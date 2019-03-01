@@ -17,7 +17,7 @@ class CreateCompaniesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email');
-            $table->integer('phone');
+            $table->bigInteger('phone');
             $table->string('address');
             $table->string('logo_path')->nullable();
             $table->string('contact_person')->nullable();
