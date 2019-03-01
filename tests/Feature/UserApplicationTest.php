@@ -1,0 +1,152 @@
+<?php
+
+namespace Tests\Feature;
+
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\UserApplication;
+
+class UserApplicationTest extends TestCase
+{
+  use DatabaseTransactions;
+  
+  public function setUp()
+  {
+    parent::setUp();
+
+    $this->company = factory(\App\Company::class)->create([
+      'name' => 'test'
+    ]);
+    $this->user->assignCompany($this->company->id);
+    $this->headers['company-id'] = $this->company->id;
+
+    $this->companyLeave = factory(\App\CompanyLeave::class)->create([
+      'company_id'  =>  $this->company->id
+    ]);
+
+    factory(\App\UserApplication::class)->create([
+      'user_id'           =>  $this->user->id,
+      'company_leave_id'  =>  $this->companyLeave->id
+    ]);
+
+    $this->payload = [ 
+      'company_leave_id'  =>  $this->companyLeave->id,
+      'from_date'         =>  '02-02-2019',
+      'to_date'           =>  '05-02-2019',
+    ];
+  }
+
+  /** @test */
+  function user_must_be_logged_in_before_accessing_the_controller()
+  {
+    $this->json('post', '/api/user_applications')
+      ->assertStatus(401); 
+  }
+
+  /** @test */
+  function it_requires_following_details()
+  {
+    $this->json('post', '/api/user_applications', [], $this->headers)
+      ->assertStatus(422)
+      ->assertExactJson([
+          "errors"  =>  [
+            "company_leave_id"  =>  ["The company leave id field is required."],
+            "from_date"         =>  ["The from date field is required."],
+            "to_date"           =>  ["The to date field is required."],
+          ],
+          "message" =>  "The given data was invalid."
+        ]);
+  }
+
+  /** @test */
+  function add_new_user_application()
+  {
+    $this->disableEH();
+    $this->json('post', '/api/user_applications', $this->payload, $this->headers)
+      ->assertStatus(201)
+      ->assertJson([
+          'data'   =>[
+            'company_leave_id'  =>  $this->companyLeave->id,
+            'from_date'         =>  '02-02-2019',
+            'to_date'           =>  '05-02-2019',          ]
+        ])
+      ->assertJsonStructureExact([
+          'data'   => [
+            'company_leave_id',
+            'from_date',
+            'to_date',
+            'user_id',
+            'updated_at',
+            'created_at',
+            'id'
+          ]
+        ]);
+  }
+
+  /** @test */
+  function list_of_user_applications()
+  {
+    $this->json('GET', '/api/user_applications',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 =>  [
+              'company_leave_id',
+              'from_date',
+              'to_date',
+              'user_id',
+              'updated_at',
+              'created_at',
+              'id'
+            ] 
+          ]
+        ]);
+      $this->assertCount(1, UserApplication::all());
+  }
+
+  /** @test */
+  function show_single_user_application()
+  {
+    $this->json('get', "/api/user_applications/1", [], $this->headers)
+      ->assertStatus(200)
+      ->assertJson([
+          'data'  => [
+            'company_leave_id'  =>  $this->companyLeave->id,
+            'from_date'         =>  '02-02-2019',
+            'to_date'           =>  '05-02-2019',          ]
+        ]);
+  }
+
+  /** @test */
+  function update_single_user_attendance()
+  {
+    $payload = [ 
+      'company_leave_id'  =>  $this->companyLeave->id,
+      'from_date'         =>  '03-02-2019',
+      'to_date'           =>  '05-02-2019',    
+    ];
+
+    $this->json('patch', '/api/user_applications/1', $payload, $this->headers)
+      ->assertStatus(200)
+      ->assertJson([
+          'data'    => [
+            'company_leave_id'  =>  $this->companyLeave->id,
+            'from_date'         =>  '03-02-2019',
+            'to_date'           =>  '05-02-2019',   
+          ]
+       ])
+      ->assertJsonStructureExact([
+          'data'  => [
+            'id',
+            'user_id',
+            'company_leave_id',
+            'from_date',
+            'to_date',
+            'created_at',
+            'updated_at',
+          ]
+      ]);
+  }
+}
