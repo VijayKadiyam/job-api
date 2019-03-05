@@ -23,6 +23,7 @@ Route::post('/register', 'Auth\RegisterController@register');
 Route::post('/reset_password','Auth\ResetPasswordController@reset_password');
 Route::post('login', 'Auth\LoginController@login');
 Route::post('/logout','Auth\LoginController@logout');
+Route::get('/logout','Auth\LoginController@logout');
 
 Route::resource('roles', 'RolesController');
 Route::resource('role_user', 'RoleUserController');
@@ -37,6 +38,7 @@ Route::resource('users', 'UsersController');
 Route::resource('companies', 'CompaniesController');
 Route::resource('company_user', 'CompanyUserController');
 Route::resource('company_states', 'CompanyStatesController');
+Route::resource('break_types', 'BreakTypesController');
 Route::resource('companies/{company}/company_designations', 'CompanyDesignationsController');
 Route::resource('company_states/{company_state}/company_state_branches', 'CompanyStateBranchesController');
 Route::resource('company_states/{company_state}/company_state_holidays', 'CompanyStateHolidaysController');

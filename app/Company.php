@@ -114,4 +114,14 @@ class Company extends Model
     $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'December', 'leaves' =>  0]);
     $this->company_leaves()->saveMany($companyLeaves);
   }
+
+  /*
+   * A company has many break types
+   *
+   *@
+   */
+  public function break_types()
+  {
+    return $this->hasMany(BreakType::class);
+  }
 }
