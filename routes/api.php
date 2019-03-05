@@ -49,3 +49,5 @@ Route::resource('user_applications', 'UserApplicationsController');
 Route::resource('user_applications/{user_application}/application_approvals', 'ApplicationApprovalsController');
 Route::resource('supervisor_user', 'SupervisorUsersController');
 
+Route::resource('user_sales', 'UserSalesController');
+

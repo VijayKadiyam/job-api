@@ -118,15 +118,13 @@ class UserAttendanceTest extends TestCase
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
-            0 =>  [
-              'date',
-              'login_time',
-              'logout_time',
-              'login_lat',
-              'login_lng',
-              'logout_lat',
-              'logout_lng'
-            ] 
+            'date',
+            'login_time',
+            'logout_time',
+            'login_lat',
+            'login_lng',
+            'logout_lat',
+            'logout_lng'
           ]
         ]);
     $this->assertCount(1, UserAttendance::all());

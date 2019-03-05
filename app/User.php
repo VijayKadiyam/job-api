@@ -171,5 +171,15 @@ class User extends Authenticatable
   {
     return $this->supervisors ? in_array($supervisor, $this->supervisors->pluck('id')->toArray()) : false;
   }
+
+  /*
+   * An user has many user sales
+   *
+   *@
+   */
+  public function user_sales()
+  {
+    return $this->hasMany(UserSale::class);
+  }
 }
 
