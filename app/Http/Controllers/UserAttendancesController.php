@@ -20,8 +20,14 @@ class UserAttendancesController extends Controller
   public function index(Request $request)
   {
     $userAttendances = request()->user()->user_attendances;
+
     if($request->date) {
       $userAttendances = $userAttendances->where('date', '=', $request->date)->first();
+    }
+
+    if($request->month) {
+      $userAttendances = UserAttendance::whereMonth('date', '=', $request->month)
+                          ->where('user_id', '=', $request->user()->id)->get();
     }
 
     return response()->json([

@@ -128,7 +128,8 @@ class User extends Authenticatable
    */
   public function user_attendances()
   {
-    return $this->hasMany(UserAttendance::class);
+    return $this->hasMany(UserAttendance::class)
+      ->with('user_attendance_breaks');
   }
 
   /*
@@ -180,6 +181,16 @@ class User extends Authenticatable
   public function user_sales()
   {
     return $this->hasMany(UserSale::class);
+  }
+
+  /*
+   * An user has many user breaks
+   *
+   *@
+   */
+  public function user_breaks()
+  {
+    return $this->hasMany(UserBreak::class);
   }
 }
 

@@ -19,4 +19,15 @@ class UserAttendance extends Model
   {
     return $this->belongsTo(User::class);
   }
+
+  /*
+   * A user attendance has many user attendance breaks
+   *
+   *@
+   */
+  public function user_attendance_breaks()
+  {
+    return $this->hasMany(UserAttendanceBreak::class)
+      ->with('break_type');
+  }
 }

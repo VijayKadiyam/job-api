@@ -5,7 +5,7 @@ use App\UserAttendance;
 
 $factory->define(UserAttendance::class, function (Faker $faker) {
   return [
-    'date'        =>  '01-01-2019',
+    'date'        =>  '2019-02-01',
     'login_time'  =>  '10.15',
     'logout_time' =>  '6.20',
     'login_lat'   =>  '23.34',

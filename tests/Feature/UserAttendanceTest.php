@@ -21,7 +21,7 @@ class UserAttendanceTest extends TestCase
     ]);
 
     $this->payload = [ 
-      'date'        =>  '01-01-2019',
+      'date'        =>  '2019-02-01',
       'login_time'  =>  '10.15',
       'logout_time' =>  '6.20',
       'login_lat'   =>  '23.34',
@@ -65,7 +65,7 @@ class UserAttendanceTest extends TestCase
       ->assertStatus(201)
       ->assertJson([
           'data'   =>[
-            'date'        =>  '01-01-2019',
+            'date'        =>  '2019-02-01',
             'login_time'  =>  '10.15',
             'logout_time' =>  '6.20',
             'login_lat'   =>  '23.34',
@@ -93,6 +93,8 @@ class UserAttendanceTest extends TestCase
   /** @test */
   function list_of_user_attendances()
   {
+    $this->disableEH();
+
     $this->json('GET', '/api/user_attendances',[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
@@ -114,7 +116,7 @@ class UserAttendanceTest extends TestCase
   /** @test */
   function list_of_user_attendances_of_specific_dat()
   {
-    $this->json('GET', '/api/user_attendances?date=01-01-2019',[], $this->headers)
+    $this->json('GET', '/api/user_attendances?date=2019-02-01',[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
@@ -131,13 +133,35 @@ class UserAttendanceTest extends TestCase
   }
 
   /** @test */
+  function list_of_user_attendances_of_specific_month()
+  {
+    $this->disableEH();
+    $this->json('GET', '/api/user_attendances?month=02',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 =>  [
+              'date',
+              'login_time',
+              'logout_time',
+              'login_lat',
+              'login_lng',
+              'logout_lat',
+              'logout_lng'
+            ]
+          ]
+        ]);
+    $this->assertCount(1, UserAttendance::all());
+  }
+
+  /** @test */
   function show_single_user_attendance()
   {
     $this->json('get', "/api/user_attendances/1", [], $this->headers)
       ->assertStatus(200)
       ->assertJson([
           'data'  => [
-            'date'        =>  '01-01-2019',
+            'date'        =>  '2019-02-01',
             'login_time'  =>  '10.15',
             'logout_time' =>  '6.20',
             'login_lat'   =>  '23.34',
@@ -151,7 +175,7 @@ class UserAttendanceTest extends TestCase
   function update_single_user_attendance()
   {
     $payload = [ 
-      'date'        =>  '02-01-2019',
+      'date'        =>  '2019-01-02',
       'login_time'  =>  '10.15',
       'logout_time' =>  '6.20',
       'login_lat'   =>  '23.34',
@@ -164,7 +188,7 @@ class UserAttendanceTest extends TestCase
       ->assertStatus(200)
       ->assertJson([
           'data'    => [
-            'date'        =>  '02-01-2019',
+            'date'        =>  '2019-01-02',
             'login_time'  =>  '10.15',
             'logout_time' =>  '6.20',
             'login_lat'   =>  '23.34',

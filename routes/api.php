@@ -47,6 +47,7 @@ Route::resource('company_leave_pattern', 'CompanyLeavePatternController');
 Route::resource('company_leaves', 'CompanyLeavesController');
 
 Route::resource('user_attendances', 'UserAttendancesController');
+Route::resource('user_attendances/{user_attendance}/user_attendance_breaks', 'UserAttendanceBreaksController');
 Route::resource('user_applications', 'UserApplicationsController');
 Route::resource('user_applications/{user_application}/application_approvals', 'ApplicationApprovalsController');
 Route::resource('supervisor_user', 'SupervisorUsersController');
