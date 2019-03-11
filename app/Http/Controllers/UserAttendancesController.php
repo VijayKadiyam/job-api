@@ -30,6 +30,12 @@ class UserAttendancesController extends Controller
                           ->where('user_id', '=', $request->user()->id)->get();
     }
 
+    if($request->search == 'today') {
+      $userAttendances = request()->company->users()->with(['user_attendances' => function($q) {
+          $q->where('date', '=', \Carbon\Carbon::now()->format('Y-m-d'));
+        }])->get();
+    }
+
     return response()->json([
       'data'     =>  $userAttendances
     ], 200);

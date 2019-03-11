@@ -16,12 +16,24 @@ class UserAttendanceTest extends TestCase
   {
     parent::setUp();
 
+    $this->company = factory(\App\Company::class)->create([
+      'name' => 'test'
+    ]);
+    $this->user->assignCompany($this->company->id);
+    $this->headers['company-id'] = $this->company->id;
+
     factory(\App\UserAttendance::class)->create([
       'user_id'  =>  $this->user->id 
     ]);
 
+    factory(\App\UserAttendance::class)->create([
+      'user_id'  =>  $this->user->id,
+      'date'     => "2019-03-09" 
+    ]);
+
+    $this->date = (\Carbon\Carbon::now()->format('Y-m-d'));
     $this->payload = [ 
-      'date'        =>  '2019-02-01',
+      'date'        =>  $this->date,
       'login_time'  =>  '10.15',
       'logout_time' =>  '6.20',
       'login_lat'   =>  '23.34',
@@ -29,6 +41,7 @@ class UserAttendanceTest extends TestCase
       'logout_lat'  =>  '34.34',
       'logout_lng'  =>  '34.34'
     ];
+
   }
 
   /** @test */
@@ -65,7 +78,7 @@ class UserAttendanceTest extends TestCase
       ->assertStatus(201)
       ->assertJson([
           'data'   =>[
-            'date'        =>  '2019-02-01',
+            'date'        =>  $this->date,
             'login_time'  =>  '10.15',
             'logout_time' =>  '6.20',
             'login_lat'   =>  '23.34',
@@ -110,13 +123,13 @@ class UserAttendanceTest extends TestCase
             ] 
           ]
         ]);
-    $this->assertCount(1, UserAttendance::all());
+    $this->assertCount(2, UserAttendance::all());
   }
 
   /** @test */
   function list_of_user_attendances_of_specific_dat()
   {
-    $this->json('GET', '/api/user_attendances?date=2019-02-01',[], $this->headers)
+    $this->json('GET', "/api/user_attendances?date=" . $this->date,[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
@@ -129,14 +142,14 @@ class UserAttendanceTest extends TestCase
             'logout_lng'
           ]
         ]);
-    $this->assertCount(1, UserAttendance::all());
+    $this->assertCount(2, UserAttendance::all());
   }
 
   /** @test */
   function list_of_user_attendances_of_specific_month()
   {
     $this->disableEH();
-    $this->json('GET', '/api/user_attendances?month=02',[], $this->headers)
+    $this->json('GET', "/api/user_attendances?month=" . \Carbon\Carbon::now()->format('m'),[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
@@ -151,7 +164,29 @@ class UserAttendanceTest extends TestCase
             ]
           ]
         ]);
-    $this->assertCount(1, UserAttendance::all());
+    $this->assertCount(2, UserAttendance::all());
+  }
+
+  /** @test */
+  function list_of_user_attendances_of_specific_company()
+  {
+    $this->disableEH();
+    $this->json('GET', '/api/user_attendances?search=today',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 =>  [
+              'name',
+              'roles',
+              'companies',
+              'company_designation',
+              'company_state_branch',
+              'supervisors',
+              'user_attendances'
+            ]
+          ]
+        ]);
+    $this->assertCount(2, UserAttendance::all());
   }
 
   /** @test */
@@ -161,7 +196,7 @@ class UserAttendanceTest extends TestCase
       ->assertStatus(200)
       ->assertJson([
           'data'  => [
-            'date'        =>  '2019-02-01',
+            'date'        =>  $this->date,
             'login_time'  =>  '10.15',
             'logout_time' =>  '6.20',
             'login_lat'   =>  '23.34',
