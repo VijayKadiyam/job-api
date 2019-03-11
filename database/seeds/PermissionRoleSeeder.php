@@ -26,6 +26,10 @@ class PermissionRoleSeeder extends Seeder
     $role->assignpermission(10); // Manage Supervisors
     $role->assignpermission(11); // Manage Leaves
     $role->assignpermission(12); // Manage Leave Applications
+    $role->assignpermission(13); // Sales
+    $role->assignpermission(14); // Reset Password
+    $role->assignpermission(15); // Break Types
+    $role->assignpermission(16); // User Logins
 
     // Admin Permissions
     $role = Role::find(2);
@@ -41,5 +45,9 @@ class PermissionRoleSeeder extends Seeder
     $role->assignpermission(10); // Manage Supervisors
     $role->assignpermission(11); // Manage Leaves
     $role->assignpermission(12); // Manage Leave Applications
+    $role->assignpermission(13); // Sales
+    $role->assignpermission(14); // Reset Password
+    $role->assignpermission(15); // Break Types
+    $role->assignpermission(16); // User Logins
   }
 }
