@@ -52,7 +52,8 @@ class LoginTest extends TestCase
       ->assertJsonStructureExact([
           'data',
           'message',
-          'token'
+          'token',
+          'success'
         ]);; 
   }
 }

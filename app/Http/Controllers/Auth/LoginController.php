@@ -48,7 +48,8 @@ class LoginController extends Controller
       return response()->json([
           'data'    =>  $user->toArray(),
           'message' =>  "User is Logged in Successfully",
-          'token'   =>  $user->api_token
+          'token'   =>  $user->api_token,
+          'success' =>  true
       ]);
     }
     else
