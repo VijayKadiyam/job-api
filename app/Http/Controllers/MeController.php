@@ -23,7 +23,8 @@ class MeController extends Controller
     $user->companies = $user->companies;
 
     return response()->json([
-      'data'    =>  $user->toArray()
+      'data'    =>  $user->toArray(),
+      'success' =>  true
     ], 200);
   }
 }

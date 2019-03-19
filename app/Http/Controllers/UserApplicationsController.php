@@ -17,12 +17,26 @@ class UserApplicationsController extends Controller
      *
    *@
    */
-  public function index()
+  public function index(Request $request)
   {
     $userApplications = request()->user()->user_applications;
 
+    if($request->user == 'supervisor') {
+
+      $applications = [];
+      foreach(request()->user()->users as $user) {
+        $uas = UserApplication::where('user_id', '=', $user->id)->with('user', 'company_leave', 'application_approvals')->latest()->get();
+        foreach($uas as $ua) {
+          $applications[] = $ua->toArray();
+        }
+      }
+      $userApplications = $applications;
+
+    }
+
     return response()->json([
-      'data'     =>  $userApplications
+      'data'     =>  $userApplications,
+      'success'   =>  true
     ], 200);
   }
 
@@ -37,13 +51,15 @@ class UserApplicationsController extends Controller
       'company_leave_id'  =>  'required',
       'from_date'         =>  'required',
       'to_date'           =>  'required',
+      'description'       =>  'required'
     ]);
 
     $userApplication = new UserApplication($request->all());
     $request->user()->user_attendances()->save($userApplication);
 
     return response()->json([
-      'data'    =>  $userApplication
+      'data'    =>  $userApplication,
+      'success' =>  true
     ], 201); 
   }
 
@@ -69,7 +85,8 @@ class UserApplicationsController extends Controller
     $request->validate([
       'company_leave_id'  =>  'required',
       'from_date'         =>  'required',
-      'to_date'           =>  'required',   
+      'to_date'           =>  'required', 
+      'description'       =>  'required'  
     ]);
 
     $userApplication->update($request->all());

@@ -34,8 +34,10 @@ class UserSalesController extends Controller
   public function store(Request $request)
   {
     $request->validate([
-      'date'        =>  'required',
-      'amount'      =>  'required'
+      'date'          =>  'required',
+      'amount'        =>  'required',
+      'customer_name' =>  'required',
+      'phone_no'      =>  'required',
     ]);
 
     $userSale = new UserSale($request->all());

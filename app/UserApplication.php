@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserApplication extends Model
 {
   protected $fillable = [
-    'company_leave_id', 'from_date', 'to_date'
+    'company_leave_id', 'from_date', 'to_date', 'description'
   ];
 
   /*

@@ -42,7 +42,8 @@ class MeTest extends TestCase
             'updated_at',
             'roles',
             'companies'
-          ]
+          ],
+          'success'
         ]);
   }
 }

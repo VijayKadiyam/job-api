@@ -39,8 +39,14 @@ class ApplicationApprovalsController extends Controller
       'status'         =>  'required',
     ]);
 
-    $applicationApproval = new ApplicationApproval($request->all());
-    $userApplication->application_approvals()->save($applicationApproval);
+    $applicationApproval = ApplicationApproval::where('user_application_id', '=', $userApplication->id)->first();
+    if($applicationApproval != null) {
+      $applicationApproval->update($request->all());
+    }
+    else {
+      $applicationApproval = new ApplicationApproval($request->all());
+      $userApplication->application_approvals()->save($applicationApproval);
+    }
 
     return response()->json([
       'data'    =>  $applicationApproval

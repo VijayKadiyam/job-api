@@ -81,12 +81,12 @@ class ApplicationApprovalTest extends TestCase
         ])
       ->assertJsonStructureExact([
           'data'   => [
+            'id',
+            'user_application_id',
             'supervisor_id',
             'status',
-            'user_application_id',
-            'updated_at',
             'created_at',
-            'id'
+            'updated_at',
           ]
         ]);
   }

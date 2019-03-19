@@ -45,6 +45,7 @@ class LoginController extends Controller
       $user = $this->guard()->user();
       $user->generateToken();
       $user->roles = $user->roles;
+      $user->companies = $user->companies;
       return response()->json([
           'data'    =>  $user->toArray(),
           'message' =>  "User is Logged in Successfully",
@@ -52,8 +53,9 @@ class LoginController extends Controller
           'success' =>  true
       ]);
     }
-    else
+    else {
       $this->sendFailedLoginResponse($request);
+    }
   }
 
   /**
@@ -71,7 +73,7 @@ class LoginController extends Controller
   {
     $user=\Auth::guard('api')->user();
     if($user){
-      $user->api_token=null;
+      // $user->api_token=null;
       $user->save();
       return response()->json([
           'message'=>'user is logged out successfully'

@@ -141,7 +141,8 @@ class User extends Authenticatable
   public function user_applications()
   {
     return $this->hasMany(UserApplication::class)
-      ->with('company_leave');
+      ->with('company_leave', 'application_approvals', 'user')
+      ->latest();
   }
 
   /*
@@ -152,6 +153,16 @@ class User extends Authenticatable
   public function supervisors()
   {
     return $this->belongsToMany(User::class, 'supervisor_user', 'user_id', 'supervisor_id');
+  }
+
+  /*
+   * A supervisor belongs to many user
+   *
+   *@
+   */
+  public function users()
+  {
+    return $this->belongsToMany(User::class, 'supervisor_user', 'supervisor_id', 'user_id');
   }
 
   /**
@@ -192,6 +203,17 @@ class User extends Authenticatable
   public function user_breaks()
   {
     return $this->hasMany(UserBreak::class);
+  }
+
+  /*
+   * A user has many plans
+   *
+   *@
+   */
+  public function plans()
+  {
+    return $this->hasMany(Plan::class)
+      ->latest();
   }
 }
 

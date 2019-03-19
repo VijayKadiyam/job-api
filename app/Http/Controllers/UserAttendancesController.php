@@ -37,7 +37,8 @@ class UserAttendancesController extends Controller
     }
 
     return response()->json([
-      'data'     =>  $userAttendances
+      'data'     =>  $userAttendances,
+      'success' =>  true
     ], 200);
   }
 
@@ -62,7 +63,8 @@ class UserAttendancesController extends Controller
     $request->user()->user_attendances()->save($userAttendance);
 
     return response()->json([
-      'data'    =>  $userAttendance
+      'data'    =>  $userAttendance,
+      'success' =>  true
     ], 201); 
   }
 
@@ -98,7 +100,8 @@ class UserAttendancesController extends Controller
     $userAttendance->update($request->all());
       
     return response()->json([
-      'data'  =>  $userAttendance
+      'data'  =>  $userAttendance,
+      'success' =>  true
     ], 200);
   }
 }

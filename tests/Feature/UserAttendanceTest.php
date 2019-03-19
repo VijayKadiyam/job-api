@@ -99,7 +99,8 @@ class UserAttendanceTest extends TestCase
             'updated_at',
             'created_at',
             'id'
-          ]
+          ],
+          'success'
         ]);
   }
 
@@ -245,7 +246,8 @@ class UserAttendanceTest extends TestCase
             'logout_lng',
             'created_at',
             'updated_at',
-          ]
+          ],
+          'success'
       ]);
   }
 }

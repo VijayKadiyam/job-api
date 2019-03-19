@@ -78,7 +78,8 @@ class UsersController extends Controller
       ->with('roles', 'companies', 'company_designation', 'company_state_branch', 'supervisors')->first();
 
     return response()->json([
-      'data'  =>  $user
+      'data'  =>  $user,
+      'success' =>  true
     ], 200); 
   }
 
@@ -101,7 +102,8 @@ class UsersController extends Controller
     $user->update($request->all());
     
     return response()->json([
-      'data'  =>  $user
+      'data'  =>  $user,
+      'success' =>  true
     ], 200);
   }
 }

@@ -22,6 +22,9 @@ class UserApplicationTest extends TestCase
     $this->user->assignCompany($this->company->id);
     $this->headers['company-id'] = $this->company->id;
 
+    $userTwo  = factory(\App\User::class)->create();
+    $userTwo->assignSupervisor($this->user->id);
+
     $this->companyLeave = factory(\App\CompanyLeave::class)->create([
       'company_id'  =>  $this->company->id
     ]);
@@ -31,10 +34,16 @@ class UserApplicationTest extends TestCase
       'company_leave_id'  =>  $this->companyLeave->id
     ]);
 
+    factory(\App\UserApplication::class)->create([
+      'user_id'           =>  $userTwo->id,
+      'company_leave_id'  =>  $this->companyLeave->id
+    ]);
+
     $this->payload = [ 
       'company_leave_id'  =>  $this->companyLeave->id,
       'from_date'         =>  '02-02-2019',
       'to_date'           =>  '05-02-2019',
+      'description'       =>  'Not Well'
     ];
   }
 
@@ -55,6 +64,7 @@ class UserApplicationTest extends TestCase
             "company_leave_id"  =>  ["The company leave id field is required."],
             "from_date"         =>  ["The from date field is required."],
             "to_date"           =>  ["The to date field is required."],
+            'description'       =>  ["The description field is required."]
           ],
           "message" =>  "The given data was invalid."
         ]);
@@ -63,7 +73,6 @@ class UserApplicationTest extends TestCase
   /** @test */
   function add_new_user_application()
   {
-    $this->disableEH();
     $this->json('post', '/api/user_applications', $this->payload, $this->headers)
       ->assertStatus(201)
       ->assertJson([
@@ -77,17 +86,20 @@ class UserApplicationTest extends TestCase
             'company_leave_id',
             'from_date',
             'to_date',
+            'description',
             'user_id',
             'updated_at',
             'created_at',
             'id'
-          ]
+          ],
+          'success'
         ]);
   }
 
   /** @test */
   function list_of_user_applications()
   {
+    $this->disableEH();
     $this->json('GET', '/api/user_applications',[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
@@ -103,7 +115,29 @@ class UserApplicationTest extends TestCase
             ] 
           ]
         ]);
-      $this->assertCount(1, UserApplication::all());
+      $this->assertCount(2, UserApplication::all());
+  }
+
+  /** @test */
+  function list_of_user_applications_of_specific_supervisor()
+  {
+    $this->disableEH();
+    $this->json('GET', '/api/user_applications?user=supervisor',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 =>  [
+              'company_leave_id',
+              'from_date',
+              'to_date',
+              'user_id',
+              'updated_at',
+              'created_at',
+              'id'
+            ] 
+          ]
+        ]);
+      $this->assertCount(2, UserApplication::all());
   }
 
   /** @test */
@@ -125,7 +159,8 @@ class UserApplicationTest extends TestCase
     $payload = [ 
       'company_leave_id'  =>  $this->companyLeave->id,
       'from_date'         =>  '03-02-2019',
-      'to_date'           =>  '05-02-2019',    
+      'to_date'           =>  '05-02-2019',   
+      'description'       =>  'Very Sick' 
     ];
 
     $this->json('patch', '/api/user_applications/1', $payload, $this->headers)
@@ -135,6 +170,7 @@ class UserApplicationTest extends TestCase
             'company_leave_id'  =>  $this->companyLeave->id,
             'from_date'         =>  '03-02-2019',
             'to_date'           =>  '05-02-2019',   
+            'description'       =>  'Very Sick' 
           ]
        ])
       ->assertJsonStructureExact([
@@ -146,6 +182,7 @@ class UserApplicationTest extends TestCase
             'to_date',
             'created_at',
             'updated_at',
+            'description'
           ]
       ]);
   }

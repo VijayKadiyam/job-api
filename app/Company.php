@@ -124,4 +124,36 @@ class Company extends Model
   {
     return $this->hasMany(BreakType::class);
   }
+
+  /*
+   * A company has many feedbacks
+   *
+   *@
+   */
+  public function feedbacks()
+  {
+    return $this->hasMany(Feedback::class);
+  }
+
+  /*
+   * A company has many allowance types
+   *
+   *@
+   */
+  public function allowance_types()
+  {
+    return $this->hasMany(AllowanceType::class);
+  }
+
+  /*
+   * A company has many transport modes
+   *
+   *@
+   */
+  public function transport_modes()
+  {
+    return $this->hasMany(TransportMode::class);
+  }
+
+  
 }

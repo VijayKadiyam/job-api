@@ -22,8 +22,10 @@ class UserSaleTest extends TestCase
     ]);
 
     $this->payload = [ 
-      'date'        =>  '02-01-2019',
-      'amount'      =>  '50'
+      'date'          =>  '02-01-2019',
+      'amount'        =>  '50',
+      'customer_name' =>  'Ajay',
+      'phone_no'      =>  '5678767656'
     ];
   }
 
@@ -41,8 +43,10 @@ class UserSaleTest extends TestCase
       ->assertStatus(422)
       ->assertExactJson([
           "errors"  =>  [
-            "date"    =>  ["The date field is required."],
-            "amount"  =>  ["The amount field is required."]
+            "date"          =>  ["The date field is required."],
+            "amount"        =>  ["The amount field is required."],
+            "customer_name" =>  ["The customer name field is required."],
+            "phone_no"      =>  ["The phone no field is required."],
           ],
           "message" =>  "The given data was invalid."
         ]);
@@ -57,13 +61,15 @@ class UserSaleTest extends TestCase
       ->assertJson([
           'data'   =>[
             'date'        =>  '02-01-2019',
-            'amount'      =>  '50'       
+            'amount'      =>  '50' 
           ]
         ])
       ->assertJsonStructureExact([
           'data'   => [
             'date',
             'amount',
+            'customer_name',
+            'phone_no',
             'user_id',
             'updated_at',
             'created_at',
@@ -124,6 +130,8 @@ class UserSaleTest extends TestCase
             'amount',
             'created_at',
             'updated_at',
+            'customer_name',
+            'phone_no'
           ]
       ]);
   }
