@@ -65,6 +65,7 @@ class SupervisorUserTest extends TestCase
             'pf_no'                   =>  $this->user->pf_no,
             'uan_no'                  =>  $this->user->uan_no,
             'esi_no'                  =>  $this->user->esi_no,
+            'salary'                  =>  $this->user->salary,
             'supervisors'             =>  [
               0 =>  [
                 'name'  =>  $userTwo->name
@@ -90,6 +91,7 @@ class SupervisorUserTest extends TestCase
           'esi_no',
           'created_at',
           'updated_at',
+          'salary',
           'supervisors'
         ]
       ]);

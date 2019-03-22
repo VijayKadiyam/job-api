@@ -16,7 +16,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $fillable = [
-    'name', 'email', 'password', 'phone', 'doj', 'dob', 'company_designation_id', 'company_state_branch_id', 'pf_no', 'uan_no', 'esi_no', 'active'
+    'name', 'email', 'password', 'phone', 'doj', 'dob', 'company_designation_id', 'company_state_branch_id', 'pf_no', 'uan_no', 'esi_no', 'active', 'salary'
   ];
 
   /**
@@ -213,6 +213,7 @@ class User extends Authenticatable
   public function plans()
   {
     return $this->hasMany(Plan::class)
+      ->with('plan_actuals')
       ->latest();
   }
 }

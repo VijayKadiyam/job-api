@@ -43,6 +43,7 @@ Route::resource('allowance_types', 'AllowanceTypesController');
 Route::resource('transport_modes', 'TransportModesController');
 Route::resource('feedbacks', 'FeedbacksController');
 Route::resource('plans', 'PlansController');
+Route::resource('plans/{plan}/plan_actual', 'PlanActualController');
 Route::resource('companies/{company}/company_designations', 'CompanyDesignationsController');
 Route::resource('company_states/{company_state}/company_state_branches', 'CompanyStateBranchesController');
 Route::resource('company_states/{company_state}/company_state_holidays', 'CompanyStateHolidaysController');

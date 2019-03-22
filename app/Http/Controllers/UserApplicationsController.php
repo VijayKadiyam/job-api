@@ -31,7 +31,10 @@ class UserApplicationsController extends Controller
         }
       }
       $userApplications = $applications;
+    }
 
+    if($request->user_id) {
+      $userApplications = UserApplication::where('user_id', '=', $request->user_id)->with('user', 'company_leave', 'application_approvals')->latest()->get();
     }
 
     return response()->json([

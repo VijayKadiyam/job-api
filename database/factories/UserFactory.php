@@ -28,6 +28,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'company_state_branch_id' => 1,
         'pf_no'                   =>  '1234567654',
         'uan_no'                  =>  '1234565432',
-        'esi_no'                  =>  '234565'
+        'esi_no'                  =>  '234565',
+        'salary'                  =>  '5000'
       ];
 });

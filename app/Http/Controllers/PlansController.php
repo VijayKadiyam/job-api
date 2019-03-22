@@ -21,6 +21,12 @@ class PlansController extends Controller
   {
     $plans = request()->user()->plans;
 
+    if(request()->user_id) {
+      $plans = Plan::where('user_id', '=', request()->user_id)
+        ->with('plan_actuals', 'allowance_type', 'user')
+        ->get();
+    }
+
     return response()->json([
       'data'     =>  $plans,
       'success'   =>  true
@@ -34,6 +40,7 @@ class PlansController extends Controller
   public function store(Request $request)
   {
     $request->validate([
+      'allowance_type_id' =>  'required',
       'date'  =>  'required',
       'plan'  =>  'required'
     ]);

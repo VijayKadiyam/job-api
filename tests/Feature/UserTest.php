@@ -181,6 +181,7 @@ class UserTest extends TestCase
             'esi_no',
             'created_at',
             'updated_at',
+            'salary'
           ],
           'success'
         ]);

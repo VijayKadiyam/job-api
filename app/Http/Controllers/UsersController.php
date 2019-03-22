@@ -21,6 +21,7 @@ class UsersController extends Controller
   public function index(Request $request)
   {
     $role = 3;
+    $users = [];
     if($request->search == 'all')
       $users = $request->company->users()->with('roles')
         ->whereHas('roles',  function($q) {

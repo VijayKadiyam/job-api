@@ -62,7 +62,8 @@ class CompaniesController extends Controller
     $company->leave_patterns = $company->leave_patterns;
 
     return response()->json([
-      'data'   =>  $company
+      'data'   =>  $company,
+      'success' =>  true
     ], 200);   
   }
 

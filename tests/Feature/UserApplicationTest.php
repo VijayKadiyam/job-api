@@ -141,6 +141,28 @@ class UserApplicationTest extends TestCase
   }
 
   /** @test */
+  function list_of_user_applications_of_specific_user_id()
+  {
+    $this->disableEH();
+    $this->json('GET', '/api/user_applications?user_id=' . $this->user->id,[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 =>  [
+              'company_leave_id',
+              'from_date',
+              'to_date',
+              'user_id',
+              'updated_at',
+              'created_at',
+              'id'
+            ] 
+          ]
+        ]);
+      $this->assertCount(2, UserApplication::all());
+  }
+
+  /** @test */
   function show_single_user_application()
   {
     $this->json('get', "/api/user_applications/1", [], $this->headers)

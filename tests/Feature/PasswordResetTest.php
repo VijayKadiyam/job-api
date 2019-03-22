@@ -60,7 +60,8 @@ class PasswordResetTest extends TestCase
             'uan_no',
             'esi_no',
             'created_at',
-            'updated_at'
+            'updated_at',
+            'salary'
           ]
         ]);
   }

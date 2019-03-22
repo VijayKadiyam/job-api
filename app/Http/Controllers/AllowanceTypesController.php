@@ -22,7 +22,8 @@ class AllowanceTypesController extends Controller
     $allowanceTypes = request()->company->allowance_types;
 
     return response()->json([
-      'data'     =>  $allowanceTypes
+      'data'     =>  $allowanceTypes,
+      'success'   =>  true
     ], 200);
   }
 

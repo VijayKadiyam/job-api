@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Plan extends Model
 {
   protected $fillable = [
-    'date', 'plan'
+    'allowance_type_id', 'date', 'plan'
   ];  
 
   /*
@@ -18,5 +18,35 @@ class Plan extends Model
   public function company()
   {
     return $this->belongsTo(Company::class);
+  }
+
+  /*
+   * A plan belongs to user
+   *
+   *@
+   */
+  public function user()
+  {
+    return $this->belongsTo(User::class);
+  }
+
+  /*
+   * A plan belongs to allowance
+   *
+   *@
+   */
+  public function allowance_type()
+  {
+    return $this->belongsTo(AllowanceType::class);
+  }
+
+  /*
+   * A plan has many plan actual
+   *
+   *@
+   */
+  public function plan_actuals()
+  {
+    return $this->hasMany(PlanActual::class);
   }
 }

@@ -20,7 +20,18 @@ class PlanTest extends TestCase
       'user_id'  =>  $this->user->id 
     ]);
 
+    $this->company = factory(\App\Company::class)->create([
+      'name' => 'test'
+    ]);
+    $this->user->assignCompany($this->company->id);
+    $this->headers['company-id'] = $this->company->id;
+
+    $this->allowanceType = factory(\App\AllowanceType::class)->create([
+      'company_id'  =>  $this->company->id 
+    ]);
+
     $this->payload = [ 
+      'allowance_type_id' =>  $this->allowanceType->id,
       'date'  =>  '2019-03-02',
       'plan'  =>  'Mumbai'
     ];
@@ -40,8 +51,9 @@ class PlanTest extends TestCase
       ->assertStatus(422)
       ->assertExactJson([
           "errors"  =>  [
-            "date"  =>  ["The date field is required."],
-            "plan"  =>  ["The plan field is required."]
+            "allowance_type_id"  =>  ["The allowance type id field is required."],
+            "date"               =>  ["The date field is required."],
+            "plan"               =>  ["The plan field is required."]
           ],
           "message" =>  "The given data was invalid."
         ]);
@@ -61,6 +73,7 @@ class PlanTest extends TestCase
         ])
       ->assertJsonStructureExact([
           'data'   => [
+            'allowance_type_id',
             'date',
             'plan',
             'user_id',
@@ -76,6 +89,21 @@ class PlanTest extends TestCase
   function list_of_plans()
   {
     $this->json('GET', '/api/plans',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0=>[
+              'date'
+            ] 
+          ]
+        ]);
+      $this->assertCount(1, Plan::all());
+  }
+
+  /** @test */
+  function list_of_plan_of_request_user()
+  {
+    $this->json('GET', '/api/plans?user_id=' . $this->user->id,[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
@@ -124,6 +152,7 @@ class PlanTest extends TestCase
             'plan',
             'created_at',
             'updated_at',
+            'allowance_type_id',
           ],
           'success'
       ]);

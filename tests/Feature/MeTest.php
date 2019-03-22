@@ -40,6 +40,7 @@ class MeTest extends TestCase
             'esi_no',
             'created_at',
             'updated_at',
+            'salary',
             'roles',
             'companies'
           ],

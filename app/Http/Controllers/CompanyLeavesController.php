@@ -22,7 +22,8 @@ class CompanyLeavesController extends Controller
     $companyleaves = request()->company->company_leaves;
 
     return response()->json([
-      'data'     =>  $companyleaves
+      'data'     =>  $companyleaves,
+      'success'   =>  true
     ], 200);
   }
 
