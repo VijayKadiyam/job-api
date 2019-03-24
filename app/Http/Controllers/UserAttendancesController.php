@@ -57,7 +57,7 @@ class UserAttendancesController extends Controller
       // 'login_lng'   =>  'required',
       // 'logout_lat'  =>  'required',
       // 'logout_lng'  =>  'required'
-    ]);
+    ]); 
 
     $userAttendance = new UserAttendance($request->all());
     $request->user()->user_attendances()->save($userAttendance);
