@@ -29,7 +29,8 @@ class CompanyTest extends TestCase
       'name'    =>  'AAIBUZZ',
       'phone'   =>  345765433,
       'email'   =>  'email@gmail.com',
-      'address' =>  '606, Vardhaman Plaza'    
+      'address' =>  '606, Vardhaman Plaza',
+      'time_zone' =>  'Asia/Calcutta'
     ];
   }
 
@@ -51,6 +52,7 @@ class CompanyTest extends TestCase
             "email"   =>  ["The email field is required."],
             "phone"   =>  ["The phone field is required."],
             "address" =>  ["The address field is required."],
+            "time_zone" =>  ["The time zone field is required."],
           ],
           "message" =>  "The given data was invalid."
         ]);
@@ -73,6 +75,7 @@ class CompanyTest extends TestCase
             'phone',
             'email',
             'address',
+            'time_zone',  
             'updated_at',
             'created_at',
             'id'
@@ -135,7 +138,8 @@ class CompanyTest extends TestCase
             'logo_path',
             'contact_person',
             'created_at',
-            'updated_at'
+            'updated_at',
+            'time_zone'
           ]
       ]);
   }

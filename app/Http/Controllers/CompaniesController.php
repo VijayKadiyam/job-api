@@ -40,6 +40,7 @@ class CompaniesController extends Controller
       'email'   =>  'required',
       'phone'   =>  'required',
       'address' =>  'required',
+      'time_zone' =>  'required'
     ]);
 
     $company = new Company(request()->all());
