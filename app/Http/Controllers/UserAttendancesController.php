@@ -26,8 +26,9 @@ class UserAttendancesController extends Controller
     }
 
     if($request->month) {
-      $userAttendances = UserAttendance::whereMonth('date', '=', $request->month)
-                          ->where('user_id', '=', $request->user()->id)->get();
+      $userAttendances = UserAttendance::with('user_attendance_breaks')
+                          ->whereMonth('date', '=', $request->month)
+                          ->where('user_id', '=', $request->user()->id)->latest()->get();
     }
 
     if($request->search == 'today') {
