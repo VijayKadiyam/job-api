@@ -31,9 +31,10 @@ class UserAttendancesController extends Controller
                           ->where('user_id', '=', $request->user()->id)->latest()->get();
     }
 
-    if($request->search == 'today') {
-      $userAttendances = request()->company->users()->with(['user_attendances' => function($q) {
-          $q->where('date', '=', \Carbon\Carbon::now()->format('Y-m-d'));
+    if($request->searchDate) {
+      $date = $request->searchDate;
+      $userAttendances = request()->company->users()->with(['user_attendances' => function($q) use($date) {
+          $q->where('date', '=', $date);
         }])->get();
     }
 

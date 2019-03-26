@@ -169,10 +169,10 @@ class UserAttendanceTest extends TestCase
   }
 
   /** @test */
-  function list_of_user_attendances_of_specific_company()
+  function list_of_user_attendances_of_specific_company_of_a_date()
   {
     $this->disableEH();
-    $this->json('GET', '/api/user_attendances?search=today',[], $this->headers)
+    $this->json('GET', '/api/user_attendances?searchDate=' . $this->date,[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
