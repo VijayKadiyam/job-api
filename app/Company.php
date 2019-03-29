@@ -155,5 +155,35 @@ class Company extends Model
     return $this->hasMany(TransportMode::class);
   }
 
+  /*
+   * A company has many travelling ways
+   *
+   *@
+   */
+  public function travelling_ways()
+  {
+    return $this->hasMany(TravellingWay::class);
+  }
+
+  /*
+   * A company has many voucher types
+   *
+   *@
+   */
+  public function voucher_types()
+  {
+    return $this->hasMany(VoucherType::class);
+  }
+
+  /*
+   * A company has many leave types
+   *
+   *@
+   */
+  public function leave_types()
+  {
+    return $this->hasMany(LeaveType::class);
+  }
+
   
 }

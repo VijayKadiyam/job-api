@@ -141,7 +141,7 @@ class User extends Authenticatable
   public function user_applications()
   {
     return $this->hasMany(UserApplication::class)
-      ->with('company_leave', 'application_approvals', 'user')
+      ->with('company_leave', 'application_approvals', 'user', 'leave_type')
       ->latest();
   }
 
@@ -215,6 +215,16 @@ class User extends Authenticatable
     return $this->hasMany(Plan::class)
       ->with('plan_actuals')
       ->latest();
+  }
+
+  /*
+   * A user has many vouchers
+   *
+   *@
+   */
+  public function vouchers()
+  {
+    return $this->hasMany(Voucher::class);
   }
 }
 

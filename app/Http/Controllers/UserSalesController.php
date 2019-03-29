@@ -21,6 +21,27 @@ class UserSalesController extends Controller
   {
     $userSales = request()->user()->user_sales;
 
+    if($request->month) {
+      $sales = [];
+
+      $userSales = UserSale::whereMonth('date', '=', $request->month);
+      if($request->user_id) {
+        $sales = $userSales->where('user_id', '=', $request->user_id)
+          ->latest()->get();
+      }
+      else {
+        foreach($request->company->users as $user) {
+          $uss = $userSales->where('user_id', '=', $user->id)
+              ->latest()->get();
+          foreach($uss as $us) {
+            $sales[] = $us->toArray();
+          }
+        }
+      }
+
+      $userSales = $sales;
+    }
+
     return response()->json([
       'data'     =>  $userSales
     ], 200);

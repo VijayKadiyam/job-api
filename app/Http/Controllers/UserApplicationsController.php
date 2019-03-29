@@ -25,7 +25,7 @@ class UserApplicationsController extends Controller
 
       $applications = [];
       foreach(request()->user()->users as $user) {
-        $uas = UserApplication::where('user_id', '=', $user->id)->with('user', 'company_leave', 'application_approvals')->latest()->get();
+        $uas = UserApplication::where('user_id', '=', $user->id)->with('user', 'company_leave', 'leave_type', 'application_approvals')->latest()->get();
         foreach($uas as $ua) {
           $applications[] = $ua->toArray();
         }
@@ -34,7 +34,7 @@ class UserApplicationsController extends Controller
     }
 
     if($request->user_id) {
-      $userApplications = UserApplication::where('user_id', '=', $request->user_id)->with('user', 'company_leave', 'application_approvals')->latest()->get();
+      $userApplications = UserApplication::where('user_id', '=', $request->user_id)->with('user', 'company_leave', 'leave_type', 'application_approvals')->latest()->get();
     }
 
     return response()->json([
@@ -54,7 +54,8 @@ class UserApplicationsController extends Controller
       'company_leave_id'  =>  'required',
       'from_date'         =>  'required',
       'to_date'           =>  'required',
-      'description'       =>  'required'
+      'description'       =>  'required',
+      'leave_type_id'     =>  'required'
     ]);
 
     $userApplication = new UserApplication($request->all());
@@ -89,7 +90,8 @@ class UserApplicationsController extends Controller
       'company_leave_id'  =>  'required',
       'from_date'         =>  'required',
       'to_date'           =>  'required', 
-      'description'       =>  'required'  
+      'description'       =>  'required',
+      'leave_type_id'     =>  'required'
     ]);
 
     $userApplication->update($request->all());

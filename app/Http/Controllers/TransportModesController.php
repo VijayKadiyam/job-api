@@ -22,7 +22,8 @@ class TransportModesController extends Controller
     $transportModes = request()->company->transport_modes;
 
     return response()->json([
-      'data'     =>  $transportModes
+      'data'     =>  $transportModes,
+      'success' =>  true
     ], 200);
   }
 

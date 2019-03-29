@@ -49,4 +49,16 @@ class Plan extends Model
   {
     return $this->hasMany(PlanActual::class);
   }
+
+  /*
+   * A plan has many plan travelling details
+   *
+   *@
+   */
+  public function plan_travelling_details()
+  {
+    return $this->hasMany(PlanTravellingDetail::class)
+      ->with('travelling_way', 'transport_mode')
+      ->latest();
+  }
 }

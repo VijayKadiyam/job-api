@@ -17,12 +17,19 @@ class UserSaleTest extends TestCase
   {
     parent::setUp();
 
+    $this->company = factory(\App\Company::class)->create([
+      'name' => 'test'
+    ]);
+    $this->user->assignCompany($this->company->id);
+    $this->headers['company-id'] = $this->company->id;
+
     factory(\App\UserSale::class)->create([
       'user_id'  =>  $this->user->id 
     ]);
 
+    $this->date = (\Carbon\Carbon::now()->format('Y-m-d'));
     $this->payload = [ 
-      'date'          =>  '02-01-2019',
+      'date'          =>  $this->date,
       'amount'        =>  '50',
       'customer_name' =>  'Ajay',
       'phone_no'      =>  '5678767656'
@@ -60,7 +67,7 @@ class UserSaleTest extends TestCase
       ->assertStatus(201)
       ->assertJson([
           'data'   =>[
-            'date'        =>  '02-01-2019',
+            'date'        =>  $this->date,
             'amount'      =>  '50' 
           ]
         ])
@@ -95,13 +102,47 @@ class UserSaleTest extends TestCase
   }
 
   /** @test */
+  function list_of_user_sales_of_specific_month()
+  {
+    $this->disableEH();
+    $this->json('GET', '/api/user_sales?month='  . \Carbon\Carbon::now()->format('m'),[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 =>  [
+              'date',
+              'amount'
+            ] 
+          ]
+        ]);
+    $this->assertCount(1, UserSale::all());
+  }
+
+  /** @test */
+  function list_of_user_sales_of_specific_month_and_specific_user()
+  {
+    $this->disableEH();
+    $this->json('GET', '/api/user_sales?month='  . \Carbon\Carbon::now()->format('m') . '&user_id=' . $this->user->id,[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 =>  [
+              'date',
+              'amount'
+            ] 
+          ]
+        ]);
+    $this->assertCount(1, UserSale::all());
+  }
+
+  /** @test */
   function show_single_user_sale()
   {
     $this->json('get', "/api/user_sales/1", [], $this->headers)
       ->assertStatus(200)
       ->assertJson([
           'data'  => [
-            'date'        =>  '01-01-2019',
+            'date'        =>  $this->date,
             'amount'      =>  '20'          ]
         ]);
   }

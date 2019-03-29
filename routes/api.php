@@ -41,15 +41,18 @@ Route::resource('company_states', 'CompanyStatesController');
 Route::resource('break_types', 'BreakTypesController');
 Route::resource('allowance_types', 'AllowanceTypesController');
 Route::resource('transport_modes', 'TransportModesController');
+Route::resource('travelling_ways', 'TravellingWaysController');
 Route::resource('feedbacks', 'FeedbacksController');
 Route::resource('plans', 'PlansController');
 Route::resource('plans/{plan}/plan_actual', 'PlanActualController');
+Route::resource('plans/{plan}/plan_travelling_details', 'PlanTravellingDetailsController');
 Route::resource('companies/{company}/company_designations', 'CompanyDesignationsController');
 Route::resource('company_states/{company_state}/company_state_branches', 'CompanyStateBranchesController');
 Route::resource('company_states/{company_state}/company_state_holidays', 'CompanyStateHolidaysController');
 
 Route::resource('company_leave_pattern', 'CompanyLeavePatternController');
 Route::resource('company_leaves', 'CompanyLeavesController');
+Route::resource('leave_types', 'LeaveTypesController');
 
 Route::resource('user_attendances', 'UserAttendancesController');
 Route::resource('user_attendances/{user_attendance}/user_attendance_breaks', 'UserAttendanceBreaksController');
@@ -58,4 +61,7 @@ Route::resource('user_applications/{user_application}/application_approvals', 'A
 Route::resource('supervisor_user', 'SupervisorUsersController');
 
 Route::resource('user_sales', 'UserSalesController');
+
+Route::resource('voucher_types', 'VoucherTypesController');
+Route::resource('vouchers', 'VouchersController');
 

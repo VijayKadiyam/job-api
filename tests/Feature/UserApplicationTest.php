@@ -29,6 +29,10 @@ class UserApplicationTest extends TestCase
       'company_id'  =>  $this->company->id
     ]);
 
+    $this->leaveType = factory(\App\LeaveType::class)->create([
+      'company_id'  =>  $this->company->id
+    ]);
+
     factory(\App\UserApplication::class)->create([
       'user_id'           =>  $this->user->id,
       'company_leave_id'  =>  $this->companyLeave->id
@@ -43,7 +47,8 @@ class UserApplicationTest extends TestCase
       'company_leave_id'  =>  $this->companyLeave->id,
       'from_date'         =>  '02-02-2019',
       'to_date'           =>  '05-02-2019',
-      'description'       =>  'Not Well'
+      'description'       =>  'Not Well',
+      'leave_type_id'     =>  $this->leaveType->id
     ];
   }
 
@@ -64,7 +69,8 @@ class UserApplicationTest extends TestCase
             "company_leave_id"  =>  ["The company leave id field is required."],
             "from_date"         =>  ["The from date field is required."],
             "to_date"           =>  ["The to date field is required."],
-            'description'       =>  ["The description field is required."]
+            'description'       =>  ["The description field is required."],
+            "leave_type_id"     =>  ["The leave type id field is required."],
           ],
           "message" =>  "The given data was invalid."
         ]);
@@ -87,6 +93,7 @@ class UserApplicationTest extends TestCase
             'from_date',
             'to_date',
             'description',
+            'leave_type_id',
             'user_id',
             'updated_at',
             'created_at',
@@ -182,7 +189,8 @@ class UserApplicationTest extends TestCase
       'company_leave_id'  =>  $this->companyLeave->id,
       'from_date'         =>  '03-02-2019',
       'to_date'           =>  '05-02-2019',   
-      'description'       =>  'Very Sick' 
+      'description'       =>  'Very Sick',
+      'leave_type_id'     =>  $this->leaveType->id
     ];
 
     $this->json('patch', '/api/user_applications/1', $payload, $this->headers)
@@ -204,7 +212,8 @@ class UserApplicationTest extends TestCase
             'to_date',
             'created_at',
             'updated_at',
-            'description'
+            'description',
+            'leave_type_id'
           ]
       ]);
   }

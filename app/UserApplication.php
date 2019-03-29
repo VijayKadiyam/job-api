@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserApplication extends Model
 {
   protected $fillable = [
-    'company_leave_id', 'from_date', 'to_date', 'description'
+    'company_leave_id', 'from_date', 'to_date', 'description', 'leave_type_id'
   ];
 
   /*
@@ -28,6 +28,16 @@ class UserApplication extends Model
   public function company_leave()
   {
     return $this->belongsTo(CompanyLeave::class);
+  }
+
+  /*
+   * An user application belongs to leave type
+   *
+   *@
+   */
+  public function leave_type()
+  {
+    return $this->belongsTo(LeaveType::class);
   }
 
   /*
