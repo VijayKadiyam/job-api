@@ -226,5 +226,15 @@ class User extends Authenticatable
   {
     return $this->hasMany(Voucher::class);
   }
+
+  /*
+   * An user has many user locations
+   *
+   *@
+   */
+  public function user_locations()
+  {
+    return $this->hasMany(UserLocation::class);
+  }
 }
 

@@ -65,3 +65,5 @@ Route::resource('user_sales', 'UserSalesController');
 Route::resource('voucher_types', 'VoucherTypesController');
 Route::resource('vouchers', 'VouchersController');
 
+Route::resource('user_locations', 'UserLocationsController');
+
