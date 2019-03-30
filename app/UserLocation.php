@@ -10,6 +10,10 @@ class UserLocation extends Model
     'content'
   ];
 
+  protected $casts = [
+     'content' => 'array'
+];
+
   /*
    * A user location belongs to user
    *

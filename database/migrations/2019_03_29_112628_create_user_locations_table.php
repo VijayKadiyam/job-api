@@ -16,7 +16,7 @@ class CreateUserLocationsTable extends Migration
         Schema::create('user_locations', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('content');
+            $table->json('content');
             $table->timestamps();
         });
     }

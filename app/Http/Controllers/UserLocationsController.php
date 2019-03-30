@@ -44,6 +44,8 @@ class UserLocationsController extends Controller
     ]);
 
     $userLocation = new UserLocation($request->all());
+
+    // return ($userLocation);
     $request->user()->user_locations()->save($userLocation);
 
     return response()->json([
