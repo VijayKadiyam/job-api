@@ -214,7 +214,8 @@ class UserApplicationTest extends TestCase
             'updated_at',
             'description',
             'leave_type_id'
-          ]
+          ],
+          'success'
       ]);
   }
 }

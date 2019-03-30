@@ -97,7 +97,8 @@ class UserApplicationsController extends Controller
     $userApplication->update($request->all());
       
     return response()->json([
-      'data'  =>  $userApplication
+      'data'  =>  $userApplication,
+      'success' =>  true
     ], 200);
   }
 
