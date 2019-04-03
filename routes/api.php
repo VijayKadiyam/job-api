@@ -67,3 +67,6 @@ Route::resource('vouchers', 'VouchersController');
 
 Route::resource('user_locations', 'UserLocationsController');
 
+// Uploads
+Route::post('upload_profile_image', 'UploadController@uploadProfileImage');
+

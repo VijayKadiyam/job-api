@@ -92,6 +92,7 @@ class SupervisorUserTest extends TestCase
           'created_at',
           'updated_at',
           'salary',
+          'image_path',
           'supervisors'
         ]
       ]);

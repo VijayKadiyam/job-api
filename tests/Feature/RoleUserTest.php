@@ -58,6 +58,7 @@ class RoleUserTest extends TestCase
             'uan_no'                  =>  $userTwo->uan_no,
             'esi_no'                  =>  $userTwo->esi_no,
             'salary'                  =>  $userTwo->salary,
+            'image_path'              =>  $userTwo->image_path,
             'roles'                   =>  [
               0 =>  [
                 'name'  =>  'Admin'
@@ -84,6 +85,7 @@ class RoleUserTest extends TestCase
           'created_at',
           'updated_at',
           'salary',
+          'image_path',
           'roles'
         ]
       ]);

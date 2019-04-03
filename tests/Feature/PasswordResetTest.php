@@ -61,7 +61,8 @@ class PasswordResetTest extends TestCase
             'esi_no',
             'created_at',
             'updated_at',
-            'salary'
+            'salary',
+            'image_path'
           ]
         ]);
   }

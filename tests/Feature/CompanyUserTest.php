@@ -60,6 +60,7 @@ class CompanyUserTest extends TestCase
               'uan_no'                  =>  $userTwo->uan_no,
               'esi_no'                  =>  $userTwo->esi_no,
               'salary'                  =>  $userTwo->salary,
+              'image_path'              =>  $userTwo->image_path,
               'companies'                   =>  [
                 0 =>  [
                   'name'  =>  $company->name
@@ -86,6 +87,7 @@ class CompanyUserTest extends TestCase
             'created_at',
             'updated_at',
             'salary',
+            'image_path',
             'companies'
           ]
         ]);;;
