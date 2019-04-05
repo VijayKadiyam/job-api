@@ -105,7 +105,7 @@ class UserSaleTest extends TestCase
   function list_of_user_sales_of_specific_month()
   {
     $this->disableEH();
-    $this->json('GET', '/api/user_sales?month='  . \Carbon\Carbon::now()->format('m'),[], $this->headers)
+    $this->json('GET', '/api/user_sales?month='  . \Carbon\Carbon::now()->format('m') . '&user_id=',[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [

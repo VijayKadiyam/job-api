@@ -22,20 +22,22 @@ class UserSalesController extends Controller
     $userSales = request()->user()->user_sales;
 
     if($request->month) {
-      $sales = [];
-
       $userSales = UserSale::whereMonth('date', '=', $request->month);
+      $sales = [];
+      
       if($request->user_id) {
-        $sales = $userSales->where('user_id', '=', $request->user_id)
+        $sales = $userSales->with('user')->where('user_id', '=', $request->user_id)
           ->latest()->get();
       }
       else {
         foreach($request->company->users as $user) {
-          $uss = $userSales->where('user_id', '=', $user->id)
+          $uss = $userSales->with('user')->where('user_id', '=', $user->id)
               ->latest()->get();
           foreach($uss as $us) {
             $sales[] = $us->toArray();
           }
+          // Again assign userSales to default
+          $userSales = UserSale::whereMonth('date', '=', $request->month);
         }
       }
 
