@@ -29,5 +29,15 @@ class PermissionSeeder extends Seeder
     Permission::create(['name' => 'Reset Password']); // 14
     Permission::create(['name' => 'Break Types']); // 15
     Permission::create(['name' => 'User Logins']); // 16
+    Permission::create(['name' => 'Leave Types']); // 17
+    Permission::create(['name' => 'Transport Modes']); // 18
+    Permission::create(['name' => 'Travelling Ways']); // 19
+    Permission::create(['name' => 'Allowance Types']); // 20
+    Permission::create(['name' => 'Voucher Types']); // 21
+    Permission::create(['name' => 'Application Approvals']); // 22
+    Permission::create(['name' => 'Leave Report']); // 23
+    Permission::create(['name' => 'Plan Report']); // 24
+    Permission::create(['name' => 'Sales Report']); // 25
+    Permission::create(['name' => 'Users Report']); // 26
   }
 }
