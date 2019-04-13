@@ -9,7 +9,7 @@ class UserLocationsController extends Controller
 {
   public function __construct()
   {
-    $this->middleware(['auth:api', 'company']);
+    $this->middleware(['auth:api']);
   }
 
   /*
@@ -23,6 +23,12 @@ class UserLocationsController extends Controller
 
     if(request()->user_id) {
       $user_locations = UserLocation::where('user_id', '=', request()->user_id)
+        ->get();
+    }
+
+    if(request()->date) {
+      $user_locations = UserLocation::where('user_id', '=', request()->user_id)
+        ->whereDate('created_at', '=', request()->date)
         ->get();
     }
 

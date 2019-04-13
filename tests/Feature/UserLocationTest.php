@@ -26,6 +26,8 @@ class UserLocationTest extends TestCase
       'user_id'  =>  $this->user->id 
     ]);
 
+    $this->date = (\Carbon\Carbon::now()->format('Y-m-d'));
+
     $this->payload = [ 
       'content' =>  'Location Content'
     ];
@@ -81,7 +83,7 @@ class UserLocationTest extends TestCase
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
-            0=>[
+            0 =>  [
               'content'
             ] 
           ]
@@ -92,7 +94,7 @@ class UserLocationTest extends TestCase
   /** @test */
   function list_of_user_location_of_request_user()
   {
-    $this->json('GET', '/api/user_locations?user_id=' . $this->user->id,[], $this->headers)
+    $this->json('GET', '/api/user_locations?user_id=' . $this->user->id . '&date=' . $this->date,[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
