@@ -30,6 +30,16 @@ class PermissionRoleSeeder extends Seeder
     $role->assignpermission(14); // Reset Password
     $role->assignpermission(15); // Break Types
     $role->assignpermission(16); // User Logins
+    $role->assignpermission(17); // Leave Types
+    $role->assignpermission(18); // Transport Modes
+    $role->assignpermission(19); // Travelling Ways
+    $role->assignpermission(20); // Allowance Types
+    $role->assignpermission(21); // Voucher Types
+    $role->assignpermission(22); // Application Approvals
+    $role->assignpermission(23); // Leave Report
+    $role->assignpermission(24); // Plan Report
+    $role->assignpermission(25); // Sales Report
+    $role->assignpermission(26); // Users Report
 
     // Admin Permissions
     $role = Role::find(2);
