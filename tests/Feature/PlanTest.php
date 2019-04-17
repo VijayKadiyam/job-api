@@ -30,7 +30,7 @@ class PlanTest extends TestCase
       'company_id'  =>  $this->company->id 
     ]);
 
-    $this->date = (\Carbon\Carbon::now()->format('Y-m-d'));
+    $this->month = (\Carbon\Carbon::now()->format('m'));
 
     $this->payload = [ 
       'allowance_type_id' =>  $this->allowanceType->id,
@@ -105,7 +105,7 @@ class PlanTest extends TestCase
   /** @test */
   function list_of_plan_of_request_user()
   {
-    $this->json('GET', '/api/plans?user_id=' . $this->user->id . '&date=' . $this->date,[], $this->headers)
+    $this->json('GET', '/api/plans?user_id=' . $this->user->id . '&date=' . $this->month,[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [

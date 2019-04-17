@@ -27,9 +27,9 @@ class PlansController extends Controller
         ->get();
     }
 
-    if(request()->date) {
+    if(request()->month) {
       $plans = Plan::where('user_id', '=', request()->user_id)
-        ->whereDate('created_at', '=', request()->date)
+        ->whereMonth('date', '=', request()->month)
         ->with('plan_actuals', 'allowance_type', 'user', 'plan_travelling_details')
         ->get();
     }
