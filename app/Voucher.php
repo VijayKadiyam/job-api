@@ -19,4 +19,14 @@ class Voucher extends Model
   {
     return $this->belongsTo(User::class);
   }
+
+  /*
+   * A voucher belongs to voucher type
+   *
+   *@
+   */
+  public function voucher_type()
+  {
+    return $this->belongsTo(VoucherType::class);
+  }
 }

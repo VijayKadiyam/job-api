@@ -21,6 +21,20 @@ class VouchersController extends Controller
   {
     $vouchers = request()->user()->vouchers;
 
+    if(request()->user_id) {
+      $vouchers = Voucher::where('user_id', '=', request()->user_id)
+        ->with('user', 'voucher_type')
+        ->get();
+
+    }
+
+    if(request()->month) {
+      $vouchers = Voucher::where('user_id', '=', request()->user_id)
+        ->whereMonth('created_at', '=', request()->month)
+        ->with('user', 'voucher_type')
+        ->get();
+    }
+    
     return response()->json([
       'data'     =>  $vouchers,
       'success'   =>  true

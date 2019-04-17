@@ -31,6 +31,8 @@ class VoucherTest extends TestCase
       'user_id'  =>  $this->user->id 
     ]);
 
+    $this->month = (\Carbon\Carbon::now()->format('m'));
+
     $this->payload = [ 
       'voucher_type_id' =>  $this->voucherType->id,
       'amount'          =>  '5000',
@@ -91,6 +93,21 @@ class VoucherTest extends TestCase
   function list_of_vouchers()
   {
     $this->json('GET', '/api/vouchers',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0=>[
+              'amount'
+            ] 
+          ]
+        ]);
+      $this->assertCount(1, Voucher::all());
+  }
+
+  /** @test */
+  function list_of_vouchers_of_request_user()
+  {
+    $this->json('GET', '/api/vouchers?user_id=' . $this->user->id . '&month=' . $this->month,[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
