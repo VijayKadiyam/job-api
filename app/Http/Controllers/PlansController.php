@@ -23,7 +23,7 @@ class PlansController extends Controller
 
     if(request()->user_id) {
       $plans = Plan::where('user_id', '=', request()->user_id)
-        ->with('plan_actuals', 'allowance_type', 'user')
+        ->with('plan_actuals', 'allowance_type', 'user', 'plan_travelling_details')
         ->get();
     }
 
