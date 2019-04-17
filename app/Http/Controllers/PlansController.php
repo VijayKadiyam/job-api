@@ -27,6 +27,13 @@ class PlansController extends Controller
         ->get();
     }
 
+    if(request()->date) {
+      $plans = Plan::where('user_id', '=', request()->user_id)
+        ->whereDate('created_at', '=', request()->date)
+        ->with('plan_actuals', 'allowance_type', 'user', 'plan_travelling_details')
+        ->get();
+    }
+
     return response()->json([
       'data'     =>  $plans,
       'success'   =>  true
