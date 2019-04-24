@@ -29,6 +29,9 @@ $factory->define(App\User::class, function (Faker $faker) {
         'pf_no'                   =>  '1234567654',
         'uan_no'                  =>  '1234565432',
         'esi_no'                  =>  '234565',
-        'salary'                  =>  '5000'
+        'salary'                  =>  '5000',
+        'employee_code'           =>  '1',
+        'asm_area'                =>  'Mumbai',
+        'asm_name'                =>  'M'
       ];
 });

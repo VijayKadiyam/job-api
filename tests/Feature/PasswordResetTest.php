@@ -62,7 +62,10 @@ class PasswordResetTest extends TestCase
             'created_at',
             'updated_at',
             'salary',
-            'image_path'
+            'image_path',
+            'employee_code',
+            'asm_area',
+            'asm_name'
           ]
         ]);
   }

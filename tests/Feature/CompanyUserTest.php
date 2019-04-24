@@ -88,6 +88,9 @@ class CompanyUserTest extends TestCase
             'updated_at',
             'salary',
             'image_path',
+            'employee_code',
+            'asm_area',
+            'asm_name',
             'companies'
           ]
         ]);;;
