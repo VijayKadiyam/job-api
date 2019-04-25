@@ -91,6 +91,7 @@ class CompanyUserTest extends TestCase
             'employee_code',
             'asm_area',
             'asm_name',
+            'uid_no',
             'companies'
           ]
         ]);;;

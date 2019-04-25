@@ -65,7 +65,8 @@ class PasswordResetTest extends TestCase
             'image_path',
             'employee_code',
             'asm_area',
-            'asm_name'
+            'asm_name',
+            'uid_no'
           ]
         ]);
   }

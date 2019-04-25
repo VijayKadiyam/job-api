@@ -89,6 +89,7 @@ class RoleUserTest extends TestCase
           'employee_code',
           'asm_area',
           'asm_name',
+          'uid_no',
           'roles'
         ]
       ]);
