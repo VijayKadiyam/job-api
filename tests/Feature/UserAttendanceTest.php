@@ -32,6 +32,7 @@ class UserAttendanceTest extends TestCase
     ]);
 
     $this->date = (\Carbon\Carbon::now()->format('Y-m-d'));
+    $this->toDate = (\Carbon\Carbon::now()->addDay()->format('Y-m-d'));
     $this->payload = [ 
       'date'        =>  $this->date,
       'login_time'  =>  '10.15',
@@ -173,6 +174,28 @@ class UserAttendanceTest extends TestCase
   {
     $this->disableEH();
     $this->json('GET', '/api/user_attendances?searchDate=' . $this->date,[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 =>  [
+              'name',
+              'roles',
+              'companies',
+              'company_designation',
+              'company_state_branch',
+              'supervisors',
+              'user_attendances'
+            ]
+          ]
+        ]);
+    $this->assertCount(2, UserAttendance::all());
+  }
+
+  /** @test */
+  function list_of_user_attendances_of_specific_company_and_between_dates()
+  {
+    $this->disableEH();
+    $this->json('GET', '/api/user_attendances?fromDate=' . $this->date . '&toDate=' . $this->toDate,[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [

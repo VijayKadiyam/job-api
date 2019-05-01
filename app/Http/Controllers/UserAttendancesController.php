@@ -38,6 +38,16 @@ class UserAttendancesController extends Controller
         }])->get();
     }
 
+
+    if($request->fromDate & $request->toDate) {
+      $fromDate = date($request->fromDate);
+      $toDate = date($request->toDate);
+      $userAttendances = request()->company->users()->with(['user_attendances' => function($q) use($fromDate, $toDate) {
+          $q->whereBetween('date', [$fromDate, $toDate]);
+        }])->get();
+    }
+
+
     return response()->json([
       'data'     =>  $userAttendances,
       'success' =>  true
