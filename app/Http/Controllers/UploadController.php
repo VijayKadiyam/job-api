@@ -66,7 +66,7 @@ class UploadController extends Controller
     $realImage = base64_decode($image);
     $path = "billImages/" . $id . '/' . $name;
 
-    // Storage::disk('s3')->put($path, $realImage, 'public');
+    Storage::disk('s3')->put($path, $realImage, 'public');
 
     $planTravellingDetail = PlanTravellingDetail::where('id', '=', $id)->first();
     $planTravellingDetail->image_path = $path;
