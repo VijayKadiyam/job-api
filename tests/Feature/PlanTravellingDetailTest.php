@@ -36,7 +36,8 @@ class PlanTravellingDetailTest extends TestCase
       'to'                => 'Calcutta',
       'travelling_way_id' =>  '2',
       'transport_mode_id' =>  '1',
-      'fare'              =>  '500'
+      'fare'              =>  '500',
+      'image_path'        =>  '123'
     ];
   }
 
@@ -75,7 +76,8 @@ class PlanTravellingDetailTest extends TestCase
             'to'                => 'Calcutta',
             'travelling_way_id' =>  '2',
             'transport_mode_id' =>  '1',
-            'fare'              =>  '500'
+            'fare'              =>  '500',
+            'image_path'        =>  '123'
           ]
         ])
       ->assertJsonStructureExact([
@@ -85,6 +87,7 @@ class PlanTravellingDetailTest extends TestCase
             'travelling_way_id',
             'transport_mode_id',
             'fare',
+            'image_path',
             'plan_id',
             'updated_at',
             'created_at',
@@ -156,6 +159,7 @@ class PlanTravellingDetailTest extends TestCase
             'fare',
             'created_at',
             'updated_at',
+            'image_path'
           ],
           'success'
       ]);

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class PlanTravellingDetail extends Model
 {
   protected $fillable = [
-    'from', 'to', 'travelling_way_id', 'transport_mode_id', 'fare'
+    'from', 'to', 'travelling_way_id', 'transport_mode_id', 'fare', 'image_path'
   ];
 
   /*

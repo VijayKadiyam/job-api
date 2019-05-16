@@ -9,7 +9,7 @@ class PlanActual extends Model
   protected $table = "plan_actual";
 
   protected $fillable  = [
-    'status', 'details'
+    'status', 'details', 'lat', 'lng'
   ];
 
   /*

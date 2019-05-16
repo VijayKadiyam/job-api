@@ -9,6 +9,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
+use App\Plan;
+use App\PlanTravellingDetail;
+
 class UploadTest extends TestCase
 {
   use DatabaseTransactions;
@@ -22,6 +25,16 @@ class UploadTest extends TestCase
     ]);
     $this->user->assignCompany($this->company->id);
     $this->headers['company-id'] = $this->company->id;
+
+    $this->plan = factory(Plan::class)->create([
+      'user_id'  =>  $this->user->id 
+    ]);
+
+    $this->planTravellingDetail = factory(PlanTravellingDetail::class)->create([
+      'plan_id'  =>  $this->plan->id 
+    ]);
+
+
   }
 
   /** @test */
@@ -66,6 +79,50 @@ class UploadTest extends TestCase
     $this->assertEquals('profileImages/' . $profileImage->hashName(), $this->user->image_path);
 
     Storage::disk('public')->assertExists('profileImages/' . $profileImage->hashName());
+  }
+
+  /** @test */
+  function upload_profile_test()
+  {
+    Storage::fake('public');
+
+    $profileImage = UploadedFile::fake()->image('random.jpg');
+    $name = $profileImage->hashName();
+
+    $payLoad = [
+      'image' =>  base64_encode($profileImage),
+      'name'  =>  $name
+    ];
+
+    $this->json('post', '/api/upload_profile', $payLoad, $this->headers)
+      ->assertJson([
+        'data'  => [
+          'image_path'=> 'profileImages/' . $this->user->id . '/' . $name,
+        ]
+      ]);
+
+    $this->user->refresh();
+    // $this->assertEquals('profileImages/' . $this->user->id . '/' . $name, $this->user->image_path);
+
+    // Storage::disk('public')->assertExists('profileImages/' . $name);
+  }
+
+  /** @test */
+  function upload_bill_image_test()
+  {
+    Storage::fake('public');
+
+    $payLoad = [
+      'user_id'       =>  $this->user->id,
+      'bill_image' => $billImage = UploadedFile::fake()->image('random.jpg')
+    ];
+
+    $this->json('post', '/api/upload_bill/' . $this->planTravellingDetail->id, $payLoad, $this->headers)
+      ->assertJson([
+        'data'  => [
+          'image_path' => 'billImages/' . $this->planTravellingDetail->id . '/',
+        ]
+      ]);
   }
 
 }

@@ -72,4 +72,6 @@ Route::resource('user_locations', 'UserLocationsController');
 
 // Uploads
 Route::post('upload_profile_image', 'UploadController@uploadProfileImage');
+Route::post('upload_profile', 'UploadController@uploadProfile');
+Route::post('upload_bill/{id}', 'UploadController@uploadBill');
 

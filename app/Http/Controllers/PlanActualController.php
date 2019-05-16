@@ -52,7 +52,7 @@ class PlanActualController extends Controller
     return response()->json([
       'data'    =>  $planActual,
       'success' =>  true
-    ]); 
+    ], 201); 
   }
 
   /*

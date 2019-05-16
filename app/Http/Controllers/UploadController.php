@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Illuminate\Support\Facades\Storage;
+use App\PlanTravellingDetail;
 
 class UploadController extends Controller
 {
@@ -29,6 +31,50 @@ class UploadController extends Controller
     return response()->json([
       'data'  => [
         'image_path'  =>  $image_path
+      ],
+      'success' =>  true
+    ]);
+  }
+
+  public function uploadProfile(Request $request)
+  {
+    $image = $request->image;
+    $name = $request->name;
+
+    $realImage = base64_decode($image);
+    $path = "profileImages/" . request()->user()->id . '/' . $name;
+
+    Storage::disk('s3')->put($path, $realImage, 'public');
+
+    $user = User::where('id', '=', request()->user()->id)->first();
+    $user->image_path = $path;
+    $user->update();
+
+    return response()->json([
+      'data'  => [
+        'image_path'  =>  $path
+      ],
+      'success' =>  true
+    ]);
+  }
+
+  public function uploadBill(Request $request, $id)
+  {
+    $image = $request->image;
+    $name = $request->name;
+
+    $realImage = base64_decode($image);
+    $path = "billImages/" . $id . '/' . $name;
+
+    Storage::disk('s3')->put($path, $realImage, 'public');
+
+    $planTravellingDetail = PlanTravellingDetail::where('id', '=', $id)->first();
+    $planTravellingDetail->image_path = $path;
+    $planTravellingDetail->update();
+
+    return response()->json([
+      'data'  => [
+        'image_path'  =>  $path 
       ],
       'success' =>  true
     ]);

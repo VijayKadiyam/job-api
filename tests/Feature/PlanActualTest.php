@@ -37,6 +37,8 @@ class PlanActualTest extends TestCase
     $this->payload = [ 
       'status'  =>  1,
       'details' =>  'Done',
+      'lat'     =>  '12',
+      'lng'     =>  '321'
     ];
   }
 
@@ -47,44 +49,46 @@ class PlanActualTest extends TestCase
       ->assertStatus(401); 
   }
 
-  // /** @test */
-  // function it_requires_following_details()
-  // {
-  //   $this->json('post', '/api/plans/' . $this->plan->id . '/plan_actual', [], $this->headers)
-  //     ->assertStatus(422)
-  //     ->assertExactJson([
-  //         "errors"  =>  [
-  //           "status"               =>  ["The status field is required."],
-  //           "details"               =>  ["The details field is required."]
-  //         ],
-  //         "message" =>  "The given data was invalid."
-  //       ]);
-  // }
+  /** @test */
+  function it_requires_following_details()
+  {
+    $this->json('post', '/api/plans/' . $this->plan->id . '/plan_actual', [], $this->headers)
+      ->assertStatus(422)
+      ->assertExactJson([
+          "errors"  =>  [
+            "status"               =>  ["The status field is required."],
+            "details"               =>  ["The details field is required."]
+          ],
+          "message" =>  "The given data was invalid."
+        ]);
+  }
 
-  // /** @test */
-  // function add_new_plan_actual()
-  // {
-  //   $this->disableEH();
-  //   $this->json('post', '/api/plans/' . $this->plan->id . '/plan_actual', $this->payload, $this->headers)
-  //     ->assertStatus(201)
-  //     ->assertJson([
-  //         'data'   =>[
-  //           'status'  =>  1,
-  //           'details' =>  'Done',
-  //         ]
-  //       ])
-  //     ->assertJsonStructureExact([
-  //         'data'   => [
-  //           'status',
-  //           'details',
-  //           'plan_id',
-  //           'updated_at',
-  //           'created_at',
-  //           'id'
-  //         ],
-  //         'success'
-  //       ]);
-  // }
+  /** @test */
+  function add_new_plan_actual()
+  {
+    $this->disableEH();
+    $this->json('post', '/api/plans/' . $this->plan->id . '/plan_actual', $this->payload, $this->headers)
+      ->assertStatus(201)
+      ->assertJson([
+          'data'   =>[
+            'status'  =>  1,
+            'details' =>  'Done',
+          ]
+        ])
+      ->assertJsonStructureExact([
+          'data'   => [
+            'id',
+            'plan_id',
+            'status',
+            'details',
+            'created_at',
+            'updated_at',
+            'lat',
+            'lng'
+          ],
+          'success'
+        ]);
+  }
 
   /** @test */
   function list_of_plan_actuals()
@@ -124,7 +128,7 @@ class PlanActualTest extends TestCase
     ];
 
     $this->json('post', '/api/plans/' . $this->plan->id . '/plan_actual', $payload, $this->headers)
-      ->assertStatus(200)
+      ->assertStatus(201)
       ->assertJson([
           'data'    => [
             'status'  =>  0,
@@ -139,6 +143,8 @@ class PlanActualTest extends TestCase
             'details',
             'created_at',
             'updated_at',
+            'lat',
+            'lng'
           ],
           'success'
       ]);
