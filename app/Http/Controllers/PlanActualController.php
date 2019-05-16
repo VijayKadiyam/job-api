@@ -66,6 +66,7 @@ class PlanActualController extends Controller
       'data'   =>  $planActual
     ], 200);   
   }
+  
 
   /*
    * To update a plan actual 
