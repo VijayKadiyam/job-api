@@ -58,6 +58,28 @@ class UploadController extends Controller
     ]);
   }
 
+  public function uploadSignature(Request $request)
+  {
+    $image = $request->image;
+    $name = $request->name;
+
+    $realImage = base64_decode($image);
+    $path = "signatureImages/" . request()->user()->id . '/' . $name;
+
+    Storage::disk('s3')->put($path, $realImage, 'public');
+
+    $user = User::where('id', '=', request()->user()->id)->first();
+    $user->terms_accepted = '1';
+    $user->update();
+
+    return response()->json([
+      'data'  => [
+        'image_path'  =>  $path
+      ],
+      'success' =>  true
+    ]);
+  }
+
   public function uploadBill(Request $request, $id)
   {
     $image = $request->image;

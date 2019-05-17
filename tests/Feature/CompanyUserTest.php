@@ -61,6 +61,7 @@ class CompanyUserTest extends TestCase
               'esi_no'                  =>  $userTwo->esi_no,
               'salary'                  =>  $userTwo->salary,
               'image_path'              =>  $userTwo->image_path,
+              'terms_accepted'          =>  $userTwo->terms_accepted,
               'companies'                   =>  [
                 0 =>  [
                   'name'  =>  $company->name
@@ -92,6 +93,7 @@ class CompanyUserTest extends TestCase
             'asm_area',
             'asm_name',
             'uid_no',
+            'terms_accepted',
             'companies'
           ]
         ]);;;

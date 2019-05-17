@@ -46,6 +46,7 @@ class MeTest extends TestCase
             'asm_area',
             'asm_name',
             'uid_no',
+            'terms_accepted',
             'roles',
             'companies'
           ],

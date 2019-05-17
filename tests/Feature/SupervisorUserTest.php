@@ -66,6 +66,7 @@ class SupervisorUserTest extends TestCase
             'uan_no'                  =>  $this->user->uan_no,
             'esi_no'                  =>  $this->user->esi_no,
             'salary'                  =>  $this->user->salary,
+            'terms_accepted'          =>  $this->user->terms_accepted,
             'supervisors'             =>  [
               0 =>  [
                 'name'  =>  $userTwo->name
@@ -97,6 +98,7 @@ class SupervisorUserTest extends TestCase
           'asm_area',
           'asm_name',
           'uid_no',
+          'terms_accepted',
           'supervisors'
         ]
       ]);
