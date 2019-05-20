@@ -22,7 +22,8 @@ class SkusController extends Controller
     $skus = request()->company->skus;
 
     return response()->json([
-      'data'     =>  $skus
+      'data'     =>  $skus,
+      'success'   =>  true
     ], 200);
   }
 
