@@ -185,5 +185,55 @@ class Company extends Model
     return $this->hasMany(LeaveType::class);
   }
 
-  
+  /*
+   * A company has many skus
+   *
+   *@
+   */
+  public function skus()
+  {
+    return $this->hasMany(Sku::class)
+      ->with('stocks');
+  }
+
+  /*
+   * A company has many sku types
+   *
+   *@
+   */
+  public function sku_types()
+  {
+    return $this->hasMany(SkuType::class);
+  }
+
+  /*
+   * A company has many offer types
+   *
+   *@
+   */
+  public function offer_types()
+  {
+    return $this->hasMany(OfferType::class);
+  }
+
+  /*
+   * A company has many offers
+   *
+   *@
+   */
+  public function offers()
+  {
+    return $this->hasMany(Offer::class)
+      ->with('offer_type');
+  }
+
+  /*
+   * A company has many retailers
+   *
+   *@
+   */
+  public function retailers()
+  {
+    return $this->hasMany(Retailer::class);
+  }
 }

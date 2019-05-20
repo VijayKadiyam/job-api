@@ -76,3 +76,12 @@ Route::post('upload_profile', 'UploadController@uploadProfile');
 Route::post('upload_signature', 'UploadController@uploadSignature');
 Route::post('upload_bill/{id}', 'UploadController@uploadBill');
 
+Route::resource('skus', 'SkusController');
+Route::resource('sku_types', 'SkuTypesController');
+Route::resource('offer_types', 'OfferTypesController');
+Route::resource('offers', 'OffersController');
+Route::resource('skus/{skus}/stocks', 'StocksController');
+Route::resource('stocks/{stock}/sales', 'SalesController');
+Route::resource('retailers', 'RetailersController');
+
+
