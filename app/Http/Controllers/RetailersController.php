@@ -22,7 +22,8 @@ class RetailersController extends Controller
     $retailers = request()->company->retailers;
 
     return response()->json([
-      'data'     =>  $retailers
+      'data'     =>  $retailers,
+      'success'   =>  true
     ], 200);
   }
 
