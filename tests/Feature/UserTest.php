@@ -25,14 +25,7 @@ class UserTest extends TestCase
     $this->payload = [ 
       'name'                 =>'sangeetha',
       'phone'                => 9844778380,
-      'email'                =>'sangeetha@gmail.com',
-      'doj'               =>  '12-02-2019',
-      'dob'               =>  '04-05-1992',
-      'company_designation_id'  =>  1,
-      'company_state_branch_id' => 1,
-      'pf_no'                   =>  '1234567654',
-      'uan_no'                  =>  '1234565432',
-      'esi_no'                  =>  '234565'
+      'email'                =>'sangeetha@gmail.com'
     ];
   }
 
@@ -53,9 +46,6 @@ class UserTest extends TestCase
               "name"                    =>  ["The name field is required."],
               "email"                   =>  ["The email field is required."],
               "phone"                   =>  ["The phone field is required."],
-              "doj"                     =>  ["The doj field is required."],
-              "dob"                     =>  ["The dob field is required."],
-              "company_designation_id"  =>  ["The company designation id field is required."],
             ],
             "message" =>  "The given data was invalid."
         ]);
@@ -71,13 +61,6 @@ class UserTest extends TestCase
           'name'                 =>'sangeetha',
           'phone'                => 9844778380,
           'email'                =>'sangeetha@gmail.com',
-          'doj'               =>  '12-02-2019',
-          'dob'               =>  '04-05-1992',
-          'company_designation_id'  =>  1,
-          'company_state_branch_id' => 1,
-          'pf_no'                   =>  '1234567654',
-          'uan_no'                  =>  '1234565432',
-          'esi_no'                  =>  '234565'
         ]
       ])
       ->assertJsonStructure([
@@ -92,13 +75,6 @@ class UserTest extends TestCase
             'name',
             'phone',
             'email',
-            'doj',
-            'dob',
-            'company_designation_id',
-            'company_state_branch_id',
-            'pf_no',
-            'uan_no',
-            'esi_no',
             'updated_at',
             'created_at',
             'id',
@@ -147,13 +123,6 @@ class UserTest extends TestCase
       'name'  =>  'sangeetha',
       'phone' =>  9088597123,
       'email' =>  'preethi@gmail.com',
-      'doj'               =>  '12-02-2019',
-      'dob'               =>  '04-05-1992',
-      'company_designation_id'  =>  1,
-      'company_state_branch_id' => 1,
-      'pf_no'                   =>  '1234567654',
-      'uan_no'                  =>  '1234565432',
-      'esi_no'                  =>  '234565'
     ];
     $this->json('patch', '/api/users/1', $payload, $this->headers)
       ->assertStatus(200)
@@ -172,22 +141,8 @@ class UserTest extends TestCase
             'active',
             'phone',
             'api_token',
-            'doj',
-            'dob',
-            'company_designation_id',
-            'company_state_branch_id',
-            'pf_no',
-            'uan_no',
-            'esi_no',
             'created_at',
-            'updated_at',
-            'salary',
-            'image_path',
-            'employee_code',
-            'asm_area',
-            'asm_name',
-            'uid_no',
-            'terms_accepted'
+            'updated_at'
           ],
           'success'
         ]);

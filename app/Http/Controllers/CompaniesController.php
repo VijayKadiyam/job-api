@@ -46,7 +46,6 @@ class CompaniesController extends Controller
     $company = new Company(request()->all());
     $company->save();
     $company->saveDefaultDesignations();
-    $company->saveDefaultCompanyLeaves();
 
     return response()->json([
       'data'    =>  $company

@@ -6,13 +6,11 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use App\Company;
+use App\Product;
 
-class CompanyTest extends TestCase
+class productTest extends TestCase
 {
   use DatabaseTransactions;
-
-  protected $company;
   
   public function setUp()
   {
@@ -21,75 +19,72 @@ class CompanyTest extends TestCase
     $this->company = factory(\App\Company::class)->create([
       'name' => 'test'
     ]);
-
-    $this->user->assignRole(1);
     $this->user->assignCompany($this->company->id);
+    $this->headers['company-id'] = $this->company->id;
 
-    $this->payload = [
-      'name'    =>  'AAIBUZZ',
-      'phone'   =>  345765433,
-      'email'   =>  'email@gmail.com',
-      'address' =>  '606, Vardhaman Plaza',
-      'time_zone' =>  'Asia/Calcutta'
+    $this->listing = factory(\App\Listing::class)->create([
+      'company_id'  =>  $this->company->id 
+    ]);
+
+    factory(\App\Product::class)->create([
+      'listing_id'  =>  $this->listing->id 
+    ]);
+
+    $this->payload = [ 
+      'name'     =>  'Product 2',
+      'position'  =>  1
     ];
   }
 
   /** @test */
   function user_must_be_logged_in_before_accessing_the_controller()
   {
-    $this->json('post', '/api/companies')
+    $this->json('post', '/api/listings/' . $this->listing->id . '/products')
       ->assertStatus(401); 
   }
 
   /** @test */
   function it_requires_following_details()
   {
-    $this->json('post', '/api/companies', [], $this->headers)
+    $this->json('post', '/api/listings/' . $this->listing->id . '/products', [], $this->headers)
       ->assertStatus(422)
       ->assertExactJson([
           "errors"  =>  [
             "name"    =>  ["The name field is required."],
-            "email"   =>  ["The email field is required."],
-            "phone"   =>  ["The phone field is required."],
-            "address" =>  ["The address field is required."],
-            "time_zone" =>  ["The time zone field is required."],
+            "position"    =>  ["The position field is required."],
           ],
           "message" =>  "The given data was invalid."
         ]);
   }
 
   /** @test */
-  function add_new_organization()
+  function add_new_product()
   {
     $this->disableEH();
-    $this->json('post', '/api/companies', $this->payload, $this->headers)
+    $this->json('post', '/api/listings/' . $this->listing->id . '/products', $this->payload, $this->headers)
       ->assertStatus(201)
       ->assertJson([
           'data'   =>[
-            'name' => 'AAIBUZZ'
+            'name' => 'Product 2',
+            'position'  =>  1
           ]
         ])
       ->assertJsonStructureExact([
           'data'   => [
             'name',
-            'phone',
-            'email',
-            'address',
-            'time_zone',  
+            'position',
+            'listing_id',
             'updated_at',
             'created_at',
             'id'
           ]
         ]);
-    $this->company->saveDefaultDesignations();
-    $this->assertCount(1, $this->company->company_designations);
   }
 
   /** @test */
-  function list_of_companies()
+  function list_of_products()
   {
-    $this->disableEH();
-    $this->json('GET', '/api/companies',[], $this->headers)
+    $this->json('GET', '/api/listings/' . $this->listing->id . '/products',[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
           'data' => [
@@ -98,50 +93,46 @@ class CompanyTest extends TestCase
             ] 
           ]
         ]);
-      $this->assertCount(2, Company::all());
+      $this->assertCount(1, Product::all());
   }
 
   /** @test */
-  function show_single_company()
+  function show_single_company_designation()
   {
-
-    $this->json('get', "/api/companies/2", [], $this->headers)
+    $this->disableEH();
+    $this->json('get', '/api/listings/' . $this->listing->id . '/products/1', [], $this->headers)
       ->assertStatus(200)
       ->assertJson([
           'data'  => [
-            'name'=> 'test',
+            'name'=> 'Product 1',
           ]
         ]);
   }
 
   /** @test */
-  function update_single_company()
+  function update_single_company_designation()
   {
+    $this->disableEH();
     $payload = [ 
-      'name'  =>  'AAIBUZZZ'
+      'name'  =>  'Product 2'
     ];
 
-    $this->json('patch', '/api/companies/2', $payload, $this->headers)
+    $this->json('patch', '/api/listings/' . $this->listing->id . '/products/1', $payload, $this->headers)
       ->assertStatus(200)
       ->assertJson([
           'data'    => [
-            'name'  =>  'AAIBUZZZ',
+            'name'  =>  'Product 2',
           ]
        ])
       ->assertJsonStructureExact([
           'data'  => [
             'id',
+            'listing_id',
             'name',
-            'email',
-            'phone',
-            'address',
-            'logo_path',
-            'contact_person',
+            'position',
             'created_at',
-            'updated_at',
-            'time_zone'
+            'updated_at'
           ]
       ]);
   }
-
 }

@@ -18,7 +18,7 @@ class Company extends Model
   public function users()
   {
     return $this->belongsToMany(User::class)
-      ->with('roles', 'companies', 'company_designation', 'company_state_branch', 'supervisors', 'user_attendances');
+      ->with('roles', 'companies', 'company_designation', 'company_state_branch', 'supervisors');
   }
 
   /*
@@ -54,186 +54,22 @@ class Company extends Model
   }
 
   /*
-   * A company belongs to leave pattern
+   * A company has many listings
    *
    *@
    */
-  public function leave_patterns()
+  public function listings()
   {
-    return $this->belongsToMany(LeavePattern::class);
-  }
-
-  /**
-   * Assign leave patter to company
-   *
-   * @ 
-   */
-  public function assignLeavePattern($leave_pattern)
-  {
-    return $this->leave_patterns()->sync([$leave_pattern]);
-  }
-
-  /**
-   * Check if the company has leave pattern
-   *
-   * @ 
-   */
-  public function hasLeavePattern($leave_pattern)
-  {
-    return $this->leave_patterns ? in_array($leave_pattern, $this->leave_patterns->pluck('id')->toArray()) : false;
+    return $this->hasMany(Listing::class);
   }
 
   /*
-   * A company has many company leaves
+   * A company has many products
    *
    *@
    */
-  public function company_leaves()
+  public function products()
   {
-    return $this->hasMany(CompanyLeave::class);
-  }
-
-  /*
-   * Save Default company leaves
-   *
-   *@
-   */
-  public function saveDefaultCompanyLeaves()
-  {
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'January', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'February', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'March', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'April', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'May', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'June', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'July', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'August', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'September', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'October', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'November', 'leaves' =>  0]);
-    $companyLeaves[] = new CompanyLeave(['leave_pattern_id' =>  2, 'name' => 'December', 'leaves' =>  0]);
-    $this->company_leaves()->saveMany($companyLeaves);
-  }
-
-  /*
-   * A company has many break types
-   *
-   *@
-   */
-  public function break_types()
-  {
-    return $this->hasMany(BreakType::class);
-  }
-
-  /*
-   * A company has many feedbacks
-   *
-   *@
-   */
-  public function feedbacks()
-  {
-    return $this->hasMany(Feedback::class);
-  }
-
-  /*
-   * A company has many allowance types
-   *
-   *@
-   */
-  public function allowance_types()
-  {
-    return $this->hasMany(AllowanceType::class);
-  }
-
-  /*
-   * A company has many transport modes
-   *
-   *@
-   */
-  public function transport_modes()
-  {
-    return $this->hasMany(TransportMode::class);
-  }
-
-  /*
-   * A company has many travelling ways
-   *
-   *@
-   */
-  public function travelling_ways()
-  {
-    return $this->hasMany(TravellingWay::class);
-  }
-
-  /*
-   * A company has many voucher types
-   *
-   *@
-   */
-  public function voucher_types()
-  {
-    return $this->hasMany(VoucherType::class);
-  }
-
-  /*
-   * A company has many leave types
-   *
-   *@
-   */
-  public function leave_types()
-  {
-    return $this->hasMany(LeaveType::class);
-  }
-
-  /*
-   * A company has many skus
-   *
-   *@
-   */
-  public function skus()
-  {
-    return $this->hasMany(Sku::class)
-      ->with('stocks');
-  }
-
-  /*
-   * A company has many sku types
-   *
-   *@
-   */
-  public function sku_types()
-  {
-    return $this->hasMany(SkuType::class);
-  }
-
-  /*
-   * A company has many offer types
-   *
-   *@
-   */
-  public function offer_types()
-  {
-    return $this->hasMany(OfferType::class);
-  }
-
-  /*
-   * A company has many offers
-   *
-   *@
-   */
-  public function offers()
-  {
-    return $this->hasMany(Offer::class)
-      ->with('offer_type');
-  }
-
-  /*
-   * A company has many retailers
-   *
-   *@
-   */
-  public function retailers()
-  {
-    return $this->hasMany(Retailer::class);
+    return $this->hasMany(Product::class);
   }
 }

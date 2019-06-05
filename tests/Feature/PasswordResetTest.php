@@ -52,22 +52,8 @@ class PasswordResetTest extends TestCase
             'active',
             'phone',
             'api_token',
-            'doj',
-            'dob',
-            'company_designation_id',
-            'company_state_branch_id',
-            'pf_no',
-            'uan_no',
-            'esi_no',
             'created_at',
             'updated_at',
-            'salary',
-            'image_path',
-            'employee_code',
-            'asm_area',
-            'asm_name',
-            'uid_no',
-            'terms_accepted',
           ]
         ]);
   }

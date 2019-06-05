@@ -51,10 +51,7 @@ class UsersController extends Controller
     $request->validate([
       'name'                    => ['required', 'string', 'max:255'],
       'email'                   => ['required', 'string', 'email', 'max:255', 'unique:users'],
-      'phone'                   => ['required', 'unique:users'],
-      'doj'                     =>  'required',
-      'dob'                     =>  'required',
-      'company_designation_id'  =>  'required',
+      'phone'                   => ['required', 'unique:users']
     ]);
 
     $user  = $request->all();
@@ -94,10 +91,7 @@ class UsersController extends Controller
     $request->validate([
       'name'                    => ['required', 'string', 'max:255'],
       'email'                   => ['required', 'string', 'email', 'max:255'],
-      'phone'                   =>  'required',
-      'doj'                     =>  'required',
-      'dob'                     =>  'required',
-      'company_designation_id'  =>  'required',
+      'phone'                   =>  'required'
     ]);
 
     $user->update($request->all());

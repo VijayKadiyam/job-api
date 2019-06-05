@@ -39,11 +39,6 @@ class HomeTest extends TestCase
     $user->assignRole(3);
     $user->assignCompany($this->company->id);
 
-    factory(\App\UserAttendance::class)->create([
-      'user_id'  =>  $this->user->id,
-      'date'     => $this->date
-    ]);
-
     $this->json('get', '/api/count?date=' . $this->date, [], $this->headers)
       ->assertStatus(200);
   }
