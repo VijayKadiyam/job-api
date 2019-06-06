@@ -47,4 +47,34 @@ class SubProductsController extends Controller
       'data'    =>  $sub_product
     ], 201); 
   }
+
+  /*
+   * To view a single sun product
+   *
+   *@
+   */
+  public function show(Product $product, SubProduct $subProduct) 
+  {
+    return response()->json([
+      'data'   =>  $subProduct
+    ], 200);   
+  }
+
+  /*
+   * To update a sun product
+   *
+   *@
+   */
+  public function update(Request $request, Product $product, SubProduct $subProduct)
+  {
+    $request->validate([
+      'name'  =>  'required',
+    ]);
+
+    $subProduct->update($request->all());
+      
+    return response()->json([
+      'data'  =>  $subProduct
+    ], 200);
+  }
 }

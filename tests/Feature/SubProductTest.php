@@ -99,4 +99,49 @@ class SubProductTest extends TestCase
         ]);
       $this->assertCount(1, SubProduct::all());
   }
+
+  /** @test */
+  function show_single_sub_product()
+  {
+    $this->disableEH();
+    $this->json('get', '/api/products/' . $this->product->id . '/sub_products/1', [], $this->headers)
+      ->assertStatus(200)
+      ->assertJson([
+          'data'  => [
+            'name'=> 'Sub Product 1',
+          ]
+        ]);
+  }
+
+  /** @test */
+  function update_single_sun_product()
+  {
+    $this->disableEH();
+    $payload = [ 
+      'name'  =>  'Sub Product 1 Updated'
+    ];
+
+    $this->json('patch', '/api/products/' . $this->product->id . '/sub_products/1', $payload, $this->headers)
+      ->assertStatus(200)
+      ->assertJson([
+          'data'    => [
+            'name'  =>  'Sub Product 1 Updated',
+          ]
+       ])
+      ->assertJsonStructureExact([
+          'data'  => [
+            'id',
+            'product_id',
+            'name',
+            'position',
+            'email_html',
+            'image1_path',
+            'image2_path',
+            'image3_path',
+            'image4_path',
+            'created_at',
+            'updated_at'
+          ]
+      ]);
+  }
 }
