@@ -22,7 +22,8 @@ class ListingsController extends Controller
     $listings = request()->company->listings;
 
     return response()->json([
-      'data'     =>  $listings
+      'data'     =>  $listings,
+      'success'  =>   true
     ], 200);
   }
 
