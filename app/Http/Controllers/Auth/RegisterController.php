@@ -78,7 +78,10 @@ class RegisterController extends Controller
     $user->generateToken();
 
     return response()->json([
-      'data'=> $user->toArray()
+      'data'    =>  $user->toArray(),
+      'message' =>  "User is Registered Successfully",
+      'token'   =>  $user->api_token,
+      'success' =>  true
     ],201);
   }
 }
