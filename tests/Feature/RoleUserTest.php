@@ -69,7 +69,8 @@ class RoleUserTest extends TestCase
           'created_at',
           'updated_at',
           'roles'
-        ]
+        ],
+        'success'
       ]);
   }
 }

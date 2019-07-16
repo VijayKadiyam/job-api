@@ -71,7 +71,8 @@ class CompanyUserTest extends TestCase
             'created_at',
             'updated_at',
             'companies'
-          ]
+          ],
+          'success'
         ]);;;
   }
 }

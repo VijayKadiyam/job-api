@@ -26,7 +26,8 @@ class RoleUserController extends Controller
     $roleUser = User::with('roles')->find($request->user_id);
 
     return response()->json([
-    'data'    =>  $roleUser
+    'data'    =>  $roleUser,
+    'success' =>  true
     ], 201); 
   }
 }

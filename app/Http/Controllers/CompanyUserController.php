@@ -32,7 +32,8 @@ class CompanyUserController extends Controller
     $companyUser = User::with('companies')->find($request->user_id);
 
     return response()->json([
-        'data'  =>  $companyUser
+        'data'  =>  $companyUser,
+        'success' =>  true
     ], 201); 
   }
 }

@@ -62,11 +62,15 @@ class RegisterTest extends TestCase
             'name',
             'email',
             'phone',
+            'active',
             'updated_at',
             'created_at',
             'id',
             'api_token'
-          ]
+          ],
+          'message',
+          'token',
+          'success'
         ]);
   }
 }
