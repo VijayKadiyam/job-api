@@ -17,19 +17,22 @@ class SendEmailsController extends Controller
   public function send(Request $request)
   {
     $request->validate([
+      'from_name'         =>  'required',
       'reply_to_email'    => 'required',
-      'send_to_email'           =>  'required',
-      'sub_product_id'  =>  'required'
+      'send_to_email'     =>  'required',
+      'sub_product_id'    =>  'required'
     ]);
 
+    $fromName = $request->from_name;
     $replyToEmail = $request->reply_to_email;
     $sendToEmail = $request->send_to_email;
     $subProduct = SubProduct::where('id', '=', $request->sub_product_id)->first();
 
     $aws_path = 'https://aaibuzz.s3.ap-south-1.amazonaws.com/digiloop/';
 
-    Mail::send([], [], function ($message) use($replyToEmail, $sendToEmail, $subProduct, $aws_path) {
+    Mail::send([], [], function ($message) use($fromName, $replyToEmail, $sendToEmail, $subProduct, $aws_path) {
       $message
+        ->from('kvjkumr@gmail.com', $fromName)
         ->replyTo($replyToEmail)
         ->to($sendToEmail)
         ->subject('Details of ' . $subProduct->name)
