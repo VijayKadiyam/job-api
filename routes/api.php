@@ -52,5 +52,6 @@ Route::post('upload_profile_image', 'UploadController@uploadProfileImage');
 Route::post('upload_profile', 'UploadController@uploadProfile');
 Route::post('upload_signature', 'UploadController@uploadSignature');
 Route::post('upload_bill/{id}', 'UploadController@uploadBill');
+Route::post('upload_attachments', 'UploadController@uploadAttachments');
 
-
+Route::post('send_email','SendEmailsController@send');

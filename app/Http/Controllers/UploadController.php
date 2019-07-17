@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Storage;
 use App\PlanTravellingDetail;
+use App\SubProduct;
 
 class UploadController extends Controller
 {
@@ -98,6 +99,57 @@ class UploadController extends Controller
       'data'  => [
         'image_path'  =>  $path 
       ],
+      'success' =>  true
+    ]);
+  }
+
+  public function uploadAttachments(Request $request)
+  {
+    $request->validate([
+      'id'  =>  'required'
+    ]); 
+
+    $image1Path = '';
+    $image2Path = '';
+    $image3Path = '';
+    $image4Path = '';
+
+    if ($request->hasFile('image1')) {
+      $file = $request->file('image1');
+      // $name = time() . $file->getClientOriginalName();
+      $name = 'attachment1.' . $file->getClientOriginalExtension();;
+      $image1Path = 'subProducts/' . $request->id . '/' . $name;
+      Storage::disk('s3')->put('digiloop/' .$image1Path, file_get_contents($file), 'public');
+    }
+    if ($request->hasFile('image2')) {
+      $file = $request->file('image2');
+      // $name = time() . $file->getClientOriginalName();
+      $name = 'attachment2.' . $file->getClientOriginalExtension();;
+      $image2Path = 'subProducts/' . $request->id . '/' . $name;
+      Storage::disk('s3')->put('digiloop/' .$image2Path, file_get_contents($file), 'public');
+    }
+    if ($request->hasFile('image3')) {
+      $file = $request->file('image3');
+      $name = 'attachment3.' . $file->getClientOriginalExtension();;
+      $image3Path = 'subProducts/' . $request->id . '/' . $name;
+      Storage::disk('s3')->put('digiloop/' .$image3Path, file_get_contents($file), 'public');
+    }
+    if ($request->hasFile('image4')) {
+      $file = $request->file('image4');
+      $name = 'attachment4.' . $file->getClientOriginalExtension();;
+      $image4Path = 'subProducts/' . $request->id . '/' . $name;
+      Storage::disk('s3')->put('digiloop/' .$image4Path, file_get_contents($file), 'public');
+    }
+
+    $subProduct = SubProduct::where('id', '=', request()->id)->first();
+    $subProduct->image1_path = $image1Path;
+    $subProduct->image2_path = $image2Path;
+    $subProduct->image3_path = $image3Path;
+    $subProduct->image4_path = $image4Path;
+    $subProduct->update();
+
+    return response()->json([
+      'data'  => $subProduct,
       'success' =>  true
     ]);
   }
