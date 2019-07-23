@@ -1,4 +1,11 @@
 {{ $subProduct->email_html }}
 
+<br>
+<br>
 Regards,
-Vijay
+<br>
+{{ $user->name }}
+<br>
+{{ $user->email }}
+<br>
+Phone: {{ $user->phone }}

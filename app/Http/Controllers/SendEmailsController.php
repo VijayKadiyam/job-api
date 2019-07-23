@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\SubProduct;
 use Illuminate\Support\Facades\Storage;
 use Mail;
+use App\User;
 
 class SendEmailsController extends Controller
 {
@@ -17,6 +18,7 @@ class SendEmailsController extends Controller
   public function send(Request $request)
   {
     $request->validate([
+      'from_id'           =>  'required',
       'from_name'         =>  'required',
       'reply_to_email'    => 'required',
       'send_to_email'     =>  'required',
@@ -32,6 +34,7 @@ class SendEmailsController extends Controller
 
     $mailData = [
       'subProduct'  =>  $subProduct,
+      'user'        =>  User::where('id', '=', $request->from_id)->first()
     ];
 
     Mail::send('mails.sub-product', $mailData, function ($message) use($fromName, $replyToEmail, $sendToEmail, $subProduct, $aws_path) {
