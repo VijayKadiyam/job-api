@@ -68,7 +68,8 @@ class RoleUserTest extends TestCase
           'api_token',
           'created_at',
           'updated_at',
-          'roles'
+          'favourite_sub_product_id',
+          'roles',
         ],
         'success'
       ]);

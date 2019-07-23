@@ -70,7 +70,8 @@ class CompanyUserTest extends TestCase
             'api_token',
             'created_at',
             'updated_at',
-            'companies'
+            'favourite_sub_product_id',
+            'companies',
           ],
           'success'
         ]);;;

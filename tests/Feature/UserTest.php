@@ -142,7 +142,8 @@ class UserTest extends TestCase
             'phone',
             'api_token',
             'created_at',
-            'updated_at'
+            'updated_at',
+            'favourite_sub_product_id'
           ],
           'success'
         ]);
