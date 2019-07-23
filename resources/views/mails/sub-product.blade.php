@@ -1,4 +1,4 @@
-{{ $subProduct->email_html }}
+{!! $subProduct->email_html !!}
 
 <br>
 <br>
