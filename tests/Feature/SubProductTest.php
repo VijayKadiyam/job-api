@@ -140,7 +140,8 @@ class SubProductTest extends TestCase
             'image3_path',
             'image4_path',
             'created_at',
-            'updated_at'
+            'updated_at',
+            'email_subject'
           ]
       ]);
   }

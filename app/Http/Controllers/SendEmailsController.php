@@ -30,13 +30,16 @@ class SendEmailsController extends Controller
 
     $aws_path = 'https://aaibuzz.s3.ap-south-1.amazonaws.com/digiloop/';
 
-    Mail::send([], [], function ($message) use($fromName, $replyToEmail, $sendToEmail, $subProduct, $aws_path) {
+    $mailData = [
+      'subProduct'  =>  $subProduct,
+    ];
+
+    Mail::send('mails.sub-product', $mailData, function ($message) use($fromName, $replyToEmail, $sendToEmail, $subProduct, $aws_path) {
       $message
         ->from('kvjkumr@gmail.com', $fromName)
         ->replyTo($replyToEmail)
         ->to($sendToEmail)
-        ->subject('Details of ' . $subProduct->name)
-        ->setBody($subProduct->email_html);
+        ->subject($subProduct->email_subject);
       if($subProduct->image1_path)
         $message->attach($aws_path . $subProduct->image1_path);
       if($subProduct->image2_path)
