@@ -11,6 +11,16 @@ class Product extends Model
   ];
 
   /*
+   * A product belongs to many users
+   *
+   *@
+   */
+  public function users()
+  {
+    return $this->belingsToMany(User::class);
+  }
+
+  /*
    * A product belongs to Listing
    *
    *@

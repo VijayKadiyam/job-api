@@ -143,7 +143,45 @@ class UserTest extends TestCase
             'api_token',
             'created_at',
             'updated_at',
-            'favourite_sub_product_id'
+            'favourite_sub_product_id',
+            'can_send_email'
+          ],
+          'success'
+        ]);
+  }
+
+  /** @test */
+  function update_user_can_send_email()
+  {
+    $this->disableEH();
+    $payload  = [ 
+      'name'  =>  'sangeetha',
+      'phone' =>  9088597123,
+      'email' =>  'preethi@gmail.com',
+      'can_send_email'  =>  1
+    ];
+    $this->json('patch', '/api/users/1', $payload, $this->headers)
+      ->assertStatus(200)
+      ->assertJson([
+          'data'    =>  [
+            'phone' =>  9088597123,
+            'email' =>  'preethi@gmail.com',
+            'can_send_email'  =>  1
+          ]
+        ])
+      ->assertJsonStructureExact([
+          'data'  => [
+            'id',
+            'name',
+            'email',
+            'email_verified_at',
+            'active',
+            'phone',
+            'api_token',
+            'created_at',
+            'updated_at',
+            'favourite_sub_product_id',
+            'can_send_email'
           ],
           'success'
         ]);

@@ -7,18 +7,42 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class RoleUserTest extends TestCase
+class ProductUserTest extends TestCase
 {
   use DatabaseTransactions;
+
+  public function setUp()
+  {
+    parent::setUp();
+
+    $this->company = factory(\App\Company::class)->create([
+      'name' => 'test'
+    ]);
+    $this->user->assignCompany($this->company->id);
+    $this->headers['company-id'] = $this->company->id;
+
+    $this->listing = factory(\App\Listing::class)->create([
+      'company_id'  =>  $this->company->id 
+    ]);
+
+    $this->product = factory(\App\Product::class)->create([
+      'listing_id'  =>  $this->listing->id 
+    ]);
+
+    $this->payload = [ 
+      'name'     =>  'Product 2',
+      'position'  =>  1
+    ];
+  }
 
   /** @test */
   function user_requires_role_and_user()
   {
-    $this->json('post', '/api/role_user', [], $this->headers)
+    $this->json('post', '/api/product_user', [], $this->headers)
       ->assertStatus(422)
       ->assertExactJson([
           "errors"     =>  [
-            "role_id"  =>  ["The role id field is required."],
+            "product_id"  =>  ["The product id field is required."],
             "user_id"  =>  ["The user id field is required."]
           ],
           "message"    =>  "The given data was invalid."
@@ -26,33 +50,33 @@ class RoleUserTest extends TestCase
   }
 
   /** @test */
-  function assign_role()
+  function assign_product()
   {
     $userTwo  = factory(\App\User::class)->create();
-    $userTwo->assignRole(2);
-    $check    = $userTwo->hasRole(2);
+    $userTwo->assignProduct($this->product->id);
+    $check    = $userTwo->hasProduct($this->product->id);
     $this->assertTrue($check);
   }
 
   /** @test */
-  function assign_role_to_user()
+  function assign_product_to_user()
   {
     $this->disableEH();
     $userTwo       = factory(\App\User::class)->create();
     $this->payload = [ 
-      'user_id'    => $userTwo->id,
-      'role_id'    => 2
+      'user_id'       => $userTwo->id,
+      'product_id'    => $this->product->id
     ];
-    $this->json('post', '/api/role_user', $this->payload)
+    $this->json('post', '/api/product_user', $this->payload)
       ->assertStatus(201)
       ->assertJson([
           'data'  =>  [
             'name'                    =>  $userTwo->name,
             'phone'                   =>  $userTwo->phone,
             'email'                   =>  $userTwo->email,
-            'roles'                   =>  [
+            'products'                   =>  [
               0 =>  [
-                'name'  =>  'Admin'
+                'name'  =>  $this->product->name
               ]
             ]
           ]
@@ -70,7 +94,7 @@ class RoleUserTest extends TestCase
           'updated_at',
           'favourite_sub_product_id',
           'can_send_email',
-          'roles',
+          'products',
         ],
         'success'
       ]);

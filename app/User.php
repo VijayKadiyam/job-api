@@ -16,7 +16,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $fillable = [
-    'name', 'email', 'password', 'phone', 'doj', 'dob', 'company_designation_id', 'company_state_branch_id', 'pf_no', 'uan_no', 'esi_no', 'active', 'salary', 'image_path', 'employee_code', 'asm_area', 'asm_name', 'uid_no', 'favourite_sub_product_id'
+    'name', 'email', 'password', 'phone', 'doj', 'dob', 'company_designation_id', 'company_state_branch_id', 'pf_no', 'uan_no', 'esi_no', 'active', 'salary', 'image_path', 'employee_code', 'asm_area', 'asm_name', 'uid_no', 'favourite_sub_product_id', 'can_send_email'
   ];
 
   /**
@@ -235,6 +235,36 @@ class User extends Authenticatable
   public function user_locations()
   {
     return $this->hasMany(UserLocation::class);
+  }
+
+  /*
+   * A user belongs to many products
+   *
+   *@
+   */
+  public function products()
+  {
+    return $this->belongsToMany(Product::class);
+  }
+
+  /**
+   * Assign product to user
+   *
+   * @ 
+   */
+  public function assignProduct($product)
+  {
+    return $this->products()->sync([$product]);
+  }
+
+  /**
+   * Check if the user has product
+   *
+   * @ 
+   */
+  public function hasProduct($products)
+  {
+    return $this->products ? in_array($products, $this->products->pluck('id')->toArray()) : false;
   }
 }
 

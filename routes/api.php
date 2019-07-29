@@ -47,6 +47,8 @@ Route::resource('listings','ListingsController');
 Route::resource('listings/{listing}/products', 'ProductsController');
 Route::resource('products/{product}/sub_products', 'SubProductsController');
 
+Route::resource('product_user', 'ProductUserController');
+
 // Uploads
 Route::post('upload_profile_image', 'UploadController@uploadProfileImage');
 Route::post('upload_profile', 'UploadController@uploadProfile');

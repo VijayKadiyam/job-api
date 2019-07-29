@@ -34,6 +34,7 @@ class MeTest extends TestCase
             'created_at',
             'updated_at',
             'favourite_sub_product_id',
+            'can_send_email',
             'roles',
             'companies',
           ],

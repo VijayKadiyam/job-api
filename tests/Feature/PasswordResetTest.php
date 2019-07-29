@@ -54,7 +54,8 @@ class PasswordResetTest extends TestCase
             'api_token',
             'created_at',
             'updated_at',
-            'favourite_sub_product_id'
+            'favourite_sub_product_id',
+            'can_send_email'
           ]
         ]);
   }
