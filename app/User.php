@@ -248,14 +248,40 @@ class User extends Authenticatable
   }
 
   /**
-   * Assign product to user
+   * Assign product to role
    *
    * @ 
    */
   public function assignProduct($product)
   {
-    return $this->products()->sync([$product]);
+    $this->products()->syncWithoutDetaching([$product]);
+    $this->refresh();
+
+    return $this;
   }
+
+  /**
+   * Detach product fom role
+   *
+   * @ 
+   */
+  public function unassignProduct($product)
+  {
+    $this->products()->detach([$product]);
+    $this->refresh();
+
+    return $this;
+  }
+
+  // /**
+  //  * Assign product to user
+  //  *
+  //  * @ 
+  //  */
+  // public function assignProduct($product)
+  // {
+  //   return $this->products()->sync([$product]);
+  // }
 
   /**
    * Check if the user has product

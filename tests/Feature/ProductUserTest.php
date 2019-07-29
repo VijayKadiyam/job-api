@@ -67,7 +67,7 @@ class ProductUserTest extends TestCase
       'user_id'       => $userTwo->id,
       'product_id'    => $this->product->id
     ];
-    $this->json('post', '/api/product_user', $this->payload)
+    $this->json('post', '/api/product_user?op=assign', $this->payload)
       ->assertStatus(201)
       ->assertJson([
           'data'  =>  [
@@ -98,5 +98,28 @@ class ProductUserTest extends TestCase
         ],
         'success'
       ]);
+  }
+
+  /** @test */
+  function unassign_product()
+  {
+    $userTwo  = factory(\App\User::class)->create();
+    $userTwo->assignProduct($this->product->id);
+    $check    = $userTwo->hasProduct($this->product->id);
+    $this->assertTrue($check);
+    $userTwo->unassignProduct($this->product->id);
+  }
+
+  /** @test */
+  function unassign_permission_from_role()
+  {
+    $userTwo       = factory(\App\User::class)->create();
+    $this->payload = [ 
+      'user_id'       => $userTwo->id,
+      'product_id'    => $this->product->id
+    ];
+
+    $this->json('post', '/api/product_user?op=unassign', $this->payload , $this->headers)
+         ->assertStatus(201);
   }
 }
