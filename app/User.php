@@ -273,16 +273,6 @@ class User extends Authenticatable
     return $this;
   }
 
-  // /**
-  //  * Assign product to user
-  //  *
-  //  * @ 
-  //  */
-  // public function assignProduct($product)
-  // {
-  //   return $this->products()->sync([$product]);
-  // }
-
   /**
    * Check if the user has product
    *
@@ -292,5 +282,12 @@ class User extends Authenticatable
   {
     return $this->products ? in_array($products, $this->products->pluck('id')->toArray()) : false;
   }
+
+  public function sub_product()
+  {
+    return $this->belongsTo(SubProduct::class)
+      ->with('product'); 
+  }
+
 }
 
