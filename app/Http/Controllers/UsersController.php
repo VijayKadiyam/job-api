@@ -73,7 +73,7 @@ class UsersController extends Controller
   public function show($id)
   {
     $user = User::where('id' , '=', $id)
-      ->with('roles', 'companies', 'products', 'company_designation', 'company_state_branch', 'supervisors')->first();
+      ->with('roles', 'companies', 'products', 'company_designation', 'company_state_branch', 'supervisors', 'sub_product')->first();
 
     return response()->json([
       'data'  =>  $user,
@@ -95,6 +95,10 @@ class UsersController extends Controller
     ]);
 
     $user->update($request->all());
+    $user->roles = $user->roles;
+    $user->companies = $user->companies;
+    $user->products = $user->products;
+    $user->sub_product = $user->sub_product;
     
     return response()->json([
       'data'  =>  $user,
