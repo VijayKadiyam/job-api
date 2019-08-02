@@ -46,6 +46,7 @@ class LoginController extends Controller
       $user->generateToken();
       $user->roles = $user->roles;
       $user->companies = $user->companies;
+      $user->products = $user->products;
       return response()->json([
           'data'    =>  $user->toArray(),
           'message' =>  "User is Logged in Successfully",
