@@ -285,7 +285,7 @@ class User extends Authenticatable
 
   public function sub_product()
   {
-    return $this->belongsTo(SubProduct::class)
+    return $this->belongsTo(SubProduct::class, 'favourite_sub_product_id')
       ->with('product'); 
   }
 

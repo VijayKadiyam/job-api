@@ -37,7 +37,8 @@ class MeTest extends TestCase
             'can_send_email',
             'roles',
             'companies',
-            'products'
+            'products',
+            'sub_product'
           ],
           'success'
         ]);
