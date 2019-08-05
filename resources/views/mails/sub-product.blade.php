@@ -16,3 +16,5 @@ Regards,
 {{ $user->email }}
 <br>
 Phone: {{ $user->phone }}
+<br>
+Address: {{ $user->address }}

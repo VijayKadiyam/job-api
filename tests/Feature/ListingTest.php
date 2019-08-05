@@ -22,9 +22,24 @@ class ListingTest extends TestCase
     $this->user->assignCompany($this->company->id);
     $this->headers['company-id'] = $this->company->id;
 
-    factory(\App\Listing::class)->create([
+    $this->listing = factory(\App\Listing::class)->create([
       'company_id'  =>  $this->company->id 
     ]);
+
+    $this->product = factory(\App\Product::class)->create([
+      'listing_id'  =>  $this->listing->id 
+    ]);
+
+    factory(\App\SubProduct::class)->create([
+      'product_id'  =>  $this->product->id,
+      'email_html'  =>  '<b>Hi</b>'
+    ]);
+
+    factory(\App\SubProduct::class)->create([
+      'product_id'  =>  $this->product->id 
+    ]);
+
+    
 
     $this->payload = [ 
       'name'     =>  'Sify'
@@ -77,6 +92,7 @@ class ListingTest extends TestCase
   /** @test */
   function list_of_listings()
   {
+    $this->disableEH();
     $this->json('GET', '/api/listings',[], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([

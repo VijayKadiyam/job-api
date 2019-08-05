@@ -21,6 +21,19 @@ class ListingsController extends Controller
   {
     $listings = request()->company->listings;
 
+    foreach($listings as $listing) {
+      foreach($listing->products as $product) {
+        foreach($product->sub_products as $sub_product) {
+          if($sub_product->email_html) {
+            $html = new \voku\Html2Text\Html2Text($sub_product->email_html);
+            $sub_product['email_text'] = $html->getText();
+          }
+          else
+            $sub_product['email_text'] = '';
+        }
+      }
+    }
+
     return response()->json([
       'data'     =>  $listings,
       'success'  =>   true
