@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class UpdateUsers1Table extends Migration
+class UpdateUsers2Table extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class UpdateUsers1Table extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('can_send_email')->default(1);
+            $table->string('address')->nullable();
         });
     }
 

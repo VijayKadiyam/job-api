@@ -94,6 +94,7 @@ class ProductUserTest extends TestCase
           'updated_at',
           'favourite_sub_product_id',
           'can_send_email',
+          'address',
           'products',
         ],
         'success'

@@ -144,7 +144,12 @@ class UserTest extends TestCase
             'created_at',
             'updated_at',
             'favourite_sub_product_id',
-            'can_send_email'
+            'can_send_email',
+            'address',
+            'roles',
+            'companies',
+            'products',
+            'sub_product'
           ],
           'success'
         ]);
@@ -181,7 +186,12 @@ class UserTest extends TestCase
             'created_at',
             'updated_at',
             'favourite_sub_product_id',
-            'can_send_email'
+            'can_send_email',
+            'address',
+            'roles',
+            'companies',
+            'products',
+            'sub_product'
           ],
           'success'
         ]);
