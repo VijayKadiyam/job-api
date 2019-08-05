@@ -142,13 +142,13 @@ class UploadController extends Controller
     }
 
     $subProduct = SubProduct::where('id', '=', request()->id)->first();
-    if($image1Path != "")
+    // if($image1Path != "")
       $subProduct->image1_path = $image1Path;
-    if($image2Path != "")
+    // if($image2Path != "")
       $subProduct->image2_path = $image2Path;
-    if($image3Path != "")
+    // if($image3Path != "")
       $subProduct->image3_path = $image3Path;
-    if($image4Path != "")
+    // if($image4Path != "")
       $subProduct->image4_path = $image4Path;
       $subProduct->update();
 
