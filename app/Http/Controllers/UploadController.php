@@ -114,29 +114,36 @@ class UploadController extends Controller
     $image3Path = '';
     $image4Path = '';
 
+    if(count(Storage::disk('s3')->exists('digiloop/subProducts/' . $request->id)) > 0)
+    {
+        Storage::disk('s3')->deleteDirectory('digiloop/subProducts/' . $request->id);
+    }
+
     if ($request->hasFile('image1')) {
       $file = $request->file('image1');
-      // $name = time() . $file->getClientOriginalName();
-      $name = 'attachment1.' . $file->getClientOriginalExtension();;
+      $name = time() . $file->getClientOriginalName();
+      // $name = $name . $file->getClientOriginalExtension();;
       $image1Path = 'subProducts/' . $request->id . '/' . $name;
       Storage::disk('s3')->put('digiloop/' .$image1Path, file_get_contents($file), 'public');
     }
     if ($request->hasFile('image2')) {
       $file = $request->file('image2');
-      // $name = time() . $file->getClientOriginalName();
-      $name = 'attachment2.' . $file->getClientOriginalExtension();;
+      $name = time() . $file->getClientOriginalName();
+      // $name = $name . $file->getClientOriginalExtension();;
       $image2Path = 'subProducts/' . $request->id . '/' . $name;
       Storage::disk('s3')->put('digiloop/' .$image2Path, file_get_contents($file), 'public');
     }
     if ($request->hasFile('image3')) {
       $file = $request->file('image3');
-      $name = 'attachment3.' . $file->getClientOriginalExtension();;
+      $name = time() . $file->getClientOriginalName();
+      // $name = $name . $file->getClientOriginalExtension();;
       $image3Path = 'subProducts/' . $request->id . '/' . $name;
       Storage::disk('s3')->put('digiloop/' .$image3Path, file_get_contents($file), 'public');
     }
     if ($request->hasFile('image4')) {
       $file = $request->file('image4');
-      $name = 'attachment4.' . $file->getClientOriginalExtension();;
+      $name = time() . $file->getClientOriginalName();
+      // $name = $name . $file->getClientOriginalExtension();;
       $image4Path = 'subProducts/' . $request->id . '/' . $name;
       Storage::disk('s3')->put('digiloop/' .$image4Path, file_get_contents($file), 'public');
     }

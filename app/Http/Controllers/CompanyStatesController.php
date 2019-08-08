@@ -40,6 +40,7 @@ class CompanyStatesController extends Controller
     $companyState = new CompanyState($request->all());
     $request->company->company_states()->save($companyState);
 
+
     return response()->json([
       'data'    =>  $companyState
     ], 201); 
