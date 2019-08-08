@@ -59,6 +59,15 @@ class ProductUserTest extends TestCase
   }
 
   /** @test */
+  function assign_all_product()
+  {
+    $userTwo  = factory(\App\User::class)->create();
+    $userTwo->assignAllProducts();
+    $check    = $userTwo->hasProduct($this->product->id);
+    $this->assertTrue($check);
+  }
+
+  /** @test */
   function assign_product_to_user()
   {
     $this->disableEH();

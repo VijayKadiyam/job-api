@@ -248,13 +248,28 @@ class User extends Authenticatable
   }
 
   /**
-   * Assign product to role
+   * Assign product to user
    *
    * @ 
    */
   public function assignProduct($product)
   {
     $this->products()->syncWithoutDetaching([$product]);
+    $this->refresh();
+
+    return $this;
+  }
+
+  /**
+   * Assign all products to user
+   *
+   * @ 
+   */
+  public function assignAllProducts()
+  {
+    $products = Product::get();
+    foreach($products as $product)
+      $this->products()->syncWithoutDetaching([$product->id]);
     $this->refresh();
 
     return $this;
@@ -287,6 +302,29 @@ class User extends Authenticatable
   {
     return $this->belongsTo(SubProduct::class, 'favourite_sub_product_id')
       ->with('product'); 
+  }
+
+  /*
+   * USer can send email
+   *
+   *@
+   */
+  public function assignEmail()
+  {
+    $this->can_send_email = 1;
+    $this->update();
+
+    return $this;
+  }
+
+  /*
+   * Check if user can send email
+   *
+   *@
+   */
+  public function hasEmail()
+  {
+    return $this->can_send_email == 1;
   }
 
 }

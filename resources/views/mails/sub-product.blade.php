@@ -1,10 +1,3 @@
-<style type="text/css">
-  table, tr, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-</style>
-
 {!! $subProduct->email_html !!}
 
 <br>
@@ -18,3 +11,13 @@ Regards,
 Phone: {{ $user->phone }}
 <br>
 Address: {{ $user->address }}
+
+<style type="text/css">
+  table, tr, td {
+    border-top: 1px solid black;
+    border-bottom : 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-collapse: collapse;
+  }
+</style>

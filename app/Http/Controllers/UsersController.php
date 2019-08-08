@@ -58,7 +58,10 @@ class UsersController extends Controller
     $user['password'] = bcrypt('123456');
 
     $user = new User($user);
+
     $user->save();
+    $user->assignEmail();
+    $user->assignAllProducts();
 
     return response()->json([
       'data'     =>  $user

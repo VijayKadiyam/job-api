@@ -25,7 +25,8 @@ class UserTest extends TestCase
     $this->payload = [ 
       'name'                 =>'sangeetha',
       'phone'                => 9844778380,
-      'email'                =>'sangeetha@gmail.com'
+      'email'                =>'sangeetha@gmail.com',
+      'can_send_email'        =>  0
     ];
   }
 
@@ -54,6 +55,7 @@ class UserTest extends TestCase
   /** @test */
   function add_new_user()
   {
+    $this->disableEH();
     $this->json('post', '/api/users', $this->payload, $this->headers)
      ->assertStatus(201)
      ->assertJson([
@@ -61,6 +63,7 @@ class UserTest extends TestCase
           'name'                 =>'sangeetha',
           'phone'                => 9844778380,
           'email'                =>'sangeetha@gmail.com',
+          'can_send_email'        =>  1
         ]
       ])
       ->assertJsonStructure([
@@ -72,12 +75,18 @@ class UserTest extends TestCase
         ])
       ->assertJsonStructureExact([
           'data'  =>  [
-            'name',
-            'phone',
-            'email',
-            'updated_at',
-            'created_at',
             'id',
+            'name',
+            'email',
+            'email_verified_at',
+            'active',
+            'phone',
+            'api_token',
+            'created_at',
+            'updated_at',
+            'favourite_sub_product_id',
+            'can_send_email',
+            'address'
           ]
         ]);
   }
@@ -123,6 +132,7 @@ class UserTest extends TestCase
       'name'  =>  'sangeetha',
       'phone' =>  9088597123,
       'email' =>  'preethi@gmail.com',
+      'can_send_email'  =>  0
     ];
     $this->json('patch', '/api/users/1', $payload, $this->headers)
       ->assertStatus(200)
@@ -130,6 +140,7 @@ class UserTest extends TestCase
           'data'    =>  [
             'phone' =>  9088597123,
             'email' =>  'preethi@gmail.com',
+            'can_send_email'  =>  0
           ]
         ])
       ->assertJsonStructureExact([
