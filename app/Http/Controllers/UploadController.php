@@ -114,10 +114,10 @@ class UploadController extends Controller
     $image3Path = '';
     $image4Path = '';
 
-    if(count(Storage::disk('s3')->exists('digiloop/subProducts/' . $request->id)) > 0)
-    {
-        Storage::disk('s3')->deleteDirectory('digiloop/subProducts/' . $request->id);
-    }
+    // if(count(Storage::disk('s3')->exists('digiloop/subProducts/' . $request->id)) > 0)
+    // {
+    //     Storage::disk('s3')->deleteDirectory('digiloop/subProducts/' . $request->id);
+    // }
 
     if ($request->hasFile('image1')) {
       $file = $request->file('image1');
