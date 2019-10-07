@@ -39,7 +39,7 @@ class SendEmailsController extends Controller
 
     Mail::send('mails.sub-product', $mailData, function ($message) use($fromName, $replyToEmail, $sendToEmail, $subProduct, $aws_path) {
       $message
-        ->from('kvjkumr@gmail.com', $fromName)
+        ->from($replyToEmail, $fromName)
         ->replyTo($replyToEmail)
         ->to($sendToEmail)
         ->subject($subProduct->email_subject);
