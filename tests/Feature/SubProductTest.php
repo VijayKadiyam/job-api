@@ -142,7 +142,11 @@ class SubProductTest extends TestCase
             'created_at',
             'updated_at',
             'email_subject',
-            'description'
+            'description',
+            'image1_description',
+            'image2_description',
+            'image3_description',
+            'image4_description',
           ]
       ]);
   }
