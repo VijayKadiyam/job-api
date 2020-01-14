@@ -42,12 +42,9 @@ Route::resource('company_states', 'CompanyStatesController');
 Route::resource('companies/{company}/company_designations', 'CompanyDesignationsController');
 Route::resource('company_states/{company_state}/company_state_branches', 'CompanyStateBranchesController');
 
-
-Route::resource('listings','ListingsController');
-Route::resource('listings/{listing}/products', 'ProductsController');
-Route::resource('products/{product}/sub_products', 'SubProductsController');
-
-Route::resource('product_user', 'ProductUserController');
+Route::resource('units', 'UnitsController');
+Route::get('data', 'DatasController@storeByDevice');
+Route::resource('units/{unit}/datas', 'DatasController');
 
 // Uploads
 Route::post('upload_profile_image', 'UploadController@uploadProfileImage');

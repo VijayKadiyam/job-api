@@ -33,13 +33,8 @@ class MeTest extends TestCase
             'api_token',
             'created_at',
             'updated_at',
-            'favourite_sub_product_id',
-            'can_send_email',
-            'address',
             'roles',
             'companies',
-            'products',
-            'sub_product',
           ],
           'success'
         ]);

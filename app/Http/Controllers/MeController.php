@@ -21,8 +21,6 @@ class MeController extends Controller
     $user = $request->user();
     $user->roles = $user->roles;
     $user->companies = $user->companies;
-    $user->products = $user->products;
-    $user->sub_product = $user->sub_product;
 
     return response()->json([
       'data'    =>  $user->toArray(),

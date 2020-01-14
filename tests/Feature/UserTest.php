@@ -62,8 +62,7 @@ class UserTest extends TestCase
         'data'  =>  [
           'name'                 =>'sangeetha',
           'phone'                => 9844778380,
-          'email'                =>'sangeetha@gmail.com',
-          'can_send_email'        =>  1
+          'email'                =>'sangeetha@gmail.com'
         ]
       ])
       ->assertJsonStructure([
@@ -75,18 +74,12 @@ class UserTest extends TestCase
         ])
       ->assertJsonStructureExact([
           'data'  =>  [
-            'id',
             'name',
-            'email',
-            'email_verified_at',
-            'active',
             'phone',
-            'api_token',
-            'created_at',
+            'email',
             'updated_at',
-            'favourite_sub_product_id',
-            'can_send_email',
-            'address'
+            'created_at',
+            'id',
           ]
         ]);
   }
@@ -113,6 +106,7 @@ class UserTest extends TestCase
   /** @test */
   function show_single_user_details()
   {
+    $this->disableEH();
     $this->json('get', "/api/users/1", [], $this->headers)
       ->assertStatus(200)
       ->assertJsonStructure([
@@ -139,8 +133,7 @@ class UserTest extends TestCase
       ->assertJson([
           'data'    =>  [
             'phone' =>  9088597123,
-            'email' =>  'preethi@gmail.com',
-            'can_send_email'  =>  0
+            'email' =>  'preethi@gmail.com'
           ]
         ])
       ->assertJsonStructureExact([
@@ -154,13 +147,8 @@ class UserTest extends TestCase
             'api_token',
             'created_at',
             'updated_at',
-            'favourite_sub_product_id',
-            'can_send_email',
-            'address',
             'roles',
             'companies',
-            'products',
-            'sub_product'
           ],
           'success'
         ]);
@@ -181,8 +169,7 @@ class UserTest extends TestCase
       ->assertJson([
           'data'    =>  [
             'phone' =>  9088597123,
-            'email' =>  'preethi@gmail.com',
-            'can_send_email'  =>  1
+            'email' =>  'preethi@gmail.com'
           ]
         ])
       ->assertJsonStructureExact([
@@ -196,13 +183,8 @@ class UserTest extends TestCase
             'api_token',
             'created_at',
             'updated_at',
-            'favourite_sub_product_id',
-            'can_send_email',
-            'address',
             'roles',
             'companies',
-            'products',
-            'sub_product'
           ],
           'success'
         ]);

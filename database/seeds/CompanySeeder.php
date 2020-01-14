@@ -13,8 +13,8 @@ class CompanySeeder extends Seeder
   public function run()
   {
     Company::create([
-      'name'    => 'HyperxServe Solutions', 
-      'email'   =>  'email@hyperxsolutions.com', 
+      'name'    => 'RMS', 
+      'email'   =>  'email@rms.com', 
       'address' =>  'Thane',
       'phone'   =>  '9820704909'
     ]);
