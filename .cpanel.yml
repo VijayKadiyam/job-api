@@ -2,6 +2,6 @@
 deployment:
   tasks:
     - export DEPLOYPATH=~/public_html/
-    - /bin/cp -R ~/repositories/digiloop-api/ $DEPLOYPATH
-    - sh ~/public_html/digiloop-api/deploy.sh 2>&1
+    - /bin/cp -R ~/repositories/rms-api/ $DEPLOYPATH
+    - sh ~/public_html/rms-api/deploy.sh 2>&1
     
