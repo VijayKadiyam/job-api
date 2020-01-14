@@ -32,8 +32,8 @@ class DatasController extends Controller
     $str_arr = explode (",", $request->data); 
     $data['data'] = $request->data;
     $data['imei_number'] = $str_arr[0];
-    $data['date'] = $str_arr[1];
-    $data['time'] = $str_arr[2];
+    $data['date'] = substr($str_arr[1], 0, 2) . '-' . substr($str_arr[1], 2, 2) . '-' . substr($str_arr[1], 4, 2);
+    $data['time'] = substr($str_arr[2], 0, 2) . ':' . substr($str_arr[2], 2, 2) . ':' . substr($str_arr[2], 4, 2);;
     $data['pump_status'] = $str_arr[3];
     $data['voltage'] = substr($str_arr[4], 0, 3);
     $data['current'] = substr($str_arr[4], 3);
