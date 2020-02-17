@@ -78,4 +78,25 @@ class Company extends Model
   {
     return $this->hasMany(Unit::class);
   }
+    public function practices()
+  {
+    return $this->hasMany(Practice::class);
+  }
+  public function days()
+  {
+    return $this->hasMany(Day::class);
+  }
+  public function affiliations()
+  {
+    return $this->hasMany(Affiliation::class);
+  }
+
+  public function qualifications()
+  {
+    return $this->hasMany(Qualification::class);
+  }
+  public function jobs()
+  {
+    return $this->hasMany(Job::class);
+  }
 }

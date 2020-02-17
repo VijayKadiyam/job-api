@@ -16,8 +16,7 @@ class User extends Authenticatable
    * @var array
    */
   protected $fillable = [
-    'name', 'email', 'password', 'phone', 'active'
-  ];
+    'name', 'email', 'password', 'phone', 'active','address','organigation_name','organigation_address','gstn','year_of_establishment','no_of_partners','total_no_of_people','description','transfer_policy','training_policy','leave_compensation','dob','gender','marital_status','10_passing_marks','10_total_marks','12_passing_marks','12_total_marks','cpt_passing_year','cpt_marks','cpt_attempts','ipcc_group_1_passing_year','ipcc_group_1_marks','ipcc_group_1_attempts','ipcc_group_2_passing_marks','ipcc_group_2_attempts','entry_scheme','icitss_passed','icitss_passing_marks','icitss_total_marks','other_training_details','outstation_travel'];
 
   /**
    * The attributes that should be hidden for arrays.
@@ -325,6 +324,46 @@ class User extends Authenticatable
   public function hasEmail()
   {
     return $this->can_send_email == 1;
+  }
+
+  public function branches()
+  {
+    return $this->hasMany(Branch::class);
+  }
+
+  public function officetimings()
+  {
+    return $this->hasMany(OfficeTiming::class);
+  }
+  public function leavepolicies()
+  {
+    return $this->hasMany(LeavePolicy::class);
+  }
+
+  public function jobs()
+  {
+    return $this->hasMany(Job::class);
+  }
+
+ 
+  public function assignAffiliation($affiliation)
+  {
+    return $this->affiliations()->sync([$affiliation]);
+  }
+
+  public function hasAffiliation($affiliation)
+  {
+    return $this->affiliations ? in_array($affiliation, $this->affiliations->pluck('id')->toArray()) : false;
+  }
+
+  public function affiliations()
+  {
+    return $this->belongsToMany(Affiliation::class);
+  }
+
+  public function days()
+  {
+    return $this->hasMany(Day::class);
   }
 
 }

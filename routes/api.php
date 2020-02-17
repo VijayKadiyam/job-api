@@ -54,3 +54,19 @@ Route::post('upload_bill/{id}', 'UploadController@uploadBill');
 Route::post('upload_attachments', 'UploadController@uploadAttachments');
 
 Route::post('send_email','SendEmailsController@send');
+Route::resource('jobs', 'JobsController');
+Route::resource('/users/{user}/branches','BranchesController');
+Route::resource('/users/{user}/office_timings','OfficeTimingsController');
+Route::resource('/users/{user}/leave_policies','LeavePoliciesController');
+Route::resource('/jobs','JobsController');
+Route::resource('/practices','PracticesController');
+Route::resource('/days','DaysController');
+Route::resource('/affiliations','AffiliationsController');
+Route::resource('/affiliation_user','AffiliationUserController');
+Route::resource('/qualifications','QualificationsController');
+Route::resource('user_practice', 'UserPracticeController');
+Route::resource('/user_day', 'UserDayController');
+Route::resource('/job_practice', 'JobPracticeController');
+
+
+
