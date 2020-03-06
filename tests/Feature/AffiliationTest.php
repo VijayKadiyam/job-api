@@ -19,7 +19,7 @@ class AffiliationTest extends TestCase
     parent::setUp();
 
     $this->company = factory(\App\Company::class)->create([
-           'name' => 'test'
+           'name'  => 'test'
     ]);
 
     $this->user->assignCompany($this->company->id);
@@ -28,7 +28,7 @@ class AffiliationTest extends TestCase
 
 
     $this->affiliation = factory(\App\Affiliation::class)->create([
-      'company_id'  =>  $this->company->id,
+      'company_id'     =>  $this->company->id,
     ]);
 
     $this->payload = [ 
@@ -58,24 +58,24 @@ class AffiliationTest extends TestCase
 
   /** @test */
   function add_new_affiliations()
-  {   $this->disableEH();
-      $this->json('post', '/api/affiliations', $this->payload, $this->headers)
-        ->assertStatus(201)
-        ->assertJson([
-            'data'   =>[
-              'name'  =>  'name',
-            ]
-          ])
-        ->assertJsonStructureExact([
-            'data'   => [
-                'name',              
-                'company_id',
-                'updated_at',
-                'created_at',
-                'id'
-            ],
-            'success'
-          ]); 
+  {  
+    $this->json('post', '/api/affiliations', $this->payload, $this->headers)
+      ->assertStatus(201)
+      ->assertJson([
+          'data'   =>[
+            'name'  =>  'name',
+          ]
+        ])
+      ->assertJsonStructureExact([
+          'data'   => [
+              'name',              
+              'company_id',
+              'updated_at',
+              'created_at',
+              'id'
+          ],
+          'success'
+        ]); 
   }
   /** @test */
   function list_of_affiliations()
@@ -89,7 +89,7 @@ class AffiliationTest extends TestCase
             ] 
           ]
         ]);
-        $this->assertCount(1, Affiliation::all());
+    $this->assertCount(1, Affiliation::all());
   }
 
 
@@ -136,9 +136,9 @@ class AffiliationTest extends TestCase
   /** @test */
   function delete_single_affiliation()
   {
-      $this->json('delete', '/api/affiliations/1', [], $this->headers)
-        ->assertStatus(200);     
-      $this->assertCount(0, Affiliation::all());
+    $this->json('delete', '/api/affiliations/1', [], $this->headers)
+      ->assertStatus(200);     
+    $this->assertCount(0, Affiliation::all());
   }
 
 

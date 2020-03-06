@@ -22,9 +22,9 @@ class BranchTest extends TestCase
       'user_id'  =>  $this->user->id
     ]);
 
-        $this->payload = [
-            'name'      => 'xyz',  
-        ];
+    $this->payload = [
+        'name'      => 'xyz',  
+    ];
   }
    /** @test */
   function add_requires_following_details()
@@ -43,35 +43,34 @@ class BranchTest extends TestCase
   function add_new_branch()
   {
     $this->json('POST', '/api/users/' . $this->user->id . '/branches' , $this->payload,$this->headers)
-         ->assertStatus(201)
-         ->assertJson([
-            "data"  => [
-                "name"  => "xyz",
-                 ]
-            ])
-          ->assertJsonStructureExact([
-            'data'  =>  [
-            'name',
-            'user_id',
-            'updated_at',
-            'created_at',
-            'id',
-            ]
+       ->assertStatus(201)
+       ->assertJson([
+          "data"  => [
+              "name"  => "xyz",
+          ]
+        ])
+        ->assertJsonStructureExact([
+          'data'  =>  [
+          'name',
+          'user_id',
+          'updated_at',
+          'created_at',
+          'id',
+          ]
         ]);
   }
     /** @test */
   function list_of_branches()
   {
     $this->json('GET' , '/api/users/' . $this->user->id . '/branches' , $this->payload,$this->headers)
-         ->assertStatus(200)
-         ->assertJson([
-            "data" => [
-                0 => [
-                    "name" => "Vijay",
-                    
-                 ]
-                ] 
-             ]);
+       ->assertStatus(200)
+       ->assertJsonStructure([
+          "data" => [
+              0 => [
+                  "name",  
+              ]
+          ] 
+    ]);
 
     $this->assertCount(1,Branch::all());
 
@@ -81,12 +80,12 @@ class BranchTest extends TestCase
   function show_single_branch()
   {
     $this->json('get',  '/api/users/' . $this->user->id . '/branches/' . $this->branch->id,[],$this->headers)
-        ->assertStatus(200)
-        ->assertJson([
-            'data' => [
-                'name' => 'Vijay',   
-             ]
-         ]);
+      ->assertStatus(200)
+      ->assertJson([
+          'data' => [
+              'name' => 'Vijay',   
+           ]
+       ]);
   }
 
    /** @test */
@@ -124,7 +123,7 @@ class BranchTest extends TestCase
              'created_at',
              'updated_at',     
           ]
-        ]);    
+      ]);    
 
   }
 

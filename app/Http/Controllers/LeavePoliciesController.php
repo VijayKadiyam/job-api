@@ -15,10 +15,10 @@ class LeavePoliciesController extends Controller
 
   public function index(Request $request,User $user)
   {
-    $leavepolicies =$user->leavepolicies;
+    $leave_policies = $user->leave_policies;
 
   	return response()->json([
-  		'data' => $leavepolicies
+  		'data' => $leave_policies
   	],200);
   }
 
@@ -29,12 +29,13 @@ class LeavePoliciesController extends Controller
   	]);
 
   	$leave_policy = new LeavePolicy($request->all());
-  	$user->leavepolicies()->save($leave_policy);
+  	$user->leave_policies()->save($leave_policy);
 
   	return response()->json([
   	  'data' => $leave_policy->toArray()
   	],201);
   }
+
   public function show(User $user,LeavePolicy $leave_policy)
   {
     return response()->json([
@@ -46,7 +47,7 @@ class LeavePoliciesController extends Controller
   {
     $request->validate([
         'exam'     =>  'required',     
-       ]);
+    ]);
 
     $leave_policy->update($request->all());
 

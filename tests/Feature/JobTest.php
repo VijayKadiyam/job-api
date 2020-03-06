@@ -13,10 +13,10 @@ use App\User;
 
 class JobTest extends TestCase
 {
-use DatabaseTransactions;
+ use DatabaseTransactions;
 
- public function setUp() : void
- {
+  public function setUp() : void
+  {
     parent::setUp();
 
     $this->company = factory(\App\Company::class)->create([
@@ -31,7 +31,7 @@ use DatabaseTransactions;
     $this->qualification   =  factory(Qualification::class)->create();
 
 
-     $this->job           = factory(\App\Job::class)->create([
+     $this->job            = factory(\App\Job::class)->create([
       'company_id'        =>  $this->company->id,
       'user_id'           =>  $this->user->id,
       'qualification_id'  =>  $this->qualification->id,
@@ -56,61 +56,60 @@ use DatabaseTransactions;
   /** @test */
   function user_must_be_logged_in_before_accessing_the_controller()
   {
-      $this->json('post', '/api/jobs')
+    $this->json('post', '/api/jobs')
         ->assertStatus(401); 
   }
 
    /** @test */
   function it_requires_following_details()
   { 
-     $this->json('post', '/api/jobs', [], $this->headers)
+    $this->json('post', '/api/jobs', [], $this->headers)
         ->assertStatus(422)
         ->assertExactJson([
-       "errors"       =>  [
-        
-        "title"        =>  ["The title field is required."],      
-      ],
+       "errors"       =>  [  
+          "title"        =>  ["The title field is required."],      
+        ],
         "message"     =>  "The given data was invalid."
       ]);
   }
 
   /** @test */
   function add_new_jobs()
-  {   $this->disableEH();
-      $this->json('post', '/api/jobs', $this->payload, $this->headers)
-        ->assertStatus(201)
-        ->assertJson([
-            'data'   =>[
-              'title'  =>  'title1',
-            ]
-          ])
-        ->assertJsonStructureExact([
-            'data'   => [              
-                'title',
-                'highlight',
-                'no_of_openings',
-                'experience',
-                'address',
-                'stipend_start',
-                'stipend_end',
-                'department',
-                'max_attempts_in_ca_exam',
-                'status',
-                'user_id',
-                'qualification_id',
-                'company_id',
-                'updated_at',
-                'created_at',
-                'id'
-            ],
-            
-          ]); 
+  {  
+    $this->json('post', '/api/jobs', $this->payload, $this->headers)
+      ->assertStatus(201)
+      ->assertJson([
+          'data'   =>[
+            'title'  =>  'title1',
+          ]
+        ])
+      ->assertJsonStructureExact([
+          'data'   => [              
+              'title',
+              'highlight',
+              'no_of_openings',
+              'experience',
+              'address',
+              'stipend_start',
+              'stipend_end',
+              'department',
+              'max_attempts_in_ca_exam',
+              'status',
+              'user_id',
+              'qualification_id',
+              'company_id',
+              'updated_at',
+              'created_at',
+              'id'
+          ],
+          
+        ]); 
   }
 
    /** @test */
   function list_of_jobs()
- {     
-  $this->json('GET', '/api/jobs',[], $this->headers)
+  {     
+    $this->json('GET', '/api/jobs',[], $this->headers)
        ->assertStatus(200)
        ->assertJsonStructure([
         'data' => [
@@ -135,7 +134,6 @@ use DatabaseTransactions;
     $this->assertCount(1, Job::all());
   }
 
-
   /** @test */
   function show_single_job()
   {
@@ -143,23 +141,23 @@ use DatabaseTransactions;
       ->assertStatus(200)
       ->assertJson([
       'data'  => [
-                'title'                    =>  'title',
-                'highlight'                =>  'highlight',
-                'no_of_openings'           =>  'no of openings',
-                'experience'               =>  'experience',
-                'address'                  =>  'address',
-                'stipend_start'            =>  'stipend start',
-                'stipend_end'              =>  'stipend end',
-                'department'               =>  'department',
-                'max_attempts_in_ca_exam'  =>  'max attempts in ca exam',
-                'status'                   =>  'status',    
+          'title'                    =>  'title',
+          'highlight'                =>  'highlight',
+          'no_of_openings'           =>  'no of openings',
+          'experience'               =>  'experience',
+          'address'                  =>  'address',
+          'stipend_start'            =>  'stipend start',
+          'stipend_end'              =>  'stipend end',
+          'department'               =>  'department',
+          'max_attempts_in_ca_exam'  =>  'max attempts in ca exam',
+          'status'                   =>  'status',    
       ]
     ]);
   }
 
 
 
- /** @test */
+  /** @test */
   function update_single_job()
   {
     $this->disableEH();
@@ -180,8 +178,7 @@ use DatabaseTransactions;
       ->assertStatus(200)
       ->assertJson([
           'data'    => [
-                 'title'  =>  'title2',
-
+             'title'  =>  'title2',
           ]
        ])
       ->assertJsonStructureExact([

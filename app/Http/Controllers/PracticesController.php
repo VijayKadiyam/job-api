@@ -15,15 +15,13 @@ class PracticesController extends Controller
   }
 
   public function index(Request $request)
-  {
-    
+  {    
     $practices = request()->company->practices;
 
     return response()->json([
       'data'     =>  $practices,
       'success'  =>   true
     ], 200);
-
   }
 
   public function store(Request $request)

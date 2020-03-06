@@ -15,15 +15,13 @@ class QualificationsController extends Controller
   }
 
   public function index(Request $request)
-  {
-    
+  {   
     $qualifications = request()->company->qualifications;
 
     return response()->json([
       'data'     =>  $qualifications,
       'success'  =>   true
     ], 200);
-
   }
 
   public function store(Request $request)
@@ -41,7 +39,8 @@ class QualificationsController extends Controller
       'success' =>  'true'
     ], 201); 
   }
-    public function show(Qualification $qualification)
+  
+  public function show(Qualification $qualification)
   {
     return response()->json([
       'data'   =>  $qualification

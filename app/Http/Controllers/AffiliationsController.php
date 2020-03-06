@@ -16,7 +16,6 @@ class AffiliationsController extends Controller
 
   public function index(Request $request)
   {
-    
     $affiliations = request()->company->affiliations;
 
     return response()->json([
@@ -41,7 +40,8 @@ class AffiliationsController extends Controller
       'success' =>  'true'
     ], 201); 
   }
-   public function show(Affiliation $affiliation)
+
+  public function show(Affiliation $affiliation)
   {
     return response()->json([
       'data'   =>  $affiliation

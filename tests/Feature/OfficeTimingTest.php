@@ -24,23 +24,22 @@ class OfficeTimingTest extends TestCase
     ]);
 
     $this->payload = [
-          'from'        =>  'from1',
-          'from_am_pm'  =>  'from am pm1',
-          'to'          =>  'to1',
-          'to_am_pm'    =>  'to am pm1' 
+        'from'        =>  'from1',
+        'from_am_pm'  =>  'from am pm1',
+        'to'          =>  'to1',
+        'to_am_pm'    =>  'to am pm1' 
       ];
   }
 
   /** @test */
   function add_requires_following_details()
   {
-
     $this->json('POST', '/api/users/' . $this->user->id . '/office_timings', [],$this->headers)
       ->assertStatus(422)
       ->assertExactJson([
         "errors" => [
           "from"    =>  ["The from field is required."],       
-       ],
+         ],
        "message" =>"The given data was invalid."
       ]);
   }
@@ -59,14 +58,14 @@ class OfficeTimingTest extends TestCase
          ])
       ->assertJsonStructureExact([
           'data'  =>  [
-          'from',
-          'from_am_pm',
-          'to',
-          'to_am_pm',
-          'user_id',
-          'updated_at',
-          'created_at',
-           'id',
+            'from',
+            'from_am_pm',
+            'to',
+            'to_am_pm',
+            'user_id',
+            'updated_at',
+            'created_at',
+             'id',
           ]
       ]);
   }
@@ -75,13 +74,13 @@ class OfficeTimingTest extends TestCase
   {
     $this->json('GET' , '/api/users/' . $this->user->id . '/office_timings' , $this->payload,$this->headers)
       ->assertStatus(200)
-      ->assertJson([
+      ->assertJsonStructure([
           "data" => [
               0 => [
-                  'from'        =>  'from',
-                  'from_am_pm'  =>  'from am pm',
-                  'to'          =>  'to',
-                  'to_am_pm'    =>  'to am pm'
+                  'from',
+                  'from_am_pm',
+                  'to',
+                  'to_am_pm',
                   ]
                 ] 
            ]);

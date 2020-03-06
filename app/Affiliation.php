@@ -8,12 +8,12 @@ class Affiliation extends Model
 {
   protected $fillable = ['name'];
 
-  public function companies()
+  public function company()
   {
     return $this->belongsTo(Company::class);
   }
    public function users()
   {
-    return $this->belongsToMany(User::class);      
+    return $this->hasMany(User::class);      
   }
 }

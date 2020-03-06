@@ -331,11 +331,11 @@ class User extends Authenticatable
     return $this->hasMany(Branch::class);
   }
 
-  public function officetimings()
+  public function office_timings()
   {
     return $this->hasMany(OfficeTiming::class);
   }
-  public function leavepolicies()
+  public function leave_policies()
   {
     return $this->hasMany(LeavePolicy::class);
   }
@@ -345,7 +345,6 @@ class User extends Authenticatable
     return $this->hasMany(Job::class);
   }
 
- 
   public function assignAffiliation($affiliation)
   {
     return $this->affiliations()->sync([$affiliation]);
@@ -364,6 +363,11 @@ class User extends Authenticatable
   public function days()
   {
     return $this->hasMany(Day::class);
+  }
+
+  public function practices()
+  {
+    return $this->hasMany(Practice::class);
   }
 
 }

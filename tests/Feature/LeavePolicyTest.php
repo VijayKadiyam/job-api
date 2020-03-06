@@ -81,16 +81,16 @@ class LeavePolicyTest extends TestCase
   {
     $this->json('GET' , '/api/users/' . $this->user->id . '/leave_policies' , $this->payload,$this->headers)
       ->assertStatus(200)
-      ->assertJson([
+      ->assertJsonStructure([
           "data" => [
               0 => [
-                'exam'                   =>  'exam',
-                'ipcc_group_1'           =>  'ipcc group1',
-                'ipcc_group_2'           =>  'ipcc group2',
-                'ca_final_group_1'       =>  'ca final group1',
-                'ca_final_group_2'       =>  'ca final group2',
-                'ipcc_both_groups'       =>  'ipcc both groups',
-                'ca_final_both_groups'   =>  'ca final both groups',
+                'exam',
+                'ipcc_group_1',
+                'ipcc_group_2',
+                'ca_final_group_1',
+                'ca_final_group_2',
+                'ipcc_both_groups',
+                'ca_final_both_groups',
                   ]
                 ] 
            ]);
@@ -140,7 +140,7 @@ class LeavePolicyTest extends TestCase
         'ca_final_both_groups'   =>  'ca final both groups',     
      ];
 
-     $this->json('patch', '/api/users/' . $this->user->id . '/leave_policies/' . $this->leave_policy->id, $payload,$this->headers)
+    $this->json('patch', '/api/users/' . $this->user->id . '/leave_policies/' . $this->leave_policy->id, $payload,$this->headers)
       ->assertStatus(200)
       ->assertJson([
         'data' => [

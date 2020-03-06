@@ -26,13 +26,11 @@ class JobsController extends Controller
     ], 200);
   }
 
-
   public function store(Request $request)
   {
     $request->validate([
-      'title'       => 'required',
-      
-       ]);
+      'title'       => 'required', 
+    ]);
 
     $job = new Job($request->all());
 

@@ -8,7 +8,7 @@ class Qualification extends Model
 {
     protected $fillable = ['name'];
 
-  public function companies()
+  public function company()
   {
     	return $this->belongsTo(Company::class);
   }

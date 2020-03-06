@@ -14,8 +14,8 @@ class DayTest extends TestCase
 {
   use DatabaseTransactions;
 
- public function setUp() : void
- {
+   public function setUp() : void
+   {
     parent::setUp();
 
     $this->company = factory(\App\Company::class)->create([
@@ -27,7 +27,7 @@ class DayTest extends TestCase
     $this->headers['company-id'] = $this->company->id;
 
 
-    $this->day = factory(\App\Day::class)->create([
+    $this->day      = factory(\App\Day::class)->create([
       'company_id'  =>  $this->company->id,
     ]);
 
@@ -58,24 +58,24 @@ class DayTest extends TestCase
 
   /** @test */
   function add_new_days()
-  {   $this->disableEH();
-      $this->json('post', '/api/days', $this->payload, $this->headers)
-        ->assertStatus(201)
-        ->assertJson([
-            'data'   =>[
-              'name'  =>  'name',
-            ]
-          ])
-        ->assertJsonStructureExact([
-            'data'   => [
-                'name',              
-                'company_id',
-                'updated_at',
-                'created_at',
-                'id'
-            ],
-            'success'
-          ]); 
+  {  
+    $this->json('post', '/api/days', $this->payload, $this->headers)
+      ->assertStatus(201)
+      ->assertJson([
+          'data'   =>[
+            'name'  =>  'name',
+          ]
+        ])
+      ->assertJsonStructureExact([
+          'data'   => [
+              'name',              
+              'company_id',
+              'updated_at',
+              'created_at',
+              'id'
+          ],
+          'success'
+        ]); 
   }
 
   /** @test */
@@ -90,7 +90,7 @@ class DayTest extends TestCase
             ] 
           ]
         ]);
-        $this->assertCount(1, Day::all());
+    $this->assertCount(1, Day::all());
   }
 
 
@@ -119,7 +119,6 @@ class DayTest extends TestCase
       ->assertJson([
           'data'    => [
             'name'    => 'Name Must Updated',
-
           ]
        ])
       ->assertJsonStructureExact([
@@ -137,8 +136,8 @@ class DayTest extends TestCase
   /** @test */
   function delete_single_day()
   {
-      $this->json('delete', '/api/days/1', [], $this->headers)
-        ->assertStatus(200);     
-      $this->assertCount(0, Day::all());
+    $this->json('delete', '/api/days/1', [], $this->headers)
+      ->assertStatus(200);     
+    $this->assertCount(0, Day::all());
   }
 }

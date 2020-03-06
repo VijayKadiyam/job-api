@@ -15,10 +15,10 @@ class OfficeTimingsController extends Controller
 
   public function index(Request $request,User $user)
   {
-    $officetimings =$user->officetimings;
+    $office_timings =$user->office_timings;
 
   	return response()->json([
-  		'data' => $officetimings
+  		'data' => $office_timings
   	],200);
   }
 
@@ -29,7 +29,7 @@ class OfficeTimingsController extends Controller
   	]);
 
   	$office_timing = new OfficeTiming($request->all());
-  	$user->officetimings()->save($office_timing);
+  	$user->office_timings()->save($office_timing);
 
   	return response()->json([
   	  'data' => $office_timing->toArray()

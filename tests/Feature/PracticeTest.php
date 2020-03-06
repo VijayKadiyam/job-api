@@ -27,8 +27,8 @@ class PracticeTest extends TestCase
     $this->headers['company-id'] = $this->company->id;
 
 
-    $this->practice = factory(\App\Practice::class)->create([
-      'company_id'  =>  $this->company->id,
+    $this->practice  = factory(\App\Practice::class)->create([
+      'company_id'   =>  $this->company->id,
     ]);
 
     $this->payload = [ 
@@ -39,18 +39,18 @@ class PracticeTest extends TestCase
   /** @test */
   function user_must_be_logged_in_before_accessing_the_controller()
   {
-      $this->json('post', '/api/practices')
-        ->assertStatus(401); 
+    $this->json('post', '/api/practices')
+         ->assertStatus(401); 
   }
 
    /** @test */
   function it_requires_following_details()
   { 
-     $this->json('post', '/api/practices', [], $this->headers)
+    $this->json('post', '/api/practices', [], $this->headers)
         ->assertStatus(422)
         ->assertExactJson([
        "errors"       =>  [
-        "name"        =>  ["The name field is required."],      
+           "name"        =>  ["The name field is required."],      
       ],
         "message"     =>  "The given data was invalid."
       ]);
@@ -58,24 +58,24 @@ class PracticeTest extends TestCase
 
   /** @test */
   function add_new_practices()
-  {   $this->disableEH();
-      $this->json('post', '/api/practices', $this->payload, $this->headers)
-        ->assertStatus(201)
-        ->assertJson([
-            'data'   =>[
-              'name'  =>  'name',
-            ]
-          ])
-        ->assertJsonStructureExact([
-            'data'   => [
-                'name',              
-                'company_id',
-                'updated_at',
-                'created_at',
-                'id'
-            ],
-            'success'
-          ]); 
+  {   
+    $this->json('post', '/api/practices', $this->payload, $this->headers)
+      ->assertStatus(201)
+      ->assertJson([
+          'data'   =>[
+            'name'  =>  'name',
+          ]
+        ])
+      ->assertJsonStructureExact([
+          'data'   => [
+              'name',              
+              'company_id',
+              'updated_at',
+              'created_at',
+              'id'
+          ],
+          'success'
+        ]); 
   }
 
   /** @test */
@@ -90,7 +90,7 @@ class PracticeTest extends TestCase
             ] 
           ]
         ]);
-        $this->assertCount(1, Practice::all());
+    $this->assertCount(1, Practice::all());
   }
 
 
@@ -108,38 +108,37 @@ class PracticeTest extends TestCase
 
   /** @test */
   function update_single_practice()
-    {
-      $this->disableEH();
-      $payload  = [
-        'name'                 => 'Name Must Updated',
-      ];
+  {
+    $this->disableEH();
+    $payload  = [
+      'name'                 => 'Name Must Updated',
+    ];
 
-      $this->json('patch', '/api/practices/1', $payload, $this->headers)
-        ->assertStatus(200)
-        ->assertJson([
-            'data'    => [
-              'name'    => 'Name Must Updated',
-
-            ]
-         ])
-        ->assertJsonStructureExact([
-            'data'  => [
-              'id',
-              'company_id',
-              'name',
-              'created_at',
-              'updated_at',
-              
-              ] 
-          ]);
+    $this->json('patch', '/api/practices/1', $payload, $this->headers)
+      ->assertStatus(200)
+      ->assertJson([
+          'data'    => [
+            'name'    => 'Name Must Updated',
+          ]
+       ])
+      ->assertJsonStructureExact([
+          'data'  => [
+            'id',
+            'company_id',
+            'name',
+            'created_at',
+            'updated_at',
+            
+            ] 
+        ]);
   }
 
   /** @test */
   function delete_single_practice()
   {
-      $this->json('delete', '/api/practices/1', [], $this->headers)
-        ->assertStatus(200);     
-      $this->assertCount(0, Practice::all());
+    $this->json('delete', '/api/practices/1', [], $this->headers)
+      ->assertStatus(200);     
+    $this->assertCount(0, Practice::all());
   }
 
 }

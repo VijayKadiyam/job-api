@@ -15,8 +15,7 @@ class DaysController extends Controller
   }
 
   public function index(Request $request)
-  {
-    
+  {    
     $days = request()->company->days;
 
     return response()->json([
@@ -49,7 +48,7 @@ class DaysController extends Controller
     ], 200);   
   }
 
-   public function update(Request $request, Day $day)
+  public function update(Request $request, Day $day)
   {
     $request->validate([
       'name'    => 'required',
