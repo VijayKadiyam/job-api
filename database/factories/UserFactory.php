@@ -37,26 +37,29 @@ $factory->define(App\User::class, function (Faker $faker) {
         'dob'                      =>  'dob',
         'gender'                   =>  'gender',
         'marital_status'           =>  'marital_status',
-        '10_passing_marks'         =>  '10_passing_marks',
-        '10_total_marks'           =>  '10_total_marks',
-        '12_passing_marks'         =>  '12_passing_marks',
-        '12_total_marks'           =>  '12_total_marks',
+
+        'passing_marks_10'         =>  'passing_marks_10',
+        'total_marks_10'           =>  'total_marks_10',
+        'passing_marks_12'         =>  'passing_marks_12',
+        'total_marks_12'           =>  'total_marks_12',
+
         'cpt_passing_year'         =>  'cpt_passing_year',
         'cpt_marks'                =>  'cpt_marks',
         'cpt_attempts'             =>  'cpt_attempts',
-        'ipcc_group_1_passing_year'=>  'ipcc_group_1_passing_year',
 
-
-
-
+        'ipcc_group_1_passing_year' =>  'ipcc_group_1_passing_year',
         'ipcc_group_1_marks'        =>  'ipcc_group_1_marks',
         'ipcc_group_1_attempts'     =>  'ipcc_group_1_attempts',
         'ipcc_group_2_passing_marks'=>  'ipcc_group_2_passing_marks',
+        'ipcc_group_2_marks'        =>  'ipcc_group_2_marks',
         'ipcc_group_2_attempts'     =>  'ipcc_group_2_attempts',
+
         'entry_scheme'              =>  'entry_scheme',
+
         'icitss_passed'             =>  'icitss_passed',
         'icitss_passing_marks'      =>  'icitss_passing_marks',
         'icitss_total_marks'        =>  'icitss_total_marks',
+
         'other_training_details'    =>  'other_training_details',
         'outstation_travel'         =>  'outstation_travel',
 
