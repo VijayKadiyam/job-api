@@ -37,7 +37,8 @@ class UsersController extends Controller
       }
 
     return response()->json([
-          'data'  =>  $users
+          'data'    =>  $users,
+          'success' =>  true
       ], 200);
   }
 
@@ -62,7 +63,8 @@ class UsersController extends Controller
     $user->save();
 
     return response()->json([
-      'data'     =>  $user
+      'data'     =>  $user,
+      'success'  =>  true
     ], 201); 
   }
 
