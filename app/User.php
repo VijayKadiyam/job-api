@@ -394,9 +394,9 @@ class User extends Authenticatable
     return $this->affiliations()->sync([$affiliation]);
   }
 
-  public function hasAffiliation($affiliation)
+  public function hasAffiliation($affiliations)
   {
-    return $this->affiliations ? in_array($affiliation, $this->affiliations->pluck('id')->toArray()) : false;
+    return $this->affiliations ? in_array($affiliations, $this->affiliations->pluck('id')->toArray()) : false;
   }
 
   public function affiliations()

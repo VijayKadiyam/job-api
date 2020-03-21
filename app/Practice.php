@@ -27,19 +27,9 @@ class Practice extends Model
     return $this->belongsToMany(User::class , 'user_practice');
   }
 
-  public function jobs()
-  {
-    return $this->belongsToMany(Job::class);
-  }
-
-  public function hasJob($jobs)
-  {
-    return $this->jobs ? in_array($jobs, $this->jobs->pluck('id')->toArray()) : false;
-  }
-
-   public function assignJob($job)
-  {
-    return $this->jobs()->sync([$job]);
-  }
+ public function jobs()
+{
+  return $this->hasMany(Job::class);
+}
 
 }

@@ -23,9 +23,22 @@ public function qualification()
 	return $this->belongsTo(Qualification::class);
 }
 
-public function practices()
-{
-  return $this->hasMany(Practice::class);
-}
+ public function practices()
+  {
+    return $this->belongsToMany(Practice::class);
+  }
+
+  public function hasPractice($practices)
+  {
+    return $this->practices ? in_array($practices, $this->practices->pluck('id')->toArray()) : false;
+  }
+
+   public function assignPractice($practice)
+  {
+    return $this->practices()->sync($practice);
+  }
+
+
+
 
 }

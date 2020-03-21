@@ -41,7 +41,7 @@ class PracticesController extends Controller
   }
 
   public function show(Practice $practice)
-  {
+  {    
     return response()->json([
       'data'   =>  $practice
     ], 200);   
