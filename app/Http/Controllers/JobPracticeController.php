@@ -17,20 +17,20 @@ class JobPracticeController extends Controller
   {
 
     $request->validate([
-        'practice_id'   =>  'required',
+        'practice_ids'   =>  'required',
         'job_id'        =>  'required'
     ]);
 
-    $practice =  Practice::find($request->practice_id);
-
     $job =  Job::find($request->job_id);
 
-    $practice->assignJob($job->id);
+    //$job =  Job::find($request->job_id);
+
+    $job->assignPractice($request->practice_ids);
     
-    $jobPractice = Practice::with('jobs')->find($request->practice_id);
+    $practiceJob = Job::with('practices')->find($request->job_id);
 
     return response()->json([
-    'data'    =>  $jobPractice,
+    'data'    =>  $practiceJob,
     'success' =>  true
     ], 201); 
   }

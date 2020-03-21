@@ -43,6 +43,9 @@ class JobsController extends Controller
 
   public function show(Job $job)
   { 
+
+    $job->practices = $job->practices;
+    
     return response()->json([
       'data'   =>  $job
     ], 200);   
