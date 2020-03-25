@@ -52,7 +52,8 @@ class UsersController extends Controller
     $request->validate([
       'name'                    => ['required', 'string', 'max:255'],
       'email'                   => ['required', 'string', 'email', 'max:255', 'unique:users'],
-      'phone'                   => ['required', 'unique:users']
+      'phone'                   => ['required', 'unique:users'],
+      'qualification_id'        => 'required',
     ]);
 
     $user  = $request->all();
@@ -76,7 +77,7 @@ class UsersController extends Controller
   public function show($id)
   {
     $user = User::where('id' , '=', $id)
-      ->with('roles', 'companies', 'company_designation', 'company_state_branch', 'supervisors')->first();
+      ->with('roles', 'companies', 'company_designation', 'company_state_branch', 'supervisors','days','affiliations','practices')->first();
 
     return response()->json([
       'data'  =>  $user,
@@ -94,7 +95,8 @@ class UsersController extends Controller
     $request->validate([
       'name'                    => ['required', 'string', 'max:255'],
       'email'                   => ['required', 'string', 'email', 'max:255'],
-      'phone'                   =>  'required'
+      'phone'                   =>  'required',
+      'qualification_id'        => 'required',
     ]);
 
     $user->update($request->all());

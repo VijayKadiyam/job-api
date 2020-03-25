@@ -31,19 +31,18 @@ class QualificationsController extends Controller
     ]);
 
     $qualification = new Qualification($request->all());
-
     $request->company->qualifications()->save($qualification);
-
     return response()->json([
       'data'    =>  $qualification,
-      'success' =>  'true'
+      'success' =>  true
     ], 201); 
   }
   
   public function show(Qualification $qualification)
   {
     return response()->json([
-      'data'   =>  $qualification
+      'data'     =>  $qualification,
+      'success'  =>   true
     ], 200);   
   }
 
@@ -56,7 +55,8 @@ class QualificationsController extends Controller
     $qualification->update($request->all());
       
     return response()->json([
-      'data'  =>  $qualification
+      'data'     =>  $qualification,
+      'success'  =>   true
     ], 200);
   }
 

@@ -103,7 +103,17 @@ class DayTest extends TestCase
           'data'  => [
               'name' =>  'Vijay',
           ]
-        ]);
+        ])
+         ->assertJsonStructureExact([
+          'data'   => [
+              'id',
+               'company_id',
+               'name',
+               'created_at',
+               'updated_at',
+          ],
+          'success'
+        ]); 
   }
 
   /** @test */
@@ -128,8 +138,8 @@ class DayTest extends TestCase
             'name',
             'created_at',
             'updated_at',
-            
-            ] 
+            ],
+            'success'
         ]);
   }
 

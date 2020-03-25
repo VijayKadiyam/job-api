@@ -37,14 +37,15 @@ class AffiliationsController extends Controller
 
     return response()->json([
       'data'    =>  $affiliation,
-      'success' =>  'true'
+      'success' =>  true
     ], 201); 
   }
 
   public function show(Affiliation $affiliation)
   {
     return response()->json([
-      'data'   =>  $affiliation
+      'data'     =>  $affiliation,
+      'success'  =>   true
     ], 200);   
   }
 
@@ -57,7 +58,8 @@ class AffiliationsController extends Controller
     $affiliation->update($request->all());
       
     return response()->json([
-      'data'  =>  $affiliation
+      'data'     =>  $affiliation,
+      'success'  =>   true
     ], 200);
   }
 

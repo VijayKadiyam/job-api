@@ -16,10 +16,10 @@ class CreateOfficeTimingsTable extends Migration
         Schema::create('office_timings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->nullable();
-            $table->string('from');
-            $table->string('from_am_pm');
-            $table->string('to');
-            $table->string('to_am_pm');
+            $table->string('from')->nullable();
+            $table->string('from_am_pm')->nullable();
+            $table->string('to')->nullable();
+            $table->string('to_am_pm')->nullable();
             $table->timestamps();
         });
     }

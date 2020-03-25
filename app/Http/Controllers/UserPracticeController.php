@@ -8,12 +8,6 @@ use App\Practice;
 
 class UserPracticeController extends Controller
 {
-  public function __construct()
-  {
-    $this->middleware('auth:api')
-      ->except('store');
-  }
-
   /*
    * Assign user to practice
    *
@@ -22,17 +16,16 @@ class UserPracticeController extends Controller
   public function store(Request $request)
   {
     $request->validate([
-      'practice_id'    =>  'required',
-      'user_id' =>  'required'
+      'practice_ids'    =>  'required',
+      'user_id'         =>  'required'
     ]);
 
-    $practice = Practice::find($request->practice_id);
     $user = User::find($request->user_id);
-    $practice->assignUser($user->id);
-    $userPractice = Practice::with('users')->find($request->practice_id);
+    $user->assignPractice($request->practice_ids);
+    $practiceUser = User::with('practices')->find($request->user_id);
 
     return response()->json([
-        'data'  =>  $userPractice,
+        'data'  =>  $practiceUser,
         'success' =>  true
     ], 201); 
   }

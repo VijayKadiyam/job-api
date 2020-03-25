@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\User;
+use App\Qualification;
 
 class UserTest extends TestCase
 {
@@ -22,10 +23,17 @@ class UserTest extends TestCase
     $this->user->assignCompany($this->company->id);
     $this->headers['company-id'] = $this->company->id;
 
+    $this->qualification = factory(Qualification::class)->create();
+
+    $this->user = factory(\App\User::class)->create([
+      'qualification_id'     =>  $this->qualification->id,
+    ]);
+
     $this->payload = [ 
-      'name'                       =>'sangeetha',
-      'phone'                      => 9844778380,
-      'email'                      =>'sangeetha@gmail.com',
+      'qualification_id'           =>  $this->qualification->id,
+      'name'                       =>  'sangeetha',
+      'phone'                      =>  9844778380,
+      'email'                      =>  'sangeetha@gmail.com',
       'address'                    =>  'address1',
       'organigation_name'          =>  'organigation_name1',
       'organigation_address'       =>  'organigation_address1',
@@ -76,9 +84,10 @@ class UserTest extends TestCase
          ->assertStatus(422)
          ->assertExactJson([
             "errors"  =>  [
-              "name"   =>  ["The name field is required."],
-              "email"  =>  ["The email field is required."],
-              "phone"  =>  ["The phone field is required."],
+              "name"             =>  ["The name field is required."],
+              "email"            =>  ["The email field is required."],
+              "phone"            =>  ["The phone field is required."],
+              "qualification_id" =>  ["The qualification id field is required."],
             ],
             "message" =>  "The given data was invalid."
         ]);
@@ -103,6 +112,7 @@ class UserTest extends TestCase
             'phone',
             'email',
             'address',
+            'qualification_id',
             'organigation_name',
             'organigation_address',
             'gstn',
@@ -138,6 +148,7 @@ class UserTest extends TestCase
         ])
       ->assertJsonStructureExact([
           'data'  =>  [
+            'qualification_id',
             'name',
             'phone',
             'email',
@@ -211,6 +222,7 @@ class UserTest extends TestCase
             'name',
             'phone',
             'email' ,
+            'qualification_id',
             'address',
             'organigation_name',
             'organigation_address',
@@ -253,6 +265,7 @@ class UserTest extends TestCase
   {
     $this->disableEH();
     $payload  = [ 
+      'qualification_id'           =>  $this->qualification->id,
       'name'                       =>  'sangeetha',
       'phone'                      =>  9088597123,
       'email'                      =>  'preethi@gmail.com',
@@ -307,6 +320,7 @@ class UserTest extends TestCase
             'email_verified_at',
             'active',
             'phone',
+            'qualification_id',
             'address',
             'organigation_name',
             'organigation_address',

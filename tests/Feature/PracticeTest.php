@@ -32,7 +32,7 @@ class PracticeTest extends TestCase
     ]);
 
     $this->payload = [ 
-      'name'           =>  'name',     
+      'name'  =>  'name',     
     ];
   }
 
@@ -66,16 +66,16 @@ class PracticeTest extends TestCase
             'name'  =>  'name',
           ]
         ])
-      ->assertJsonStructureExact([
-          'data'   => [
-              'name',              
-              'company_id',
-              'updated_at',
-              'created_at',
-              'id'
-          ],
-          'success'
-        ]); 
+        ->assertJsonStructureExact([
+            'data'   => [
+                'name',              
+                'company_id',
+                'updated_at',
+                'created_at',
+                'id'
+            ],
+            'success'
+          ]); 
   }
 
   /** @test */
@@ -103,7 +103,17 @@ class PracticeTest extends TestCase
           'data'  => [
               'name' =>  'Vijay',
           ]
-        ]);
+        ])
+         ->assertJsonStructureExact([
+            'data'   => [
+                'id',
+                'company_id',
+                'name',
+                'created_at',
+                'updated_at',
+            ],
+            'success'
+          ]); 
   }
 
   /** @test */
@@ -111,7 +121,7 @@ class PracticeTest extends TestCase
   {
     $this->disableEH();
     $payload  = [
-      'name'                 => 'Name Must Updated',
+      'name'  => 'Name Must Updated',
     ];
 
     $this->json('patch', '/api/practices/1', $payload, $this->headers)
@@ -129,7 +139,8 @@ class PracticeTest extends TestCase
             'created_at',
             'updated_at',
             
-            ] 
+            ],
+            'success'
         ]);
   }
 

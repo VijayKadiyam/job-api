@@ -21,7 +21,8 @@ class User extends Authenticatable
         'password',
         'phone',
         'active',
-
+        
+        'qualification_id',
         'address',
         'organigation_name',
         'organigation_address',
@@ -389,9 +390,14 @@ class User extends Authenticatable
     return $this->hasMany(Job::class);
   }
 
+  public function affiliations()
+  {
+    return $this->belongsToMany(Affiliation::class);
+  }
+  
   public function assignAffiliation($affiliation)
   {
-    return $this->affiliations()->sync([$affiliation]);
+    return $this->affiliations()->sync($affiliation);
   }
 
   public function hasAffiliation($affiliations)
@@ -399,20 +405,36 @@ class User extends Authenticatable
     return $this->affiliations ? in_array($affiliations, $this->affiliations->pluck('id')->toArray()) : false;
   }
 
-  public function affiliations()
+  public function practices()
   {
-    return $this->belongsToMany(Affiliation::class);
+    return $this->belongsToMany(Practice::class,'user_practice');
+  }
+
+  public function hasPractice($practices)
+  {
+    return $this->practices ? in_array($practices, $this->practices->pluck('id')->toArray()) : false;
+  }
+
+  public function assignPractice($practice)
+  {
+    return $this->practices()->sync($practice);
   }
 
   public function days()
   {
-    return $this->hasMany(Day::class);
+    return $this->belongsToMany(Day::class,'user_day');
   }
 
-  public function practices()
+  public function hasDay($days)
   {
-    return $this->hasMany(Practice::class);
+    return $this->days ? in_array($days, $this->days->pluck('id')->toArray()) : false;
   }
+
+  public function assignDay($day)
+  {
+    return $this->days()->sync($day);
+  }
+
 
 }
 

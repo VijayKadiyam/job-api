@@ -38,7 +38,8 @@ class OfficeTimingTest extends TestCase
       ->assertStatus(422)
       ->assertExactJson([
         "errors" => [
-          "from"    =>  ["The from field is required."],       
+          "from"    =>  ["The from field is required."],   
+          "to"      =>  ["The to field is required."],       
          ],
        "message" =>"The given data was invalid."
       ]);
@@ -56,18 +57,19 @@ class OfficeTimingTest extends TestCase
               'from'        =>  'from1',
            ]
          ])
-      ->assertJsonStructureExact([
-          'data'  =>  [
-            'from',
-            'from_am_pm',
-            'to',
-            'to_am_pm',
-            'user_id',
-            'updated_at',
-            'created_at',
-             'id',
-          ]
-      ]);
+        ->assertJsonStructureExact([
+            'data'  =>  [
+              'from',
+              'from_am_pm',
+              'to',
+              'to_am_pm',
+              'user_id',
+              'updated_at',
+              'created_at',
+               'id',
+            ],
+            'success'
+        ]);
   }
     /** @test */
   function list_of_office_timings()
@@ -99,7 +101,20 @@ class OfficeTimingTest extends TestCase
               'to'          =>  'to',
               'to_am_pm'    =>  'to am pm'
              ]
-       ]);
+       ])
+        ->assertJsonStructureExact([
+            'data'  =>  [
+              'id',
+              'user_id',
+              'from',
+              'from_am_pm',
+              'to',
+              'to_am_pm',
+              'created_at',
+              'updated_at',
+            ],
+            'success'
+        ]);
   }
 
    /** @test */
@@ -109,7 +124,8 @@ class OfficeTimingTest extends TestCase
       ->assertStatus(422)
       ->assertExactJson([
           "errors"  =>  [
-             "from"    =>  ["The from field is required."],       
+             "from"    =>  ["The from field is required."],   
+             "to"      =>  ["The to field is required."],       
            ],
         "message" => "The given data was invalid."
       ]);
@@ -145,7 +161,8 @@ class OfficeTimingTest extends TestCase
           'to_am_pm',
           'created_at',
           'updated_at',
-        ]
+        ],
+        'success'
       ]);    
   }
 

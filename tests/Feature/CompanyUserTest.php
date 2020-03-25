@@ -67,6 +67,7 @@ class CompanyUserTest extends TestCase
             'email_verified_at',
             'active',
             'phone',
+            'qualification_id',
             'address',
             'organigation_name',
             'organigation_address',

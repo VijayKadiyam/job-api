@@ -8,21 +8,15 @@ use App\Affiliation;
 
 class AffiliationUserController extends Controller
 {
-   public function __construct()
-  {
-    $this->middleware('auth:api')
-      ->except('store');
-  }
   public function store(Request $request)
   {
     $request->validate([
-      'user_id'    =>  'required',
-      'affiliation_id' =>  'required'
+      'user_id'         =>  'required',
+      'affiliation_ids' =>  'required'
     ]);
 
     $user = User::find($request->user_id);
-    $affiliation = Affiliation::find($request->affiliation_id);
-    $user->assignAffiliation($affiliation->id);
+    $user->assignAffiliation($request->affiliation_ids);
     $affiliationUser = User::with('affiliations')->find($request->user_id);
 
     return response()->json([

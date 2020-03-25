@@ -36,15 +36,16 @@ class DaysController extends Controller
     $request->company->days()->save($day);
 
     return response()->json([
-      'data'    =>  $day,
-      'success' =>  'true'
+      'data'     =>  $day,
+      'success'  =>   true
     ], 201); 
   }
   
   public function show(Day $day)
   {
     return response()->json([
-      'data'   =>  $day
+      'data'     =>  $day,
+      'success'  =>   true
     ], 200);   
   }
 
@@ -57,7 +58,8 @@ class DaysController extends Controller
     $day->update($request->all());
       
     return response()->json([
-      'data'  =>  $day
+      'data'     =>  $day,
+      'success'  =>   true
     ], 200);
   }
 

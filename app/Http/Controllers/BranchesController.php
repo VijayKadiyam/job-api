@@ -18,7 +18,8 @@ class BranchesController extends Controller
   	$branches =$user->branches;
 
   	return response()->json([
-  		'data' => $branches
+  		'data'     => $branches,
+      'success'  =>   true
   	],200);
   }
 
@@ -32,13 +33,15 @@ class BranchesController extends Controller
   	$user->branches()->save($branch);
 
   	return response()->json([
-  	  'data' => $branch->toArray()
+  	  'data'     => $branch->toArray(),
+      'success'  =>   true
   	],201);
   }
   public function show(User $user,Branch $branch)
   {
     return response()->json([
-           'data' => $branch
+      'data'     => $branch,
+      'success'  =>   true
     ], 200);
   }
 
@@ -51,8 +54,9 @@ class BranchesController extends Controller
 		$branch->update($request->all());
 
 		return response()->json([
-		'data' => $branch],
-		200);
+		'data'     => $branch,
+    'success'  =>   true
+    ],200);
 	}
 
   public function destroy(User $user,Branch $branch)
