@@ -15,7 +15,7 @@ class AffiliationTest extends TestCase
    use DatabaseTransactions;
 
   public function setUp() : void
- {
+  {
     parent::setUp();
 
     $this->company = factory(\App\Company::class)->create([
@@ -25,7 +25,6 @@ class AffiliationTest extends TestCase
     $this->user->assignCompany($this->company->id);
 
     $this->headers['company-id'] = $this->company->id;
-
 
     $this->affiliation = factory(\App\Affiliation::class)->create([
       'company_id'     =>  $this->company->id,
@@ -66,16 +65,16 @@ class AffiliationTest extends TestCase
             'name'  =>  'name',
           ]
         ])
-      ->assertJsonStructureExact([
-          'data'   => [
-              'name',              
-              'company_id',
-              'updated_at',
-              'created_at',
-              'id'
-          ],
-          'success'
-        ]); 
+        ->assertJsonStructureExact([
+            'data'   => [
+                'name',              
+                'company_id',
+                'updated_at',
+                'created_at',
+                'id'
+            ],
+            'success'
+          ]); 
   }
   /** @test */
   function list_of_affiliations()
@@ -92,7 +91,6 @@ class AffiliationTest extends TestCase
     $this->assertCount(1, Affiliation::all());
   }
 
-
   /** @test */
   function show_single_affiliation()
   {
@@ -102,7 +100,17 @@ class AffiliationTest extends TestCase
           'data'  => [
               'name' =>  'Vijay',
           ]
-        ]);
+        ])
+        ->assertJsonStructureExact([
+            'data'   => [
+                'id',
+                'company_id',
+                'name',              
+                'created_at',
+                'updated_at',
+            ],
+            'success'
+          ]); 
   }
 
   /** @test */
@@ -118,7 +126,6 @@ class AffiliationTest extends TestCase
         ->assertJson([
             'data'    => [
               'name'    => 'Name Must Updated',
-
             ]
          ])
         ->assertJsonStructureExact([
@@ -128,8 +135,8 @@ class AffiliationTest extends TestCase
               'name',
               'created_at',
               'updated_at',
-              
-              ] 
+              ] ,
+              'success'
           ]);
   }
 

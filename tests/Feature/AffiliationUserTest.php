@@ -18,8 +18,8 @@ class AffiliationUserTest extends TestCase
        ->assertStatus(422)
        ->assertExactJson([
           "errors"            =>  [
-            "affiliation_id" =>  ["The affiliation id field is required."],
-            "user_id"        =>  ["The user id field is required."]
+            "affiliation_ids" =>  ["The affiliation ids field is required."],
+            "user_id"         =>  ["The user id field is required."]
           ],
           "message" =>  "The given data was invalid."
       ]);
@@ -29,7 +29,7 @@ class AffiliationUserTest extends TestCase
   {
     $userTwo = factory(\App\User::class)->create();
     $affiliation = factory(\App\Affiliation::class)->create();
-    $userTwo->assignAffiliation($affiliation->id);
+    $userTwo->assignAffiliation([1]);
     $check = $userTwo->hasAffiliation($affiliation->id);
     $this->assertTrue($check);
   }
@@ -41,8 +41,10 @@ class AffiliationUserTest extends TestCase
     $userTwo = factory(\App\User::class)->create();
     $affiliation = factory(\App\Affiliation::class)->create();
     $this->payload      = [ 
-      'user_id'    => $userTwo->id,
-      'affiliation_id' => $affiliation->id
+      'user_id'        => $userTwo->id,
+      'affiliation_ids'=> [
+        1
+      ] 
     ];
     $this->json('post', '/api/affiliation_user', $this->payload , $this->headers)
       ->assertStatus(201)
@@ -53,7 +55,7 @@ class AffiliationUserTest extends TestCase
               'email'                   =>  $userTwo->email,
               'affiliations'                   =>  [
                 0 =>  [
-                  'name'  =>  $affiliation->name
+                  'name'  =>  'Vijay'
                 ]
               ]
             ]
@@ -66,6 +68,7 @@ class AffiliationUserTest extends TestCase
             'email_verified_at',
             'active',
             'phone',
+            'qualification_id',
             'address',
             'organigation_name',
             'organigation_address',

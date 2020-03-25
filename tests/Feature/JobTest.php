@@ -102,7 +102,7 @@ class JobTest extends TestCase
               'created_at',
               'id'
           ],
-          
+          'success'
         ]); 
   }
 
@@ -152,7 +152,29 @@ class JobTest extends TestCase
           'max_attempts_in_ca_exam'  =>  'max attempts in ca exam',
           'status'                   =>  'status',    
       ]
-    ]);
+    ])
+     ->assertJsonStructureExact([
+          'data'   => [  
+              'id',
+              'company_id',
+              'user_id',
+              'qualification_id',
+              'title',
+              'highlight',
+              'no_of_openings',
+              'experience',
+              'address',
+              'stipend_start',
+              'stipend_end',
+              'department',
+              'max_attempts_in_ca_exam',
+              'status',            
+              'created_at',
+              'updated_at',
+              'practices',
+          ],
+          'success'
+        ]); 
   }
 
 
@@ -199,7 +221,8 @@ class JobTest extends TestCase
             'status',    
             'created_at',
             'updated_at',       
-          ]
+          ],
+          'success'
       ]);
   }
 

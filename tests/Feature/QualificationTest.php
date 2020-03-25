@@ -19,20 +19,19 @@ class QualificationTest extends TestCase
     parent::setUp();
 
     $this->company = factory(\App\Company::class)->create([
-           'name' => 'test'
+      'name' => 'test'
     ]);
 
     $this->user->assignCompany($this->company->id);
 
     $this->headers['company-id'] = $this->company->id;
 
-
     $this->qualification = factory(\App\Qualification::class)->create([
       'company_id'  =>  $this->company->id,
     ]);
 
     $this->payload = [ 
-      'name'           =>  'name',     
+      'name'  =>  'name',     
     ];
   }
 
@@ -66,16 +65,16 @@ class QualificationTest extends TestCase
             'name'  =>  'name',
           ]
         ])
-      ->assertJsonStructureExact([
-          'data'   => [
-              'name',              
-              'company_id',
-              'updated_at',
-              'created_at',
-              'id'
-          ],
-          'success'
-        ]); 
+        ->assertJsonStructureExact([
+            'data'   => [
+                'name',              
+                'company_id',
+                'updated_at',
+                'created_at',
+                'id'
+            ],
+            'success'
+          ]); 
   }
     /** @test */
   function list_of_qualifications()
@@ -102,7 +101,17 @@ class QualificationTest extends TestCase
           'data'  => [
               'name' =>  'Vijay',
           ]
-        ]);
+        ])
+         ->assertJsonStructureExact([
+            'data'   => [
+                'id',
+                'company_id',
+                'name',
+                'created_at',
+                'updated_at',
+            ],
+            'success'
+          ]); 
   }
 
     /** @test */
@@ -110,7 +119,7 @@ class QualificationTest extends TestCase
   {
     $this->disableEH();
       $payload  = [
-        'name'                 => 'Name Must Updated',
+        'name'    => 'Name Must Updated',
       ];
 
     $this->json('patch', '/api/qualifications/1', $payload, $this->headers)
@@ -128,8 +137,8 @@ class QualificationTest extends TestCase
             'name',
             'created_at',
             'updated_at',
-            
-            ] 
+            ],
+            'success'
         ]);
   }
 

@@ -36,14 +36,15 @@ class PracticesController extends Controller
 
     return response()->json([
       'data'    =>  $practice,
-      'success' =>  'true'
+      'success' =>  true
     ], 201); 
   }
 
   public function show(Practice $practice)
   {    
     return response()->json([
-      'data'   =>  $practice
+      'data'     =>  $practice,
+      'success'  =>   true
     ], 200);   
   }
 
@@ -56,7 +57,8 @@ class PracticesController extends Controller
     $practice->update($request->all());
       
     return response()->json([
-      'data'  =>  $practice
+      'data'     =>  $practice,
+      'success'  =>   true
     ], 200);
   }
 

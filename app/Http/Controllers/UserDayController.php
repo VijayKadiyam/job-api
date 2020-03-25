@@ -17,21 +17,17 @@ class UserDayController extends Controller
   {
 
     $request->validate([
-        'day_id'   =>  'required',
-        'user_id'        =>  'required'
+        'day_ids'   =>  'required',
+        'user_id'   =>  'required'
     ]);
 
-    $day =  Day::find($request->day_id);
-
-    $user =  User::find($request->user_id);
-
-    $day->assignUser($user->id);
-    
-    $userDay = Day::with('users')->find($request->day_id);
+    $user = User::find($request->user_id);
+    $user->assignDay($request->day_ids);
+    $dayUser = User::with('days')->find($request->user_id);
 
     return response()->json([
-    'data'    =>  $userDay,
-    'success' =>  true
+        'data'  =>  $dayUser,
+        'success' =>  true
     ], 201); 
   }
 }

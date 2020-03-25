@@ -16,17 +16,6 @@ class Day extends Model
 
   public function users()
   {
-    return $this->belongsToMany(User::class, 'user_day');
-  }
-
-  public function hasUser($users)
-  {
-    return $this->users ? in_array($users, $this->users->pluck('id')->toArray()) : false;
-  }
-
-   public function assignUser($user)
-  {
-    return $this->users()->sync([$user]);
-  }
- 
+    return $this->hasMany(User::class);
+  } 
 }

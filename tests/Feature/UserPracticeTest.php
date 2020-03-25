@@ -6,6 +6,8 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Practice;
+use App\User;
 
 class UserPracticeTest extends TestCase
 {
@@ -18,8 +20,8 @@ class UserPracticeTest extends TestCase
       ->assertStatus(422)
       ->assertExactJson([
           "errors"     =>  [
-            "user_id"  =>  ["The user id field is required."],
-            "practice_id"      =>  ["The practice id field is required."]
+            "user_id"           =>  ["The user id field is required."],
+            "practice_ids"      =>  ["The practice ids field is required."]
           ],
           "message"        =>  "The given data was invalid."
         ]);
@@ -28,32 +30,33 @@ class UserPracticeTest extends TestCase
    /** @test */
   function assign_user()
   { 
-
-    $PracticeTwo  = factory(\App\Practice::class)->create();
-    $user  = factory(\App\User::class)->create();
-    $PracticeTwo->assignUser(1);
-    $check    = $PracticeTwo->hasUser(1);
+    $userTwo  = factory(\App\User::class)->create();
+    $practice  = factory(\App\Practice::class)->create();
+    $userTwo->assignPractice([1]);
+    $check    = $userTwo->hasPractice(1);
     $this->assertTrue($check);
   }
 
      /** @test */
-  function assign_user_to_practice()
+  function assign_practice_to_user()
   {
     $this->disableEH();
-    $practiceTwo = factory(\App\Practice::class)->create();
-    $user = factory(\App\User::class)->create();
+    $userTwo = factory(\App\User::class)->create();
+    $practice  = factory(\App\Practice::class)->create();
     $this->payload      = [ 
-      'practice_id'    => $practiceTwo->id,
-      'user_id' => $user->id
+      'user_id'       => $userTwo->id,
+      'practice_ids'  => [
+        1
+      ]
     ];
     $this->json('post', '/api/user_practice', $this->payload , $this->headers)
       ->assertStatus(201)
       ->assertJson([
             'data'  =>  [
-              'name'                    =>  $practiceTwo->name,
-              'users'                   =>  [
+              'name'                    =>  $userTwo->name,
+              'practices'                   =>  [
                 0 =>  [
-                  'email'  =>  $user->email
+                  'name'  => 'Vijay'
                 ]
               ]
             ]
@@ -61,11 +64,49 @@ class UserPracticeTest extends TestCase
         ->assertJsonStructureExact([
           'data'  =>  [
             'id',
-            'company_id',
             'name',
+            'email',
+            'email_verified_at',
+            'active',
+            'phone',
+            'qualification_id',
+            'address',
+            'organigation_name',
+            'organigation_address',
+            'gstn',
+            'year_of_establishment',
+            'no_of_partners',
+            'total_no_of_people',
+            'description',
+            'transfer_policy',
+            'training_policy',
+            'leave_compensation',
+            'dob',
+            'gender',
+            'marital_status',
+            'passing_marks_10',
+            'total_marks_10',
+            'passing_marks_12',
+            'total_marks_12',
+            'cpt_passing_year',
+            'cpt_marks',
+            'cpt_attempts',
+            'ipcc_group_1_passing_year',
+            'ipcc_group_1_marks',
+            'ipcc_group_1_attempts',
+            'ipcc_group_2_passing_marks',
+            'ipcc_group_2_marks',
+            'ipcc_group_2_attempts',
+            'entry_scheme',
+            'icitss_passed',
+            'icitss_passing_marks',
+            'icitss_total_marks',
+            'other_training_details',
+            'outstation_travel',
+            'api_token',
             'created_at',
             'updated_at',
-            'users',
+            'practices',
           ],
           'success'
         ]);

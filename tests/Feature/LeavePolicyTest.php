@@ -37,7 +37,6 @@ class LeavePolicyTest extends TestCase
   /** @test */
   function add_requires_following_details()
   {
-
     $this->json('POST', '/api/users/' . $this->user->id . '/leave_policies', [],$this->headers)
       ->assertStatus(422)
       ->assertExactJson([
@@ -60,21 +59,22 @@ class LeavePolicyTest extends TestCase
               'exam'        =>  'exam1',
            ]
          ])
-      ->assertJsonStructureExact([
-          'data'  =>  [
-          'exam',                  
-          'ipcc_group_1',
-          'ipcc_group_2',
-          'ca_final_group_1',
-          'ca_final_group_2',
-          'ipcc_both_groups',    
-          'ca_final_both_groups',
-          'user_id',
-          'updated_at',
-          'created_at',
-           'id',
-          ]
-      ]);
+        ->assertJsonStructureExact([
+            'data'  =>  [
+            'exam',                  
+            'ipcc_group_1',
+            'ipcc_group_2',
+            'ca_final_group_1',
+            'ca_final_group_2',
+            'ipcc_both_groups',    
+            'ca_final_both_groups',
+            'user_id',
+            'updated_at',
+            'created_at',
+             'id',
+            ],
+            'success'
+        ]);
   }
     /** @test */
   function list_of_office_timings()
@@ -103,15 +103,31 @@ class LeavePolicyTest extends TestCase
     $this->json('get',  '/api/users/' . $this->user->id . '/leave_policies/' . $this->leave_policy->id,[],$this->headers)
       ->assertStatus(200)
       ->assertJson([
-          'data' => [
-              'exam'                   =>  'exam',
-              'ipcc_group_1'           =>  'ipcc group1',
-              'ipcc_group_2'           =>  'ipcc group2',
-              'ca_final_group_1'       =>  'ca final group1',
-              'ca_final_group_2'       =>  'ca final group2',
-              'ipcc_both_groups'       =>  'ipcc both groups',
-              'ca_final_both_groups'   =>  'ca final both groups',             ]
-    ]);
+        'data' => [
+            'exam'                   =>  'exam',
+            'ipcc_group_1'           =>  'ipcc group1',
+            'ipcc_group_2'           =>  'ipcc group2',
+            'ca_final_group_1'       =>  'ca final group1',
+            'ca_final_group_2'       =>  'ca final group2',
+            'ipcc_both_groups'       =>  'ipcc both groups',
+            'ca_final_both_groups'   =>  'ca final both groups',             ]
+    ])
+      ->assertJsonStructureExact([
+            'data'  =>  [
+            'id',
+            'user_id',
+            'exam',                  
+            'ipcc_group_1',
+            'ipcc_group_2',
+            'ca_final_group_1',
+            'ca_final_group_2',
+            'ipcc_both_groups',    
+            'ca_final_both_groups',
+            'created_at',
+            'updated_at',
+            ],
+            'success'
+        ]);
   }
 
    /** @test */
@@ -166,7 +182,8 @@ class LeavePolicyTest extends TestCase
           'ca_final_both_groups',
           'created_at',
           'updated_at',
-        ]
+        ],
+        'success'
       ]);    
   }
 

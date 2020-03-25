@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->integer('active')->default(0);
             $table->string('password');
             $table->bigInteger('phone')->nullable();
+            $table->integer('qualification_id')->nullable();
             $table->string('address')->nullable();
             $table->string('organigation_name')->nullable();
             $table->string('organigation_address')->nullable();

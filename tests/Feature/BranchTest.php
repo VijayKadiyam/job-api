@@ -51,12 +51,13 @@ class BranchTest extends TestCase
         ])
         ->assertJsonStructureExact([
           'data'  =>  [
-          'name',
-          'user_id',
-          'updated_at',
-          'created_at',
-          'id',
-          ]
+            'name',
+            'user_id',
+            'updated_at',
+            'created_at',
+            'id',
+          ],
+          'success'
         ]);
   }
     /** @test */
@@ -85,7 +86,17 @@ class BranchTest extends TestCase
           'data' => [
               'name' => 'Vijay',   
            ]
-       ]);
+       ])
+        ->assertJsonStructureExact([
+          'data'  =>  [
+            'id',
+            'user_id',
+            'name',
+            'created_at',
+            'updated_at',
+          ],
+          'success'
+        ]);
   }
 
    /** @test */
@@ -122,7 +133,8 @@ class BranchTest extends TestCase
              'name',
              'created_at',
              'updated_at',     
-          ]
+          ],
+          'success'
       ]);    
 
   }

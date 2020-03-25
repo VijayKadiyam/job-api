@@ -29,7 +29,7 @@ class JobsController extends Controller
   public function store(Request $request)
   {
     $request->validate([
-      'title'       => 'required', 
+      'title' => 'required', 
     ]);
 
     $job = new Job($request->all());
@@ -37,17 +37,18 @@ class JobsController extends Controller
     $request->company->jobs()->save($job);
 
     return response()->json([
-    'data' => $job->toArray()
+    'data'     => $job->toArray(),
+    'success'  =>   true
   	],201);
   }
 
   public function show(Job $job)
   { 
-
     $job->practices = $job->practices;
     
     return response()->json([
-      'data'   =>  $job
+      'data'     =>  $job,
+      'success'  =>   true
     ], 200);   
   }
 
@@ -55,14 +56,15 @@ class JobsController extends Controller
   {
     $request->validate([
      
-      'title'       => 'required',
+      'title' => 'required',
   ]);
 
     $job->update($request->all());
 
     return response()->json([
-     'data' => $job],
-     200);
+     'data'     => $job,
+     'success'  =>   true
+    ],200);
   }
 
   public function destroy(Job $job)
