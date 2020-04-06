@@ -16,13 +16,29 @@ class JobsController extends Controller
     $this->middleware(['auth:api', 'company']);
   }
 
-  public function index(Request $request)
-  { 
-    $jobs = request()->company->jobs;
+public function index(Request $request)
+  {
+    $count = 0;
+    if($request->search) {
+      $jobs = request()->company->jobs()
+        ->where('title', 'LIKE', '%' . $request->search . '%')
+        ->get();
+      $count = $jobs->count();
+    }
+    else if($request->page && $request->rowsPerPage != -1) {
+      $jobs = request()->company->jobs();
+      $count = $jobs->count();
+      $jobs = $jobs->paginate($request->rowsPerPage)->toArray();
+      $jobs = $jobs['data'];
+    }
+    else {
+      $jobs = request()->company->jobs;
+      $count = $jobs->count();
+    }
 
     return response()->json([
-      'data'     =>  $jobs,
-      'success'  =>   true
+      'data'  =>  $jobs,
+      'count' =>  $count
     ], 200);
   }
 

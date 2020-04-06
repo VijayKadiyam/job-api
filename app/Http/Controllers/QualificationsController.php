@@ -15,12 +15,28 @@ class QualificationsController extends Controller
   }
 
   public function index(Request $request)
-  {   
-    $qualifications = request()->company->qualifications;
+  {
+    $count = 0;
+    if($request->search) {
+      $qualifications = request()->company->qualifications()
+        ->where('name', 'LIKE', '%' . $request->search . '%')
+        ->get();
+      $count = $qualifications->count();
+    }
+    else if($request->page && $request->rowsPerPage != -1) {
+      $qualifications = request()->company->qualifications();
+      $count = $qualifications->count();
+      $qualifications = $qualifications->paginate($request->rowsPerPage)->toArray();
+      $qualifications = $qualifications['data'];
+    }
+    else {
+      $qualifications = request()->company->qualifications;
+      $count = $qualifications->count();
+    }
 
     return response()->json([
-      'data'     =>  $qualifications,
-      'success'  =>   true
+      'data'  =>  $qualifications,
+      'count' =>  $count
     ], 200);
   }
 

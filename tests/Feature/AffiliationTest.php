@@ -41,7 +41,58 @@ class AffiliationTest extends TestCase
     $this->json('post', '/api/affiliations')
         ->assertStatus(401); 
   }
+/** @test */
+  function list_of_affiliations()
+  {
+    $this->json('GET', '/api/affiliations',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 => [
+              'name',              
+            ] 
+          ]
+        ]);
+    $this->assertCount(1, Affiliation::all());
+  }
+  /** @test */
+  function list_of_affiliations_of_a_page()
+  {
+    $this->disableEH();
+    factory(\App\Affiliation::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
 
+    $this->json('GET', '/api/affiliations?page=1&rowsPerPage=5', [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+                'name'
+              ] 
+            ]
+        ]);
+    $this->assertCount(2, Affiliation::all());
+  }
+
+  /** @test */
+  public function list_of_affiliations_of_a_search()
+  {
+    $this->disableEH();
+    factory(\App\Affiliation::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
+
+    $this->json('GET', '/api/affiliations?search=' . $this->affiliation->name, [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+                'name'
+              ] 
+            ]
+        ]);
+  }
    /** @test */
   function it_requires_following_details()
   { 
@@ -76,21 +127,6 @@ class AffiliationTest extends TestCase
             'success'
           ]); 
   }
-  /** @test */
-  function list_of_affiliations()
-  {
-    $this->json('GET', '/api/affiliations',[], $this->headers)
-      ->assertStatus(200)
-      ->assertJsonStructure([
-          'data' => [
-            0 => [
-              'name',              
-            ] 
-          ]
-        ]);
-    $this->assertCount(1, Affiliation::all());
-  }
-
   /** @test */
   function show_single_affiliation()
   {

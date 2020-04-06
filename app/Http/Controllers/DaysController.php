@@ -15,16 +15,30 @@ class DaysController extends Controller
   }
 
   public function index(Request $request)
-  {    
-    $days = request()->company->days;
+  {
+    $count = 0;
+    if($request->search) {
+      $days = request()->company->days()
+        ->where('name', 'LIKE', '%' . $request->search . '%')
+        ->get();
+      $count = $days->count();
+    }
+    else if($request->page && $request->rowsPerPage != -1) {
+      $days = request()->company->days();
+      $count = $days->count();
+      $days = $days->paginate($request->rowsPerPage)->toArray();
+      $days = $days['data'];
+    }
+    else {
+      $days = request()->company->days;
+      $count = $days->count();
+    }
 
     return response()->json([
-      'data'     =>  $days,
-      'success'  =>   true
+      'data'  =>  $days,
+      'count' =>  $count
     ], 200);
-
   }
-
   public function store(Request $request)
   {
     $request->validate([

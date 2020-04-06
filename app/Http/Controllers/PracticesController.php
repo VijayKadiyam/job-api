@@ -15,12 +15,28 @@ class PracticesController extends Controller
   }
 
   public function index(Request $request)
-  {    
-    $practices = request()->company->practices;
+  {
+    $count = 0;
+    if($request->search) {
+      $practices = request()->company->practices()
+        ->where('name', 'LIKE', '%' . $request->search . '%')
+        ->get();
+      $count = $practices->count();
+    }
+    else if($request->page && $request->rowsPerPage != -1) {
+      $practices = request()->company->practices();
+      $count = $practices->count();
+      $practices = $practices->paginate($request->rowsPerPage)->toArray();
+      $practices = $practices['data'];
+    }
+    else {
+      $practices = request()->company->practices;
+      $count = $practices->count();
+    }
 
     return response()->json([
-      'data'     =>  $practices,
-      'success'  =>   true
+      'data'  =>  $practices,
+      'count' =>  $count
     ], 200);
   }
 
