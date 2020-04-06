@@ -42,6 +42,60 @@ class DayTest extends TestCase
     $this->json('post', '/api/days')
         ->assertStatus(401); 
   }
+  
+  /** @test */
+  function list_of_days()
+  {
+    $this->json('GET', '/api/days',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 => [
+              'name',              
+            ] 
+          ]
+        ]);
+    $this->assertCount(1, Day::all());
+  }
+
+  /** @test */
+  function list_of_days_of_a_page()
+  {
+    $this->disableEH();
+    factory(\App\Day::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
+
+    $this->json('GET', '/api/days?page=1&rowsPerPage=5', [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+                'name'
+              ] 
+            ]
+        ]);
+    $this->assertCount(2, Day::all());
+  }
+
+  /** @test */
+  public function list_of_days_of_a_search()
+  {
+    $this->disableEH();
+    factory(\App\Day::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
+
+    $this->json('GET', '/api/days?search=' . $this->day->name, [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+                'name'
+              ] 
+            ]
+        ]);
+  }
 
    /** @test */
   function it_requires_following_details()
@@ -77,23 +131,6 @@ class DayTest extends TestCase
           'success'
         ]); 
   }
-
-  /** @test */
-  function list_of_days()
-  {
-    $this->json('GET', '/api/days',[], $this->headers)
-      ->assertStatus(200)
-      ->assertJsonStructure([
-          'data' => [
-            0 => [
-              'name',              
-            ] 
-          ]
-        ]);
-    $this->assertCount(1, Day::all());
-  }
-
-
   /** @test */
   function show_single_day()
   {

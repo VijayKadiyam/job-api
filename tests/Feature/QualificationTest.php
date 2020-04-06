@@ -41,6 +41,60 @@ class QualificationTest extends TestCase
     $this->json('post', '/api/qualifications')
       ->assertStatus(401); 
   }
+  /** @test */
+  function list_of_qualifications()
+  {
+    $this->json('GET', '/api/qualifications',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 => [
+              'name',              
+            ] 
+          ]
+        ]);
+    $this->assertCount(1, Qualification::all());
+  }
+
+
+  /** @test */
+  function list_of_qualifications_of_a_page()
+  {
+    $this->disableEH();
+    factory(\App\Qualification::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
+
+    $this->json('GET', '/api/qualifications?page=1&rowsPerPage=5', [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+                'name'
+              ] 
+            ]
+        ]);
+    $this->assertCount(2, Qualification::all());
+  }
+
+  /** @test */
+  public function list_of_qualifications_of_a_search()
+  {
+    $this->disableEH();
+    factory(\App\Qualification::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
+
+    $this->json('GET', '/api/qualifications?search=' . $this->qualification->name, [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+                'name'
+              ] 
+            ]
+        ]);
+  }
 
    /** @test */
   function it_requires_following_details()
@@ -76,22 +130,6 @@ class QualificationTest extends TestCase
             'success'
           ]); 
   }
-    /** @test */
-  function list_of_qualifications()
-  {
-    $this->json('GET', '/api/qualifications',[], $this->headers)
-      ->assertStatus(200)
-      ->assertJsonStructure([
-          'data' => [
-            0 => [
-              'name',              
-            ] 
-          ]
-        ]);
-    $this->assertCount(1, Qualification::all());
-  }
-
-
   /** @test */
   function show_single_qualification()
   {

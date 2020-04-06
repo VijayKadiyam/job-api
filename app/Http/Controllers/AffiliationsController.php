@@ -16,14 +16,30 @@ class AffiliationsController extends Controller
 
   public function index(Request $request)
   {
-    $affiliations = request()->company->affiliations;
+    $count = 0;
+    if($request->search) {
+      $affiliations = request()->company->affiliations()
+        ->where('name', 'LIKE', '%' . $request->search . '%')
+        ->get();
+      $count = $affiliations->count();
+    }
+    else if($request->page && $request->rowsPerPage != -1) {
+      $affiliations = request()->company->affiliations();
+      $count = $affiliations->count();
+      $affiliations = $affiliations->paginate($request->rowsPerPage)->toArray();
+      $affiliations = $affiliations['data'];
+    }
+    else {
+      $affiliations = request()->company->affiliations;
+      $count = $affiliations->count();
+    }
 
     return response()->json([
-      'data'     =>  $affiliations,
-      'success'  =>   true
+      'data'  =>  $affiliations,
+      'count' =>  $count
     ], 200);
-
   }
+
 
   public function store(Request $request)
   {

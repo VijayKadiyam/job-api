@@ -59,6 +59,98 @@ class JobTest extends TestCase
     $this->json('post', '/api/jobs')
         ->assertStatus(401); 
   }
+  
+   /** @test */
+  function list_of_jobs()
+  {     
+    $this->json('GET', '/api/jobs',[], $this->headers)
+       ->assertStatus(200)
+       ->assertJsonStructure([
+        'data' => [
+          0 => [              
+              'title',
+              'highlight',
+              'no_of_openings',
+              'experience',
+              'address',
+              'stipend_start',
+              'stipend_end',
+              'department',
+              'max_attempts_in_ca_exam',
+              'status',
+              'user_id',
+              'qualification_id',
+              'company_id',      
+          ] 
+        ]
+  ]);
+
+    $this->assertCount(1, Job::all());
+  }
+
+  /** @test */
+  function list_of_jobs_of_a_page()
+  {
+    $this->disableEH();
+    factory(\App\Job::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
+
+    $this->json('GET', '/api/jobs?page=1&rowsPerPage=5', [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+              'title',
+              'highlight',
+              'no_of_openings',
+              'experience',
+              'address',
+              'stipend_start',
+              'stipend_end',
+              'department',
+              'max_attempts_in_ca_exam',
+              'status',
+              'user_id',
+              'qualification_id',
+              'company_id',      
+              ] 
+            ]
+        ]);
+    $this->assertCount(2, Job::all());
+  }
+
+  /** @test */
+  public function list_of_jobs_of_a_search()
+  {
+    $this->disableEH();
+    factory(\App\Job::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
+
+    $this->json('GET', '/api/jobs?search=' . $this->job->title, [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+              'title',
+              'highlight',
+              'no_of_openings',
+              'experience',
+              'address',
+              'stipend_start',
+              'stipend_end',
+              'department',
+              'max_attempts_in_ca_exam',
+              'status',
+              'user_id',
+              'qualification_id',
+              'company_id',      
+              ] 
+            ]
+        ]);
+  }
+
 
    /** @test */
   function it_requires_following_details()
@@ -104,34 +196,6 @@ class JobTest extends TestCase
           ],
           'success'
         ]); 
-  }
-
-   /** @test */
-  function list_of_jobs()
-  {     
-    $this->json('GET', '/api/jobs',[], $this->headers)
-       ->assertStatus(200)
-       ->assertJsonStructure([
-        'data' => [
-          0 => [              
-              'title',
-              'highlight',
-              'no_of_openings',
-              'experience',
-              'address',
-              'stipend_start',
-              'stipend_end',
-              'department',
-              'max_attempts_in_ca_exam',
-              'status',
-              'user_id',
-              'qualification_id',
-              'company_id',      
-          ] 
-        ]
-  ]);
-
-    $this->assertCount(1, Job::all());
   }
 
   /** @test */

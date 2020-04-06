@@ -42,6 +42,58 @@ class PracticeTest extends TestCase
     $this->json('post', '/api/practices')
          ->assertStatus(401); 
   }
+   /** @test */
+  function list_of_practices()
+  {
+    $this->json('GET', '/api/practices',[], $this->headers)
+      ->assertStatus(200)
+      ->assertJsonStructure([
+          'data' => [
+            0 => [
+              'name',              
+            ] 
+          ]
+        ]);
+    $this->assertCount(1, Practice::all());
+  }
+  /** @test */
+  function list_of_practices_of_a_page()
+  {
+    $this->disableEH();
+    factory(\App\Practice::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
+
+    $this->json('GET', '/api/practices?page=1&rowsPerPage=5', [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+                'name'
+              ] 
+            ]
+        ]);
+    $this->assertCount(2, Practice::all());
+  }
+
+  /** @test */
+  public function list_of_practices_of_a_search()
+  {
+    $this->disableEH();
+    factory(\App\Practice::class)->create([
+      'company_id' =>  $this->company->id
+    ]);
+
+    $this->json('GET', '/api/practices?search=' . $this->practice->name, [], $this->headers)
+         ->assertStatus(200)
+         ->assertJsonStructure([
+            'data' => [
+              0=>[
+                'name'
+              ] 
+            ]
+        ]);
+  }
 
    /** @test */
   function it_requires_following_details()
@@ -77,22 +129,6 @@ class PracticeTest extends TestCase
             'success'
           ]); 
   }
-
-  /** @test */
-  function list_of_practices()
-  {
-    $this->json('GET', '/api/practices',[], $this->headers)
-      ->assertStatus(200)
-      ->assertJsonStructure([
-          'data' => [
-            0 => [
-              'name',              
-            ] 
-          ]
-        ]);
-    $this->assertCount(1, Practice::all());
-  }
-
 
   /** @test */
   function show_single_practice()
